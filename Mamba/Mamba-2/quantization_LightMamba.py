@@ -3,12 +3,12 @@ import scipy.linalg
 import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(current_dir, "mamba2-2.7b")
+model_path = os.path.join(current_dir, "mamba2-130m")
 
 # === Step 1: Load Hugging Face Model Weights (FP32/FP16) ===
 from transformers import AutoModelForCausalLM
-model = AutoModelForCausalLM.from_pretrained("AntonV/mamba2-2.7b-hf")
-model.save_pretrained(model_path + "/mamba2-2.7b-hf-raw")
+model = AutoModelForCausalLM.from_pretrained("AntonV/mamba2-130m-hf")
+model.save_pretrained(model_path + "/mamba2-130m-hf-raw", safe_serialization=False)
 
 
 # === Step 2: Per-Channel Quantization (INT8) with PoT Scaling ===
@@ -67,4 +67,4 @@ def save_fpga_ready_weight(weight, np, pp, file_path):
 weight = model.lm_head.weight.data.clone()  # Example: LM Head Weight
 np, pp = 8, 64  # Example Tile Sizes (Adjust according to your FPGA design)
 # np ≥ 2,pp ≥ 8
-save_fpga_ready_weight(weight, np, pp, (model_path + "./mamba2-2.7b-fpga-ready.pt"), safe_serialization=False)
+save_fpga_ready_weight(weight, np, pp, (model_path + "./mamba2-130m-fpga-ready.pt"))
