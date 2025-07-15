@@ -1,0 +1,96 @@
+import time
+import torch
+from transformers import AutoTokenizer
+from mamba2 import Mamba2LMHeadModel
+if torch.cuda.is_available():
+    device = torch.device('cuda')
+elif torch.backends.mps.is_available():
+    device = torch.device('mps')
+else:
+    device = torch.device('cpu')
+
+def quantize_tensor_asym(tensor, num_bits=8):
+    qmin = 0
+    qmax = 2**num_bits - 1
+    min_val = tensor.min()
+    max_val = tensor.max()
+
+    # scale and zero point
+    scale = (max_val - min_val) / (qmax - qmin + 1e-8)
+    zero_point = qmin - min_val / (scale + 1e-8)
+    zero_point = torch.clamp(zero_point.round(), qmin, qmax)
+
+    # quantize
+    q_tensor = ((tensor / scale) + zero_point).round()
+    q_tensor = torch.clamp(q_tensor, qmin, qmax)
+
+    # dequantize
+    dq_tensor = (q_tensor - zero_point) * scale
+    return dq_tensor, scale, zero_point
+
+def quantize_tensor_sym(tensor, num_bits=8):
+    qmax = 2**(num_bits - 1) - 1
+    scale = tensor.abs().max() / qmax
+    q_tensor = (tensor / scale).round().clamp(-qmax, qmax)
+    dq_tensor = q_tensor * scale
+    return dq_tensor, scale
+
+
+
+model = Mamba2LMHeadModel.from_pretrained("state-spaces/mamba2-130m", device=device)
+n_layers = len(model.backbone.layers)
+
+for i in range(n_layers):
+    layer = model.backbone.layers[i]
+    mixer = layer['mixer']
+    norm = layer['norm']
+
+    with torch.no_grad():
+        # 전체 weight 양자화 (row가 아닌 전체)
+        q, _ = quantize_tensor_sym(mixer.in_proj.weight, 8)
+        mixer.in_proj.weight.copy_(q)
+
+        q, _ = quantize_tensor_sym(mixer.conv1d.weight, 8)
+        mixer.conv1d.weight.copy_(q)
+
+        q, _ = quantize_tensor_sym(mixer.conv1d.bias, 8)
+        mixer.conv1d.bias.copy_(q)
+
+        q, _ = quantize_tensor_sym(mixer.A_log, 16)
+        mixer.A_log.copy_(q)
+
+        q, _ = quantize_tensor_sym(mixer.D, 8)
+        mixer.D.copy_(q)
+
+        q, _ = quantize_tensor_sym(mixer.dt_bias, 16)
+        mixer.dt_bias.copy_(q)
+
+        # q, _ = quantize_tensor_sym(mixer.norm.weight, 8)
+        # mixer.norm.weight.copy_(q)
+
+        q, _ = quantize_tensor_sym(mixer.out_proj.weight, 8)
+        mixer.out_proj.weight.copy_(q)
+
+        # q, _ = quantize_tensor_sym(norm.weight, 8)
+        # norm.weight.copy_(q)
+
+# ▷ 레이어 외부 RMSNorm
+# with torch.no_grad():
+    # q_param, scale = quantize_tensor_sym(norm.weight, num_bits=8)
+    # norm.weight.copy_(q_param)
+
+# 최종 저장
+torch.save(model.state_dict(), r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth")
+
+
+'''
+# 저장한 가중치 다시 부르기
+# config는 원래대로 불러와야 함
+config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
+model = Mamba2LMHeadModel(config)
+
+# 수정된 가중치 로드
+state_dict = torch.load("mamba2_130m_modified.pth")
+model.load_state_dict(state_dict)
+model.eval()
+'''

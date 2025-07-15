@@ -3,7 +3,8 @@ import scipy.linalg
 import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(current_dir, "mamba2-130m")
+base_dir = os.path.abspath(os.path.join(current_dir, '../../..'))
+model_path = os.path.join(base_dir, "mamba2-130m")
 
 # === Step 1: Load Hugging Face Model Weights (FP32/FP16) ===
 from transformers import AutoModelForCausalLM

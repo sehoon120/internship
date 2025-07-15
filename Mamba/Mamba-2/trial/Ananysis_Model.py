@@ -2,7 +2,8 @@ from transformers import AutoModel, AutoTokenizer, AutoModelForCausalLM
 import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(current_dir, "mamba2-130m")
+base_dir = os.path.abspath(os.path.join(current_dir, '../../..'))
+model_path = os.path.join(base_dir, "mamba2-130m")
 
 # model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True)
 
