@@ -311,26 +311,37 @@ class Mamba2(nn.Module):
             ],
             dim=-1,
         )
+        # print('z: ', z.shape)
+        # print('xBC: ', xBC.shape)
+        # print('dt: ', dt.shape)
 
         # Advance convolution input
         h.conv_state.copy_(torch.roll(h.conv_state, shifts=-1, dims=-1))
         h.conv_state[:, :, -1] = xBC
+        # print('xBC: ', xBC.shape)
         # Convolution step
         xBC = torch.sum(
             h.conv_state * rearrange(self.conv1d.weight, "d 1 w -> d w"), dim=-1
         )
+        # print('h.conv_state', h.conv_state.shape)
+        # print('xBC2: ', xBC.shape)
         xBC += self.conv1d.bias
         xBC = silu(xBC)
 
         x, B, C = torch.split(
             xBC, [self.args.d_inner, self.args.d_state, self.args.d_state], dim=-1
         )
+        # print('x: ', x.shape)
+        # print('B: ', B.shape)
+        # print('C: ', C.shape)
         A = -torch.exp(self.A_log)  # (nheads,)
+        # print('A: ', A.shape)
 
         # SSM step
         dt = F.softplus(dt + self.dt_bias)  # (batch, nheads)
         dA = torch.exp(dt * A)  # (batch, nheads)
         x = rearrange(x, "b (h p) -> b h p", p=self.args.headdim)
+        
         dBx = torch.einsum("bh, bn, bhp -> bhpn", dt, B, x)
         h.ssm_state.copy_(h.ssm_state * rearrange(dA, "b h -> b h 1 1") + dBx)
         y = torch.einsum("bhpn, bn -> bhp", h.ssm_state, C)
@@ -338,7 +349,7 @@ class Mamba2(nn.Module):
         y = rearrange(y, "b h p -> b (h p)")
         y = self.norm(y, z)
         y = self.out_proj(y)
-
+        # print(y.shape)
         return y.unsqueeze(1), h
 
 

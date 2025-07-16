@@ -28,12 +28,13 @@ def conv1d(x, weight, bias, kernel_size=4):
 
 # ─── 가중치 로드 ─────────────────────────────────────────────────────
 # state_dict 위치 (raw HF checkpoint)
-base = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+base = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../.."))
 sd = torch.load(os.path.join(base, "mamba2-130m/mamba2-130m-hf-raw/pytorch_model.bin"),
                 map_location="cpu")
 
 # 토크나이저만 HF에서 불러오고, 모델 블록과 헤드 가중치는 직접 사용
-tokenizer  = AutoTokenizer.from_pretrained("AntonV/mamba2-130m-hf")
+tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neox-20b")
+tokenizer.pad_token_id = tokenizer.eos_token_id
 emb_w       = sd["backbone.embeddings.weight"].to(DEVICE)   # [50288,768]
 normf_w     = sd["backbone.norm_f.weight"].to(DEVICE)       # [768]
 lmhead_w    = sd["lm_head.weight"].to(DEVICE)               # [50288,768]
