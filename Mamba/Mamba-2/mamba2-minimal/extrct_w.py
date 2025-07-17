@@ -31,7 +31,7 @@ def quantize_tensor_asym(tensor, num_bits=8):
 def quantize_tensor_sym(tensor, num_bits=8):
     qmax = 2**(num_bits - 1) - 1
     scale = tensor.abs().max() / qmax
-    q_tensor = (tensor / scale).round().clamp(-qmax, qmax)
+    q_tensor = (tensor / scale).round().clamp(-qmax, qmax)  # 실제 양자화값
     dq_tensor = q_tensor * scale
     return dq_tensor, scale
 
@@ -47,7 +47,7 @@ for i in range(n_layers):
 
     with torch.no_grad():
         # 전체 weight 양자화 (row가 아닌 전체)
-        q, _ = quantize_tensor_sym(mixer.in_proj.weight, 8)
+        q, _, zp = quantize_tensor_asym(mixer.in_proj.weight, 8)
         mixer.in_proj.weight.copy_(q)
 
         q, _ = quantize_tensor_sym(mixer.conv1d.weight, 8)
@@ -68,7 +68,7 @@ for i in range(n_layers):
         # q, _ = quantize_tensor_sym(mixer.norm.weight, 8)
         # mixer.norm.weight.copy_(q)
 
-        q, _ = quantize_tensor_sym(mixer.out_proj.weight, 8)
+        q, _, zp = quantize_tensor_asym(mixer.out_proj.weight, 8)
         mixer.out_proj.weight.copy_(q)
 
         # q, _ = quantize_tensor_sym(norm.weight, 8)
