@@ -442,6 +442,7 @@ class RMSNorm(nn.Module):
     def forward(self, x, z=None):
         if z is not None:
             x = x * silu(z)
+            # print(x.pow(2).mean(-1, keepdim=True) + self.eps, '\n')
         return x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps) * self.weight
 
 

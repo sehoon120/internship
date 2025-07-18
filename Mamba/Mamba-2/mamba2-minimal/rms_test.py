@@ -7,6 +7,134 @@ from mamba2 import Mamba2LMHeadModel, Mamba2Config, ssd, InferenceCache
 import torch.nn.functional as F
 from einops import rearrange
 
+class FXP16Simulator:
+    def __init__(self, frac_bits=14):
+        self.total_bits = 16
+        self.frac_bits = frac_bits
+        self.scale = 2 ** frac_bits
+        self.qmin = -2 ** (self.total_bits - 1)
+        self.qmax = 2 ** (self.total_bits - 1) - 1
+
+    def quantize(self, x_float):
+        return (torch.round(x_float * self.scale)
+                .clamp(self.qmin, self.qmax)
+                .to(torch.int16))
+
+    def dequantize(self, x_int):
+        return x_int.to(torch.float32) / self.scale
+
+    def add(self, x, y):
+        return (x.to(torch.int32) + y.to(torch.int32)).clamp(self.qmin, self.qmax).to(torch.int16)
+
+    def mul(self, x, y):
+        prod = x.to(torch.int32) * y.to(torch.int32)
+        return (prod >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int16)
+
+    def fxp_matmul(self, A, B):
+        prod = torch.matmul(A.to(torch.int32), B.to(torch.int32))
+        return (prod >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int16)
+
+    def fxp_einsum(self, equation, *operands):
+        if equation == 'i,i->':
+            x, y = operands
+            prod = x.to(torch.int32) * y.to(torch.int32)
+            summed = prod.sum()
+            return (summed >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int16)
+        else:
+            raise NotImplementedError(f"Equation '{equation}' not supported.")
+        
+    def fxp_conv1d(self, x: torch.Tensor, weight: torch.Tensor, bias=None, stride=1, padding=0):
+        """ FXP Conv1D 시뮬레이션 """
+        x_i32 = x.to(torch.int32)
+        w_i32 = weight.to(torch.int32)
+        out = F.conv1d(x_i32, w_i32, bias=None, stride=stride, padding=padding)
+        out = (out >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int16)
+        if bias is not None:
+            out += bias.to(torch.int16).view(1, -1, 1)
+        return out
+
+    def fxp_conv2d(self, x: torch.Tensor, weight: torch.Tensor, bias=None, stride=1, padding=0):
+        """ FXP Conv2D 시뮬레이션 """
+        x_i32 = x.to(torch.int32)
+        w_i32 = weight.to(torch.int32)
+        out = F.conv2d(x_i32, w_i32, bias=None, stride=stride, padding=padding)
+        out = (out >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int16)
+        if bias is not None:
+            out += bias.to(torch.int16).view(1, -1, 1, 1)
+        return out
+    
+    def fxp_sum(self, x: torch.Tensor):
+        x_i32 = x.to(torch.int32)
+        total = x_i32.sum()
+        return total.clamp(self.qmin, self.qmax).to(torch.int16)
+
+fxp16 = FXP16Simulator(frac_bits=14)
+fxp16_12 = FXP16Simulator(frac_bits=12)
+fxp16_8 =  FXP16Simulator(frac_bits=8)
+
+class FXP32Simulator:
+    def __init__(self, frac_bits=16):
+        self.total_bits = 32
+        self.frac_bits = frac_bits
+        self.scale = 2 ** frac_bits
+        self.qmin = -2 ** (self.total_bits - 1)
+        self.qmax = 2 ** (self.total_bits - 1) - 1
+
+    def quantize(self, x_float):
+        return (torch.round(x_float * self.scale)
+                .clamp(self.qmin, self.qmax)
+                .to(torch.int32))
+
+    def dequantize(self, x_int):
+        return x_int.to(torch.float32) / self.scale
+
+    def add(self, x, y):
+        return (x.to(torch.int64) + y.to(torch.int64)).clamp(self.qmin, self.qmax).to(torch.int32)
+
+    def mul(self, x, y):
+        prod = x.to(torch.int64) * y.to(torch.int64)
+        return (prod >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int32)
+
+    def fxp_matmul(self, A, B):
+        prod = torch.matmul(A.to(torch.int64), B.to(torch.int64))
+        return (prod >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int32)
+
+    def fxp_einsum(self, equation, *operands):
+        if equation == 'i,i->':
+            x, y = operands
+            prod = x.to(torch.int64) * y.to(torch.int64)
+            summed = prod.sum()
+            return (summed >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int32)
+        else:
+            raise NotImplementedError(f"Equation '{equation}' not supported.")
+        
+    def fxp_conv1d(self, x: torch.Tensor, weight: torch.Tensor, bias=None, stride=1, padding=0):
+        """ FXP Conv1D 시뮬레이션 """
+        x_i32 = x.to(torch.int64)
+        w_i32 = weight.to(torch.int64)
+        out = F.conv1d(x_i32, w_i32, bias=None, stride=stride, padding=padding)
+        out = (out >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int32)
+        if bias is not None:
+            out += bias.to(torch.int32).view(1, -1, 1)
+        return out
+
+    def fxp_conv2d(self, x: torch.Tensor, weight: torch.Tensor, bias=None, stride=1, padding=0):
+        """ FXP Conv2D 시뮬레이션 """
+        x_i32 = x.to(torch.int64)
+        w_i32 = weight.to(torch.int64)
+        out = F.conv2d(x_i32, w_i32, bias=None, stride=stride, padding=padding)
+        out = (out >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int32)
+        if bias is not None:
+            out += bias.to(torch.int32).view(1, -1, 1, 1)
+        return out
+    
+    def fxp_sum(self, x: torch.Tensor):
+        x_i32 = x.to(torch.int64)
+        total = x_i32.sum()
+        return total.clamp(self.qmin, self.qmax).to(torch.int32)
+
+fxp32 = FXP32Simulator(frac_bits=16)
+
 def quant_dequant_fxpa(tensor: torch.Tensor, total_bits: int = 8, frac_bits: int = 6):
     """
     Quantize + dequantize a tensor using signed fixed-point FXPa format.
@@ -243,9 +371,19 @@ for i in range(n_chunked, prefix.shape[1]):
 
 # 생성된 결과 토큰 저장 리스트 초기화
 generated = [t.item() for t in input_ids[0]]
-RMS_Seg = SegmentedLUTRMSNorm_linear_ver(dim=config.d_model).to(device)  # 사용자 정의 RMS 생성
-RMS_Seg2 = SegmentedLUTRMSNorm_linear_ver(dim=1536).to(device)  # 사용자 정의 RMS 생성
-approx_silu = ApproxSiLU()
+# RMS_Seg = SegmentedLUTRMSNorm(dim=config.d_model).to(device)  # 사용자 정의 RMS 생성
+# RMS_Seg2 = SegmentedLUTRMSNorm(dim=1536).to(device)  # 사용자 정의 RMS 생성
+# approx_silu = ApproxSiLU()
+# # === LUT 정의 ===
+# segment = torch.tensor([0.0, 0.0015625, 0.0125, 0.5, 1, 2, 64, 1024, 24576])
+# esp = 1e-6
+# # sq = 1 / (torch.sqrt(segment + esp))
+# # LUT = [(sq[i] + sq[i + 1]) / 2 for i in range(len(sq) - 1)]
+# LUT = [(1 / torch.sqrt((segment[i] + segment[i + 1]) / 2 + esp)) for i in range(len(segment) - 1)]
+# LUT.append(LUT[-1])  # overflow 방지
+# print(LUT)
+
+
 # 자동 생성 반복: 최대 20 토큰 생성
 with torch.no_grad():
     # for _ in range(1):  # 20
@@ -257,6 +395,12 @@ with torch.no_grad():
 
         # (1, 1) → 임베딩: (1, 1, d_model)
         u = model.backbone['embedding'](input_tensor)
+        # print(u)
+        u_p = u
+        u = fxp16_12.quantize(u)
+        u = fxp16_12.dequantize(u)
+        # print(u)
+        # print("Abs Error:\n", torch.sum(torch.abs(u - u_p)))
         residual = u  # skip connection용
 
         # 전체 레이어 순차 처리
@@ -268,7 +412,39 @@ with torch.no_grad():
             # x = quant_dequant_fxpa(x, total_bits=16, frac_bits=14)  # Intermediate quantizaiton
             # print(x[0,0,:50], '\n\n')
             # x = RMS_Seg(residual, weight = model.backbone['layers'][i].norm.weight)
-            # print(x[0,0,:30], '\n\n')
+
+            # print(residual[0,0,:50], '\n\n')
+
+            # # 1. residual → quantize → dequantize
+            # temp = fxp16.quantize(residual)
+            # x1 = fxp16.dequantize(temp)  # [B, L, D]
+
+            # # 2. RMS^2 = mean(x^2)
+            # x2 = x1.pow(2).mean(-1, keepdim=True) + esp  # shape: [B, L, 1]
+
+            # # 3. LUT 보간 기반 역제곱근 근사
+            # norm_scale = torch.full_like(x2, LUT[-1])  # 기본값은 마지막 LUT 값
+
+            # for seg_idx in range(len(segment) - 1):
+            #     s0 = segment[seg_idx]
+            #     s1 = segment[seg_idx + 1]
+            #     mask = (x2 >= s0) & (x2 < s1)  # bool mask
+
+            #     y0 = 1.0 / torch.sqrt(s0 + esp)
+            #     y1 = 1.0 / torch.sqrt(s1 + esp)
+
+            #     # Linear interpolation
+            #     interp = ((x2 - s0) * y1 + (s1 - x2) * y0) / (s1 - s0)
+            #     norm_scale = torch.where(mask, interp, norm_scale)
+
+            # # 4. 정규화 후 가중치 곱
+            # gamma = model.backbone['layers'][i].norm.weight  # [D]
+            # x = norm_scale * x1 * gamma
+
+            # # 5. 비교 출력
+            # print("Torch.rsqrt 결과:", torch.rsqrt(x1.pow(2).mean(-1, keepdim=True) + esp)[0, 0, :10])
+            # print("LUT 근사 결과:", norm_scale[0, 0, :10])
+            # print("출력 x:", x[0, 0, :50])
 
 # '''
             # Linear projection → z, xBC, dt 분리
@@ -310,8 +486,19 @@ with torch.no_grad():
             A = -torch.exp(model.backbone['layers'][i]['mixer'].A_log)  # state decay factor
 
             # SSM 계산
+            
             dt = F.softplus(dt + model.backbone['layers'][i]['mixer'].dt_bias)
+            # print('dt: ', dt)
+            dt_p = dt
+            dt = fxp16_12.quantize(dt)
+            dt = fxp16_12.dequantize(dt)
+            # print(f"dt {i} Abs Error:", torch.sum(torch.abs(dt - dt_p)))
             dA = torch.exp(dt * A)
+            # print('dA:  ', dA)
+            dA_p = dA
+            dA = fxp16_12.quantize(dA)
+            dA = fxp16_12.dequantize(dA)
+            # print(f"dA {i} Abs Error:", torch.sum(torch.abs(dA - dA_p)))
             x = rearrange(x, "b (h p) -> b h p", p=config.headdim)
 
             # 상태 업데이트
@@ -322,6 +509,16 @@ with torch.no_grad():
             y = torch.einsum("bhpn, bn -> bhp", h[i].ssm_state, C)
             y = y + rearrange(model.backbone['layers'][i]['mixer'].D, "h -> h 1") * x
             y = rearrange(y, "b h p -> b (h p)")
+            # print('y: ', y)
+            # y_p = y
+            # y = fxp16_12.quantize(y)  # error 너무 크다.
+            # y = fxp16_12.dequantize(y)
+            # print(f"y {i} Abs Error:", torch.sum(torch.abs(y - y_p)))
+            # print('z: ', z)
+            z_p = z
+            z = fxp16_12.quantize(z)
+            z = fxp16_12.dequantize(z)
+            # print(f"z {i} Abs Error:", torch.sum(torch.abs(z - z_p)))
 
             # y = model.backbone['layers'][i]['mixer'].norm(y, z)
 
@@ -329,9 +526,46 @@ with torch.no_grad():
             # y = RMS_Seg2(y * approx_silu(z), weight = model.backbone['layers'][i]['mixer'].norm.weight)
             
             y = model.backbone['layers'][i]['mixer'].out_proj(y)
-
+            
             # residual connection
             residual = residual + y.unsqueeze(1)
+
+
+
+            # max_val = residual.max().item()
+            # min_val = residual.min().item()
+
+            # print(f"{i}  최댓값:", max_val, "최솟값:", min_val)
+
+            
+            residual_p = residual
+            residual_q = fxp32.quantize(residual_p)
+            residual_dq = fxp32.dequantize(residual_q)
+            residual = residual_dq
+
+            # 오차 디버깅 라인
+            # # 오차 계산
+            # abs_error = torch.abs(residual_dq - residual_p)
+            # threshold = 1
+            # # 조건: 오차가 threshold보다 큰 요소
+            # mask = abs_error > threshold
+            # if mask.any():
+            #     print(f"\n⚠️ [Layer {i}] Abs Error: {abs_error.sum().item():.6f} | Elements over {threshold}: {mask.sum().item()}개")
+
+            #     indices = torch.nonzero(mask, as_tuple=False)
+            #     for idx in indices:
+            #         # idx는 텐서 → 리스트 변환 후 unpack
+            #         idx_tuple = tuple(idx.tolist())
+
+            #         # 동적으로 인덱싱
+            #         orig_val = residual_p[idx_tuple].item()
+            #         deq_val = residual_dq[idx_tuple].item()
+            #         error_val = abs_error[idx_tuple].item()
+
+            #         print(f" → index {idx_tuple} | original: {orig_val:.6f}, dequantized: {deq_val:.6f}, abs error: {error_val:.6f}")
+            # else:
+            #     print(f"[Layer {i}] 모든 요소 오차 < {threshold}")
+
 
         # 최종 layer norm 후 LM 헤드
         residual = model.backbone.norm_f(residual)
