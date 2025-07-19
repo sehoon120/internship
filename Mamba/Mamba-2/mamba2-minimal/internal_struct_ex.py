@@ -1,3 +1,7 @@
+'''
+    mamba2-130m quantization FXP8/16 standard
+'''
+
 # 필요한 라이브러리 import
 import time
 import torch
@@ -16,6 +20,9 @@ config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
 # 모델 초기화 및 양자화된 state_dict 로딩
 model = Mamba2LMHeadModel(config)
 model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
+model = model.to(device)
+# for name, param in model.named_parameters():
+#     print(f"{name}: shape = {param.shape}, requires_grad = {param.requires_grad}")
 
 # GPT-NeoX 토크나이저 불러오기
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neox-20b")
@@ -54,11 +61,12 @@ generated = [t.item() for t in input_ids[0]]
 
 # 자동 생성 반복: 최대 20 토큰 생성
 with torch.no_grad():
-    for _ in range(20):
+    for t in range(100):
         seqlen = f_token.shape[1]  # 보통 1
 
         # f_token을 모델 입력 형식으로 변환
-        input_tensor = torch.tensor([[f_token]], device=device)
+        # input_tensor = torch.tensor([[f_token]], device=device)
+        input_tensor = f_token.to(device)
 
         # (1, 1) → 임베딩: (1, 1, d_model)
         u = model.backbone['embedding'](input_tensor)
@@ -128,7 +136,8 @@ with torch.no_grad():
 
         # 다음 루프 준비
         generated.append(next_token.item())
-        f_token = next_token.unsqueeze(0)
+        # f_token = next_token.unsqueeze(0)
+        f_token = next_token.to(device).unsqueeze(0)
 
 # 토큰 결과 디코딩 후 출력
 print(tokenizer.decode(generated, skip_special_tokens=True))

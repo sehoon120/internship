@@ -330,6 +330,7 @@ config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
 # 모델 초기화 및 양자화된 state_dict 로딩
 model = Mamba2LMHeadModel(config)
 model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
+model = model.to(device)
 
 # GPT-NeoX 토크나이저 불러오기
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neox-20b")
@@ -387,11 +388,12 @@ generated = [t.item() for t in input_ids[0]]
 # 자동 생성 반복: 최대 20 토큰 생성
 with torch.no_grad():
     # for _ in range(1):  # 20
-    for _ in range(30):
+    for _ in range(100):
         seqlen = f_token.shape[1]  # 보통 1
 
         # f_token을 모델 입력 형식으로 변환
-        input_tensor = torch.tensor([[f_token]], device=device)
+        # input_tensor = torch.tensor([[f_token]], device=device)
+        input_tensor = f_token.to(device)
 
         # (1, 1) → 임베딩: (1, 1, d_model)
         u = model.backbone['embedding'](input_tensor)
@@ -520,9 +522,9 @@ with torch.no_grad():
             z = fxp16_12.dequantize(z)
             # print(f"z {i} Abs Error:", torch.sum(torch.abs(z - z_p)))
 
-            # y = model.backbone['layers'][i]['mixer'].norm(y, z)
+            y = model.backbone['layers'][i]['mixer'].norm(y, z)
 
-            y = RMS_Seg2(y * F.silu(z), weight = model.backbone['layers'][i]['mixer'].norm.weight)
+            # y = RMS_Seg2(y * F.silu(z), weight = model.backbone['layers'][i]['mixer'].norm.weight)
             # y = RMS_Seg2(y * approx_silu(z), weight = model.backbone['layers'][i]['mixer'].norm.weight)
             
             y = model.backbone['layers'][i]['mixer'].out_proj(y)
@@ -583,7 +585,8 @@ with torch.no_grad():
 
         # 다음 루프 준비
         generated.append(next_token.item())
-        f_token = next_token.unsqueeze(0)
+        # f_token = next_token.unsqueeze(0)
+        f_token = next_token.to(device).unsqueeze(0)
 
 # 토큰 결과 디코딩 후 출력
 print(tokenizer.decode(generated, skip_special_tokens=True))
