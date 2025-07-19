@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-tokenizer = AutoTokenizer.from_pretrained("AntonV/mamba2-2.7b-hf")
-model = AutoModelForCausalLM.from_pretrained("AntonV/mamba2-2.7b-hf")
+tokenizer = AutoTokenizer.from_pretrained("AntonV/mamba2-130m-hf")  # 2.7b
+model = AutoModelForCausalLM.from_pretrained("AntonV/mamba2-130m-hf")
 
 print('\n==================================================\n')
 print(model)
