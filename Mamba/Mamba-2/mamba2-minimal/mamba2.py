@@ -153,9 +153,9 @@ class Mamba2LMHeadModel(nn.Module):
         self,
         input_ids: LongTensor,
         max_new_length: int = 20,
-        temperature: float = 1.0,
+        temperature: float = 0.85,  # 1.0,
         top_k: int = 50,
-        top_p: float = 1.0,
+        top_p: float = 0.9,  # 1.0,
         eos_token_id: int = 0,
     ) -> Iterable[tuple[int, list[InferenceCache]]]:
         prefix, tokens = input_ids[:-1], input_ids[-1:].unsqueeze(0)

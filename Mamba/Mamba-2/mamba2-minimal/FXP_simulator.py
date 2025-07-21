@@ -1,6 +1,65 @@
 import torch
 import torch.nn.functional as F
 
+class FXP8Simulator:
+    def __init__(self, frac_bits=6):
+        self.total_bits = 8
+        self.frac_bits = frac_bits
+        self.scale = 2 ** frac_bits
+        self.qmin = -2 ** (self.total_bits - 1)
+        self.qmax = 2 ** (self.total_bits - 1) - 1
+
+    def quantize(self, x_float):
+        return (torch.round(x_float * self.scale)
+                .clamp(self.qmin, self.qmax)
+                .to(torch.int8))
+
+    def dequantize(self, x_int):
+        return x_int.to(torch.float32) / self.scale
+
+    def add(self, x, y):
+        return (x.to(torch.int16) + y.to(torch.int16)).clamp(self.qmin, self.qmax).to(torch.int8)
+
+    def mul(self, x, y):
+        prod = x.to(torch.int16) * y.to(torch.int16)
+        return (prod >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int8)
+
+    def fxp_matmul(self, A, B):
+        prod = torch.matmul(A.to(torch.int16), B.to(torch.int16))
+        return (prod >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int8)
+
+    def fxp_einsum(self, equation, *operands):
+        if equation == 'i,i->':
+            x, y = operands
+            prod = x.to(torch.int16) * y.to(torch.int16)
+            summed = prod.sum()
+            return (summed >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int8)
+        else:
+            raise NotImplementedError(f"Equation '{equation}' not supported.")
+
+    def fxp_conv1d(self, x: torch.Tensor, weight: torch.Tensor, bias=None, stride=1, padding=0):
+        x_i16 = x.to(torch.int16)
+        w_i16 = weight.to(torch.int16)
+        out = F.conv1d(x_i16, w_i16, bias=None, stride=stride, padding=padding)
+        out = (out >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int8)
+        if bias is not None:
+            out += bias.to(torch.int8).view(1, -1, 1)
+        return out
+
+    def fxp_conv2d(self, x: torch.Tensor, weight: torch.Tensor, bias=None, stride=1, padding=0):
+        x_i16 = x.to(torch.int16)
+        w_i16 = weight.to(torch.int16)
+        out = F.conv2d(x_i16, w_i16, bias=None, stride=stride, padding=padding)
+        out = (out >> self.frac_bits).clamp(self.qmin, self.qmax).to(torch.int8)
+        if bias is not None:
+            out += bias.to(torch.int8).view(1, -1, 1, 1)
+        return out
+
+    def fxp_sum(self, x: torch.Tensor):
+        x_i16 = x.to(torch.int16)
+        total = x_i16.sum()
+        return total.clamp(self.qmin, self.qmax).to(torch.int8)
+
 class FXP16Simulator:
     def __init__(self, frac_bits=14):
         self.total_bits = 16
@@ -126,6 +185,7 @@ class FXP32Simulator:
 if __name__ == '__main__':
     fxp = FXP16Simulator(frac_bits=14)
     fxp32 = FXP32Simulator()
+    fxp8 = FXP8Simulator()
 
     # 기본 벡터
     a = torch.tensor([0.12345, 0.023456, -0.34567])
