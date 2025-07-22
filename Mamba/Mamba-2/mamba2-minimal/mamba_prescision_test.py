@@ -7,12 +7,50 @@ from mamba2 import Mamba2LMHeadModel, Mamba2Config, ssd, InferenceCache
 import torch.nn.functional as F
 from einops import rearrange
 
+def analyze_fxp_precision(tensor, max_total_bits=16, target_error=1e-2):
+    import torch
+    import numpy as np
+
+    min_val = tensor.min().item()
+    max_val = tensor.max().item()
+    range_val = max_val - min_val
+
+    print(f"Range: {min_val:.4f} to {max_val:.4f}")
+
+    best_config = None
+    lowest_error = float('inf')
+
+    for total_bits in range(8, max_total_bits + 1):
+        for frac_bits in range(1, total_bits):
+            int_bits = total_bits - frac_bits
+            scale = 2 ** frac_bits
+            q = torch.round(tensor * scale).clamp(-(2**(int_bits-1)), 2**(int_bits-1) - 1)
+            dq = q / scale
+
+            error = torch.abs(tensor - dq).mean().item()
+            if error < lowest_error:
+                lowest_error = error
+                best_config = (total_bits, frac_bits, error)
+
+            if error < target_error:
+                return {"total_bits": total_bits, "frac_bits": frac_bits, "abs_error": error}
+
+    return {
+        "total_bits": best_config[0],
+        "frac_bits": best_config[1],
+        "abs_error": best_config[2],
+        "note": "target error not reached, best effort"
+    }
+
+
 from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
 fxp16_14 = FXP16Simulator(frac_bits=14)
 fxp16_12 = FXP16Simulator(frac_bits=12)
 fxp16_11 = FXP16Simulator(frac_bits=11)
 fxp16_10 = FXP16Simulator(frac_bits=10)
 fxp16_8 =  FXP16Simulator(frac_bits=8)
+fxp16_5 =  FXP16Simulator(frac_bits=5)
+fxp16_4 =  FXP16Simulator(frac_bits=4)
 fxp32_16 = FXP32Simulator(frac_bits=16)
 fxp32_21 = FXP32Simulator(frac_bits=21)
 fxp8_6 = FXP8Simulator(frac_bits=6)
@@ -34,7 +72,11 @@ def findm(x):
 
 def q_dq(x, a, b):
     if a == 16:
-        if b == 8:
+        if b == 4:
+            return fxp16_4.dequantize(fxp16_4.quantize(x))
+        elif b == 5:
+            return fxp16_5.dequantize(fxp16_5.quantize(x))
+        elif b == 8:
             return fxp16_8.dequantize(fxp16_8.quantize(x))
         elif b == 10:
             return fxp16_10.dequantize(fxp16_10.quantize(x))
@@ -60,11 +102,13 @@ def q_dq(x, a, b):
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Mamba2 설정 정의: d_model=768, 24-layer, vocab_size=50277
-config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
+# config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
+config = Mamba2Config(d_model=2560, n_layer=64, vocab_size=50288)
 
 # 모델 초기화 및 양자화된 state_dict 로딩
 model = Mamba2LMHeadModel(config)
-model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
+# model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
+model.load_state_dict(torch.load(r"C:\Internship\mamba2-2.7b\mamba2_2.7b_quantized.pth"))
 model = model.to(device)
 
 # GPT-NeoX 토크나이저 불러오기
@@ -79,7 +123,11 @@ h = [InferenceCache.alloc(
 ) for _ in range(config.n_layer)]
 
 # 입력 프롬프트 정의 및 토크나이징
-prompt = "Mamba is a new sequence model that can replace transformers in some cases. It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient."  # "The future of AI"
+# prompt = "Mamba is a new sequence model that can replace transformers in some cases. It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient."  # "The future of AI"
+prompt = """
+I'm happy.
+How about you?
+"""
 input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)  # shape: (1, L)
 
 # 마지막 토큰을 f_token으로 분리, 나머지는 prefix
@@ -105,7 +153,7 @@ generated = [t.item() for t in input_ids[0]]
 # 자동 생성 반복: 최대 20 토큰 생성
 with torch.no_grad():
     # for _ in range(1):  # 20
-    for _ in range(20):  # 100
+    for _ in range(50):  # 100
         seqlen = f_token.shape[1]  # 보통 1
 
         # f_token을 모델 입력 형식으로 변환
@@ -116,13 +164,14 @@ with torch.no_grad():
         u = model.backbone['embedding'](input_tensor)
 
         # print(u)
-        u_p = u
+        # u_p = u
         # findm(u) # -8 ~ 5
         # u = q_dq(u, 16, 11)  # 0.08 오차 발생  # fxp16_12 -> 0.02 but outliers
-        u = q_dq(u, 32, 21)
+        
         # print("Abs Error:  ", torch.sum(torch.abs(u - u_p)))
 
         residual = u  # skip connection용
+        residual = q_dq(residual, 32, 16)
 
         # 전체 레이어 순차 처리
         # for i in range(1):  # config.n_layer
@@ -131,7 +180,7 @@ with torch.no_grad():
             x = model.backbone['layers'][i].norm(residual)  # RMSNorm
             # findm(x)  # -9 ~ 9
             # x_p = x
-            x = q_dq(x, 16, 11)
+            x = q_dq(x, 16, 11)  # -3 ~ 4
             # print(f"|{i}| Abs Error:  ", torch.sum(torch.abs(x - x_p)))  # 0.09
 # '''
             # Linear projection → z, xBC, dt 분리
@@ -141,6 +190,8 @@ with torch.no_grad():
                 [config.d_inner, config.d_inner + 2 * config.d_state, config.nheads],
                 dim=-1,
             )
+            # findm(xBC)
+            xBC = q_dq(xBC, 16, 11)  # 13 ~ -15  outlier -19
 
             # xBC_p = xBC
             # xBC = fxp16_11.quantize(xBC)
@@ -163,8 +214,6 @@ with torch.no_grad():
 
             xBC_q = q_dq(xBC, 16, 10)  # 10, 11 둘 다 평균 0.02로 비슷
             # xBC = F.silu(xBC)
-            # a = F.silu(xBC)
-            # findm(xBC)
             xBC = approx(xBC_q)  # 근사 SiLU 사용
             # print(f"|{i}| {a.shape} Abs Error:", torch.sum(torch.abs(a - xBC)))
             
@@ -189,6 +238,8 @@ with torch.no_grad():
             dA = q_dq(dA, 16, 14)
             # dA = FastBiasedExp()(dt * A)
 
+# SSM start
+
             x = rearrange(x, "b (h p) -> b h p", p=config.headdim)
 
             # 상태 업데이트
@@ -200,19 +251,32 @@ with torch.no_grad():
             y = y + rearrange(model.backbone['layers'][i]['mixer'].D, "h -> h 1") * x
             y = rearrange(y, "b h p -> b (h p)")
 
-            z = q_dq(z, 32, 21)  # 16 ~ -10
+# SSM end
+            
+            y = q_dq(y, 16, 5)  # +-420  오차 0.007
+            
+
+            z = q_dq(z, 32, 16)  # 16 ~ -10
             z = approx(z)  # 16 ~ -10
             z = q_dq(z, 16, 11)
             
             y = y * z
-            # y = model.backbone['layers'][i]['mixer'].norm(y, z)
+            
+            # result = analyze_fxp_precision(y)
+            # print(result)
+            
+            y = q_dq(y, 32, 16)  # error 0
+            # y = q_dq(y, 16, 4)  # errror 0.014
+            
+
             y = model.backbone['layers'][i]['mixer'].norm(y)
 
-            # y = RMS_Seg2(y * F.silu(z), weight = model.backbone['layers'][i]['mixer'].norm.weight)
-            # y = RMS_Seg2(y * approx_silu(z), weight = model.backbone['layers'][i]['mixer'].norm.weight)
-            
+            # a = y
+            y = q_dq(y, 32, 16)  # error 0.000004
+            # print(f"|{i}| {a.shape} Abs Error:", torch.sum(torch.abs(y - a)))
+
             y = model.backbone['layers'][i]['mixer'].out_proj(y)  # +-450
-            y = q_dq(y, 32, 21)
+            y = q_dq(y, 32, 16)
             # residual connection
             residual = residual + y.unsqueeze(1)
 

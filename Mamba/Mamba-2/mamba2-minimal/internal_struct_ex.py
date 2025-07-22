@@ -16,16 +16,19 @@ from transformers import AutoTokenizer
 from mamba2 import Mamba2LMHeadModel, Mamba2Config, ssd, InferenceCache
 import torch.nn.functional as F
 from einops import rearrange
+import numpy as np
 
 # CUDA가 가능하면 GPU 사용
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Mamba2 설정 정의: d_model=768, 24-layer, vocab_size=50277
 config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
+# config = Mamba2Config(d_model=2560, n_layer=64, vocab_size=50288)
 
 # 모델 초기화 및 양자화된 state_dict 로딩
 model = Mamba2LMHeadModel(config)
 model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
+# model.load_state_dict(torch.load(r"C:\Internship\mamba2-2.7b\mamba2_2.7b_quantized.pth"))
 model = model.to(device)
 # for name, param in model.named_parameters():
 #     print(f"{name}: shape = {param.shape}, requires_grad = {param.requires_grad}")
@@ -42,7 +45,13 @@ h = [InferenceCache.alloc(
 ) for _ in range(config.n_layer)]
 
 # 입력 프롬프트 정의 및 토크나이징
-prompt = "Mamba is a new sequence model that can replace transformers in some cases. It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient."  # "The future of AI"
+# prompt = "Mamba is a new sequence model that can replace transformers in some cases. It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient."  # "The future of AI"
+prompt = """
+Mamba is a new sequence model that can replace transformers in some cases. 
+It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient.
+
+Write a clear summary of how Mamba differs from Transformers.
+"""
 input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)  # shape: (1, L)
 
 # 마지막 토큰을 f_token으로 분리, 나머지는 prefix
@@ -65,9 +74,11 @@ for i in range(n_chunked, prefix.shape[1]):
 # 생성된 결과 토큰 저장 리스트 초기화
 generated = [t.item() for t in input_ids[0]]
 
+rms1_list = []
+
 # 자동 생성 반복: 최대 20 토큰 생성
 with torch.no_grad():
-    for t in range(20):  # 100
+    for t in range(50):  # 100
         seqlen = f_token.shape[1]  # 보통 1
 
         # f_token을 모델 입력 형식으로 변환
@@ -119,6 +130,11 @@ with torch.no_grad():
             y = torch.einsum("bhpn, bn -> bhp", h[i].ssm_state, C)
             y = y + rearrange(model.backbone['layers'][i]['mixer'].D, "h -> h 1") * x
             y = rearrange(y, "b h p -> b (h p)")
+
+            a = F.silu(z)
+            b = y * a
+            rms1_list.append(b)
+            
             y = model.backbone['layers'][i]['mixer'].norm(y, z)
             y = model.backbone['layers'][i]['mixer'].out_proj(y)
 
@@ -133,6 +149,11 @@ with torch.no_grad():
 
         # 다음 토큰 샘플링
         probs = F.softmax(logits, dim=-1)
+
+        # entropy = -(probs * probs.log()).sum(dim=-1).mean()  #
+        # print("Output entropy:", entropy.item())  #
+
+
         next_token = torch.multinomial(probs, num_samples=1)
 
         # 종료 조건 확인 (EOS 토큰일 경우)
@@ -146,3 +167,8 @@ with torch.no_grad():
 
 # 토큰 결과 디코딩 후 출력
 print(tokenizer.decode(generated, skip_special_tokens=True))
+
+rms1_list_cat = torch.cat([x.flatten() for x in rms1_list])
+min_val = np.percentile(rms1_list_cat, 0.05)   # 하위 0.05%
+max_val = np.percentile(rms1_list_cat, 99.95)  # 상위 0.05%
+print(f"\n==================================================\nglobal min/max: {min_val:.3f} ~ {max_val:.3f}\n==================================================\n")

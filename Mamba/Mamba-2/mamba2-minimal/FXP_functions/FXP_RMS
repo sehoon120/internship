@@ -1,0 +1,49 @@
+import torch
+import torch.nn as nn
+
+class FXPRMSNorm(nn.Module):
+    def __init__(self, dim, lut_bits=8, frac_bits=6):
+        super().__init__()
+        self.dim = dim
+        self.frac_bits = frac_bits  # ex: 6 → 2^6 = 64 scaling factor
+        self.scale = 2 ** frac_bits
+
+        # LUT: 1/sqrt(i) scaled to fixed-point
+        self.lut = self.build_inv_sqrt_lut(dim, frac_bits)
+
+        # learnable weight (INT8) + scale
+        self.weight_int = nn.Parameter(torch.randint(-127, 127, (dim,), dtype=torch.int8), requires_grad=False)
+        self.weight_scale = nn.Parameter(torch.ones(1), requires_grad=False)  # float32
+
+    def build_inv_sqrt_lut(self, dim, frac_bits):
+        # max input: sum of x^2 up to dim * 127^2 (worst case)
+        max_input = dim * (127 ** 2)
+        lut_size = min(max_input, 2 ** 16)  # cap size
+        x = torch.arange(1, lut_size + 1)
+        inv_sqrt = 1.0 / torch.sqrt(x.float())
+        return (inv_sqrt * (2 ** frac_bits)).round().clamp(0, 2 ** 16 - 1).short()  # FXP LUT
+
+    def forward(self, x_int8):  # x: (B, D), int8 tensor
+        assert x_int8.dtype == torch.int8
+        x_int = x_int8.to(torch.int32)
+
+        # 1. Square
+        x2 = x_int * x_int  # (B, D)
+
+        # 2. Sum & Mean
+        sum_x2 = x2.sum(dim=-1, keepdim=True)  # (B, 1)
+        mean_x2 = sum_x2 // self.dim  # 정수 평균
+
+        # 3. Inv sqrt from LUT
+        mean_x2_clipped = mean_x2.clamp(min=1, max=len(self.lut))  # LUT index는 1부터 시작
+        inv_rms = self.lut[mean_x2_clipped.squeeze(-1) - 1].unsqueeze(-1)  # (B, 1), short
+
+        # 4. Normalize: x * inv_rms
+        x_norm = (x_int * inv_rms) >> self.frac_bits  # shift 대신 나누기
+
+        # 5. Apply weight (INT8 * scale)
+        w = self.weight_int.to(torch.int32)
+        x_norm = x_norm * w  # (B, D)
+        x_out = (x_norm.float() * self.weight_scale).to(torch.float32)  # FXP 해제
+
+        return x_out

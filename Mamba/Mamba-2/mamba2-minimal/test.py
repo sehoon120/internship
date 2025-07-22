@@ -5,19 +5,27 @@ from mamba2 import Mamba2LMHeadModel, InferenceCache, Mamba2Config
 
 # 설정
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model_name = 'state-spaces/mamba2-130m'  # "AntonV/mamba2-130m-hf"
+
 
 # 모델/토크나이저 불러오기
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neox-20b")
 tokenizer.pad_token_id = tokenizer.eos_token_id
 
 config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
-model = Mamba2LMHeadModel(config)
-model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
-model.to(device)
+# model = Mamba2LMHeadModel(config)
+# model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
+# model.to(device)
+
+model_name = 'state-spaces/mamba2-130m'  # "AntonV/mamba2-130m-hf"
+model = Mamba2LMHeadModel.from_pretrained(model_name, device=device)
 
 # 입력 프롬프트
-prompt = "The future of AI"
+prompt = """
+Mamba is a new sequence model that can replace transformers in some cases. 
+It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient.
+
+Write a clear summary of how Mamba differs from Transformers.
+"""
 input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)  # (1, L)
 prefix, tokens = input_ids[:, :-1], input_ids[:, -1:]
 
@@ -33,7 +41,7 @@ for i in range(n_chunked, prefix.shape[1]):
 
 # 생성
 generated = [t.item() for t in input_ids[0]]
-for _ in range(20):
+for _ in range(50):
     with torch.no_grad():
         out, h = model(tokens, h)
         # print(out[0,0,:5])

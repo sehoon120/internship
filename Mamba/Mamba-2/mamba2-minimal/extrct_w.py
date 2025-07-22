@@ -35,9 +35,15 @@ def quantize_tensor_sym(tensor, num_bits=8):
     dq_tensor = q_tensor * scale
     return dq_tensor, scale
 
+def quantize_tensor_per_channel_sym(tensor, num_bits=8, dim=0):
+    qmax = 2 ** (num_bits - 1) - 1
+    scales = tensor.abs().amax(dim=dim, keepdim=True) / qmax
+    q_tensor = (tensor / scales).round().clamp(-qmax, qmax)
+    dq_tensor = q_tensor * scales
+    return dq_tensor, scales
 
 
-model = Mamba2LMHeadModel.from_pretrained("state-spaces/mamba2-130m", device=device)
+model = Mamba2LMHeadModel.from_pretrained("state-spaces/mamba2-2.7b", device=device)
 n_layers = len(model.backbone.layers)
 
 for i in range(n_layers):
@@ -51,6 +57,7 @@ for i in range(n_layers):
         mixer.in_proj.weight.copy_(q)
 
         q, _ = quantize_tensor_sym(mixer.conv1d.weight, 8)
+        q, _ = quantize_tensor_per_channel_sym(mixer.conv1d.weight, 8)
         mixer.conv1d.weight.copy_(q)
 
         q, _ = quantize_tensor_sym(mixer.conv1d.bias, 8)
@@ -80,7 +87,7 @@ for i in range(n_layers):
     # norm.weight.copy_(q_param)
 
 # 최종 저장
-torch.save(model.state_dict(), r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth")
+torch.save(model.state_dict(), r"C:\Internship\mamba2-2.7b\mamba2_2.7b_quantized.pth")
 
 
 '''
