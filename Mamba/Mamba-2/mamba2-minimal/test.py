@@ -16,7 +16,9 @@ config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
 # model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
 # model.to(device)
 
-model_name = 'state-spaces/mamba2-130m'  # "AntonV/mamba2-130m-hf"
+# model_name = 'ut-enyac/quamba2-130m-w8a8'
+model_name = 'state-spaces/mamba2-130m'  
+# model_name = "AntonV/mamba2-130m-hf"
 model = Mamba2LMHeadModel.from_pretrained(model_name, device=device)
 
 # 입력 프롬프트

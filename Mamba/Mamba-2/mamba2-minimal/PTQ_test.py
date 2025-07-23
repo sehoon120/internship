@@ -4,15 +4,10 @@
     엔트로피가 작게나오는 issue가 있음
     residual쪽은 32bit으로 하는 방법 고려해보기
 '''
-def findm(x):
-    max_val = x.max()     # 최대값
-    min_val = x.min()     # 최소값
-    mean_val = x.mean()   # 평균값
-    print(f"Max: {max_val}, Min: {min_val}, Mean: {mean_val}")
-    return 0
 
 # 필요한 라이브러리 import
 import time
+import logging
 import torch
 from torch import nn
 from transformers import AutoTokenizer
@@ -20,8 +15,53 @@ from mamba2 import Mamba2LMHeadModel, Mamba2Config, ssd, InferenceCache
 import torch.nn.functional as F
 from einops import rearrange
 import numpy as np
+import math
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+log_dir = os.path.join(current_dir, "log")
+os.makedirs(log_dir, exist_ok=True)
+# 로거 생성
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+# 파일 핸들러
+file_handler = logging.FileHandler(os.path.join(log_dir, 'log.txt'), mode='w')
+file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+# 콘솔 핸들러
+# console_handler = logging.StreamHandler()
+# console_handler.setFormatter(logging.Formatter('[%(levelname)s] %(message)s'))
+# 핸들러 등록
+logger.addHandler(file_handler)
+# logger.addHandler(console_handler)
+
+def findm(x):
+    max_val = x.max()     # 최대값
+    min_val = x.min()     # 최소값
+    mean_val = x.mean()   # 평균값
+    logger.info(f"Max: {max_val}, Min: {min_val}, Mean: {mean_val}")
+    return 0
+
+def list_l(x, lst):
+    logger.info(f"==================================================")
+    for i, layer_list in enumerate(lst):
+        if len(layer_list) == 0:
+            continue
+        layer_tensor = torch.cat([t.flatten() for t in layer_list])
+        min_val = np.percentile(layer_tensor.numpy(), 0.05)
+        max_val = np.percentile(layer_tensor.numpy(), 99.95)
+        logger.info(f"  |Layer{i}| {x} global min/max: {min_val:.3f} ~ {max_val:.3f}")
+
+    # 전체 통합
+    all_tensors = [t.flatten() for layer in lst for t in layer]
+    if len(all_tensors) > 0:
+        list_cat = torch.cat(all_tensors)
+        min_val = np.percentile(list_cat.numpy(), 0.05)
+        max_val = np.percentile(list_cat.numpy(), 99.95)
+        logger.info(f"  Total {x} global min/max: {min_val:.3f} ~ {max_val:.3f}")
+    logger.info(f"==================================================")
+
+
 
 from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
 # 8-bit FXP 시뮬레이터
@@ -52,7 +92,15 @@ fxp32_21 = FXP32Simulator(frac_bits=21)
 fxp32_24 = FXP32Simulator(frac_bits=24)
 
 
-def q_dq(x, a, b):
+def get_ppl(model, tokenizer, text):
+    inputs = tokenizer(text, return_tensors='pt').to(model.device)
+    with torch.no_grad():
+        output = model(**inputs, labels=inputs['input_ids'])
+    loss = output.loss.item()
+    return math.exp(loss)
+
+
+# def q_dq(x, a, b):
     if a == 8:
         if b == 2:
             return fxp8_2.dequantize(fxp8_2.quantize(x))
@@ -130,12 +178,21 @@ h = [InferenceCache.alloc(
     device=device
 ) for _ in range(config.n_layer)]
 
-prompt = """
-Mamba is a new sequence model that can replace transformers in some cases. 
-It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient.
+# prompt = """
+# Mamba is a new sequence model that can replace transformers in some cases. 
+# It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient.
 
-Write a clear summary of how Mamba differs from Transformers.
+# Write a clear summary of how Mamba differs from Transformers.
+# """
+prompt = """
+John has 3 apples. He gives 1 to Mary and buys 4 more. How many apples does he have now?
 """
+# prompt = """
+# Continue the story: "The robot slowly opened the door, not knowing what it would find on the other side..."
+# """
+# prompt = """
+# Write a Python function that returns the nth Fibonacci number using recursion.
+# """
 input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)  # shape: (1, L)
 
 prefix, f_token = input_ids[:, :-1], input_ids[:, -1:]
@@ -151,7 +208,32 @@ for i in range(n_chunked, prefix.shape[1]):
 generated = [t.item() for t in input_ids[0]]
 
 entrophy_list = []
-rms1_list = []
+loss_list = []
+
+x1_list = [[] for _ in range(config.n_layer)] 
+xBC1_list = [[] for _ in range(config.n_layer)] 
+z1_list = [[] for _ in range(config.n_layer)] 
+dt1_list = [[] for _ in range(config.n_layer)] 
+xBC2_list = [[] for _ in range(config.n_layer)] 
+xBC3_list = [[] for _ in range(config.n_layer)] 
+x2_list = [[] for _ in range(config.n_layer)] 
+B_list = [[] for _ in range(config.n_layer)] 
+C_list = [[] for _ in range(config.n_layer)] 
+A_list = [[] for _ in range(config.n_layer)] 
+dt2_list = [[] for _ in range(config.n_layer)] 
+dA1_list = [[] for _ in range(config.n_layer)] 
+dA2_list = [[] for _ in range(config.n_layer)] 
+dBx_list = [[] for _ in range(config.n_layer)] 
+dAh_list = [[] for _ in range(config.n_layer)] 
+dAhdBx_list = [[] for _ in range(config.n_layer)] 
+y1_list = [[] for _ in range(config.n_layer)] 
+y2_list = [[] for _ in range(config.n_layer)] 
+z2_list = [[] for _ in range(config.n_layer)] 
+y3_list = [[] for _ in range(config.n_layer)] 
+y4_list = [[] for _ in range(config.n_layer)] 
+y5_list = [[] for _ in range(config.n_layer)] 
+residual_list = [[] for _ in range(config.n_layer)] 
+
 
 with torch.no_grad():
     for t in range(50):  # 100
@@ -159,13 +241,13 @@ with torch.no_grad():
         input_tensor = f_token.to(device)
         u = model.backbone['embedding'](input_tensor)
         residual = u  
-        residual = q_dq(residual, 16, 10)  # -2.593 ~ 3.061
+        # residual = q_dq(residual, 32, 16)  # -2.593 ~ 3.061
         # 이거 하니까 엔트로피들이 작아짐 -issue 그 이후에 변경한 값.
-        # rms1_list.append(residual) 
 
         for i in range(config.n_layer):
             x = model.backbone['layers'][i].norm(residual)  # RMSNorm
-            x = q_dq(x, 16, 11)  # -3.2 ~ 4.3
+            # x = q_dq(x, 16, 11)  # -3.2 ~ 4.6
+            x1_list[i].extend(x)
             
             zxbcdt = model.backbone['layers'][i]['mixer'].in_proj(x.squeeze(1))
             z, xBC, dt = torch.split(
@@ -173,86 +255,119 @@ with torch.no_grad():
                 [config.d_inner, config.d_inner + 2 * config.d_state, config.nheads],
                 dim=-1,
             )
-            xBC = q_dq(xBC, 8, 4)  # -6.1 ~ 6.1
-            z = q_dq(z, 8, 4)  # -7.3 ~ 6.6
-            dt = q_dq(dt, 8, 4)  # -5.6 ~ 8.01
+            # xBC = q_dq(xBC, 16, 11)  # -6.1 ~ 6.1, 9
+            # z = q_dq(z, 16, 11)  # -7.3 ~ 9
+            # dt = q_dq(dt, 16, 11)  # -5.6 ~ 8.01
+            xBC1_list[i].extend(xBC)
+            z1_list[i].extend(z)
+            dt1_list[i].extend(dt)
+            
             
             h[i].conv_state.copy_(torch.roll(h[i].conv_state, shifts=-1, dims=-1))
             h[i].conv_state[:, :, -1] = xBC
-
+# 
             xBC = torch.sum(
                 h[i].conv_state * rearrange(model.backbone['layers'][i]['mixer'].conv1d.weight, "d 1 w -> d w"),
                 dim=-1
             )
             xBC += model.backbone['layers'][i]['mixer'].conv1d.bias
-            xBC = q_dq(xBC, 8, 4)  # -7.04 ~ 5.4
+            # xBC = q_dq(xBC, 16, 11)  # -7.04 ~ 6
+            xBC2_list[i].extend(xBC)
             
             xBC = F.silu(xBC)
-            xBC = q_dq(xBC, 16, 12)  # -0.27 ~ 5.28
+            xBC3_list[i].extend(xBC)
+            # xBC = q_dq(xBC, 16, 10)  # -0.27 ~ 5.28
             
             x, B, C = torch.split(xBC, [config.d_inner, config.d_state, config.d_state], dim=-1)
-            x = q_dq(x, 16, 12)  # -0.27 ~ 5.28
-            B = q_dq(B, 16, 12)  # -0.27 ~ 5.28
-            C = q_dq(C, 16, 12)  # -0.27 ~ 5.28
+            # x = q_dq(x, 16, 10)  # -0.27 ~ 5.28, 20
+            # B = q_dq(B, 16, 10) if (i == 19) else q_dq(B, 16, 12)  # -0.27 ~ 5.28
+            # C = q_dq(C, 16, 12)  # -0.27 ~ 5.28
+            x2_list[i].extend(x)
+            B_list[i].extend(B)
+            C_list[i].extend(C)
             
             A = -torch.exp(model.backbone['layers'][i]['mixer'].A_log)  # state decay factor
-            A = q_dq(A, 8, 5)  # -0.27 ~ 3.12
-            
+            # A = q_dq(A, 32, 16)  # -0.27 ~ 3.12 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            A_list[i].extend(A)
+            #             
             dt = F.softplus(dt + model.backbone['layers'][i]['mixer'].dt_bias)
-            dt = q_dq(dt, 16, 11)  # 0.00 ~ 8.8
-            
+            # dt = q_dq(dt, 16, 11)  # 0.00 ~ 8.8
+            dt2_list[i].extend(dt)
+
             dA = dt * A
-            dA = q_dq(dA, 16, 10)  # -18.6 ~ 0
-                        
+            # dA = q_dq(dA, 32, 16)  # -18.6 ~ 0 !!!!!!!!!! layer4 이상
+            dA1_list[i].extend(dA)
+
             dA = torch.exp(dA)
-            dA = q_dq(dA, 16, 14)  # 0.00 ~ 1
+            # dA = q_dq(dA, 16, 14)  # 0.00 ~ 1
+            dA2_list[i].extend(dA)
             
             x = rearrange(x, "b (h p) -> b h p", p=config.headdim)
 
             dBx = torch.einsum("bh, bn, bhp -> bhpn", dt, B, x)
-            dBX = q_dq(dBx, 16, 13)  # -2.1 ~ 2.9
+            # dBX = q_dq(dBx, 16, 11)  # -2.1 ~ 2.9, 9
+            dBx_list[i].extend(dBx)
             
             dAh = h[i].ssm_state * rearrange(dA, "b h -> b h 1 1")
-            dAh = q_dq(dAh, 16, 11)  # -6.0636 ~ 10.6496
+            # dAh = q_dq(dAh, 16, 10)  # -6.0636 ~ 10.6496, 22
+            dAh_list[i].extend(dAh)
             
-
             dAhdBx = dAh + dBx
-            dAhdBx = q_dq(dAhdBx, 16, 11)  # -6.585 ~ 12.080 여기부터 좀 이상해짐
+            # dAhdBx = q_dq(dAhdBx, 16, 10)  # -6.585 ~ 12.080, 22
+            dAhdBx_list[i].extend(dAhdBx)
             
             h[i].ssm_state.copy_(dAhdBx)
             y = torch.einsum("bhpn, bn -> bhp", h[i].ssm_state, C)
-            y = q_dq(y, 16, 9)  # -18.287 ~ 56.663
+            # y = q_dq(y, 16, 7)  # -18.287 ~ 56.663, 210
+            y1_list[i].extend(y)
             
             y = y + rearrange(model.backbone['layers'][i]['mixer'].D, "h -> h 1") * x
-            y = q_dq(y, 16, 8)  # -17.542 ~ 72.729
+            # y = q_dq(y, 16, 7)  # -17.542 ~ 72.729, 250
+            y2_list[i].extend(y)
             
             y = rearrange(y, "b h p -> b (h p)")
             z = F.silu(z)
-            z = q_dq(z, 16, 12)# -0.278 ~ 6.931
+            # z = q_dq(z, 16, 11)# -0.278 ~ 6.931
+            z2_list[i].extend(z)
             
             y = y * z
-            y = q_dq(y, 16, 7)  # -29.336 ~ 212.738  # 이건 더 커질수도
+            # y = q_dq(y, 32, 16) # -29.336 ~ 212.738, 600  # 이건 더 커질수도
+            y3_list[i].extend(y)
 
             y = model.backbone['layers'][i]['mixer'].norm(y)
-            y = q_dq(y, 16, 9)  # -34.582 ~ 30.436
+            # y = q_dq(y, 32, 16)
+            '''
+            # y = q_dq(y, 16, 6) if (i == 22)and(i == 23) else q_dq(y, 16, 9)  # -34.582 ~ 30.436
+            '''
+            y4_list[i].extend(y)
             
             y = model.backbone['layers'][i]['mixer'].out_proj(y)
-            y = q_dq(y, 16, 7)  # -134.434 ~ 143.244  # 이거 하니까 엔트로피들이 작아짐 -issue
+            # y = q_dq(y, 32, 16)
+            '''
+            # y = q_dq(y, 16, 6) if (i == 22)and(i == 23) else q_dq(y, 16, 9)  # -134.434 ~ 143.244, 500  # 이거 하니까 엔트로피들이 작아짐 -issue
+            '''
+            y5_list[i].extend(y)
             
             residual = residual + y.unsqueeze(1)
+            residual_list[i].extend(y)
 
         residual = model.backbone.norm_f(residual)
         logits = model.lm_head(residual)  # shape: (1, 1, vocab_size)
         out = logits[:, :seqlen]  # seqlen=1
         logits = out[0, -1]  # 최종 토큰의 로짓
         probs = F.softmax(logits, dim=-1)
-
-        entrophy_list.append(-(probs * probs.log()).sum(dim=-1).mean())
-
-        # print("Output entropy:", entropy.item())
-
         next_token = torch.multinomial(probs, num_samples=1)
 
+        # ✅ Output entropy (전체 분포 불확실성)
+        entrophy_list.append(-(probs * probs.log()).sum(dim=-1).mean())
+        # print("Output entropy:", entropy.item())
+
+        # ✅ Cross-entropy loss (정답 토큰 기준)
+        target_token_id = next_token.item()  # 정답은 sampling된 토큰
+        log_probs = F.log_softmax(logits, dim=-1)
+        loss = -log_probs[target_token_id]
+        loss_list.append(loss.item())        # 리스트에 수집
+        
         # 종료 조건 확인 (EOS 토큰일 경우)
         if next_token.item() == tokenizer.eos_token_id:
             break
@@ -270,15 +385,46 @@ print(tokenizer.decode(generated, skip_special_tokens=True))
 # max_val = np.percentile(rms1_list_cat, 99.95)  # 상위 0.05%
 # print(f"\n==================================================\nglobal min/max: {min_val:.3f} ~ {max_val:.3f}\n==================================================\n")
 
+list_l('x1', x1_list)
+list_l('xBC1', xBC1_list)
+list_l('z1', z1_list)
+list_l('dt1', dt1_list)
+list_l('xBC2', xBC2_list)
+list_l('xBC3', xBC3_list)
+list_l('x2', x2_list)
+list_l('B', B_list)
+list_l('C', C_list)
+list_l('A', A_list)
+list_l('dt2', dt2_list)
+list_l('dA1', dA1_list)
+list_l('dA2', dA2_list)
+list_l('dBx', dBx_list)
+list_l('dAh', dAh_list)
+list_l('dAhdBx', dAhdBx_list)
+list_l('y1', y1_list)
+list_l('y2', y2_list)
+list_l('z2', z2_list)
+list_l('y3', y3_list)
+list_l('y4', y4_list)
+list_l('y5', y5_list)
+list_l('residual', residual)
+
+
+
+logger.info(f"  Entropy: \n{entrophy_list}\n")
+logger.info(f"  Cross Entropy Loss: \n{loss_list}\n")
+            
 import matplotlib.pyplot as plt
 
 steps = list(range(len(entrophy_list)))
 
-plt.plot(steps, entrophy_list, label='Float Model', marker='o')
-# plt.plot(steps, quant_entropy_list, label='Quantized Model', marker='x')
-plt.xlabel("Step (token index)")
-plt.ylabel("Entropy")
-plt.title("Entropy per Step")
+plt.plot(steps, entrophy_list, label='Entropy', marker='o')
+plt.plot(steps, loss_list, label='Cross Entropy Loss', marker='x')
+
+plt.xlabel("Step (Token Index)")
+plt.ylabel("Entropy / Loss")
+plt.title("Entropy and Cross Entropy Loss per Step")
 plt.legend()
 plt.grid(True)
+plt.tight_layout()
 plt.show()
