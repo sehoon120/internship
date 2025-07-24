@@ -21,6 +21,9 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 log_dir = os.path.join(current_dir, "log")
+model_path = os.path.join(current_dir, '../../..')
+model_path = os.path.join(model_path, 'mamba2-2.7b\mamba2_2.7b_quantized.pth')
+
 os.makedirs(log_dir, exist_ok=True)
 # 로거 생성
 logger = logging.getLogger()
@@ -48,16 +51,16 @@ def list_l(x, lst):
         if len(layer_list) == 0:
             continue
         layer_tensor = torch.cat([t.flatten() for t in layer_list])
-        min_val = np.percentile(layer_tensor.numpy(), 0.05)
-        max_val = np.percentile(layer_tensor.numpy(), 99.95)
+        min_val = np.percentile(layer_tensor.cpu().numpy(), 0.05)
+        max_val = np.percentile(layer_tensor.cpu().numpy(), 99.95)
         logger.info(f"  |Layer{i}| {x} global min/max: {min_val:.3f} ~ {max_val:.3f}")
 
     # 전체 통합
     all_tensors = [t.flatten() for layer in lst for t in layer]
     if len(all_tensors) > 0:
         list_cat = torch.cat(all_tensors)
-        min_val = np.percentile(list_cat.numpy(), 0.05)
-        max_val = np.percentile(list_cat.numpy(), 99.95)
+        min_val = np.percentile(list_cat.cpu().numpy(), 0.05)
+        max_val = np.percentile(list_cat.cpu().numpy(), 99.95)
         logger.info(f"  Total {x} global min/max: {min_val:.3f} ~ {max_val:.3f}")
     logger.info(f"==================================================")
 
@@ -164,7 +167,7 @@ config = Mamba2Config(d_model=2560, n_layer=64, vocab_size=50288)
 
 model = Mamba2LMHeadModel(config)
 # model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
-model.load_state_dict(torch.load(r"C:\Internship\mamba2-2.7b\mamba2_2.7b_quantized.pth"))
+model.load_state_dict(torch.load(model_path))
 model = model.to(device)
 
 # model_name = 'state-spaces/mamba2-2.7b'  # "AntonV/mamba2-130m-hf"
@@ -414,17 +417,17 @@ list_l('x1', x1_list)
 logger.info(f"  Entropy: \n{entrophy_list}\n")
 logger.info(f"  Cross Entropy Loss: \n{loss_list}\n")
             
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
-steps = list(range(len(entrophy_list)))
+# steps = list(range(len(entrophy_list)))
 
-plt.plot(steps, entrophy_list, label='Entropy', marker='o')
-plt.plot(steps, loss_list, label='Cross Entropy Loss', marker='x')
+# plt.plot(steps, entrophy_list, label='Entropy', marker='o')
+# plt.plot(steps, loss_list, label='Cross Entropy Loss', marker='x')
 
-plt.xlabel("Step (Token Index)")
-plt.ylabel("Entropy / Loss")
-plt.title("Entropy and Cross Entropy Loss per Step")
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+# plt.xlabel("Step (Token Index)")
+# plt.ylabel("Entropy / Loss")
+# plt.title("Entropy and Cross Entropy Loss per Step")
+# plt.legend()
+# plt.grid(True)
+# plt.tight_layout()
+# plt.show()

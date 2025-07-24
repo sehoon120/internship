@@ -2,12 +2,19 @@ import time
 import torch
 from transformers import AutoTokenizer
 from mamba2 import Mamba2LMHeadModel
-if torch.cuda.is_available():
-    device = torch.device('cuda')
-elif torch.backends.mps.is_available():
-    device = torch.device('mps')
-else:
-    device = torch.device('cpu')
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+save_path = os.path.join(current_dir, "../../..")
+save_path = os.path.join(save_path, "mamba2-2.7b\mamba2_2.7b_quantized.pth")
+
+device = None # torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+print("CUDA_VISIBLE_DEVICES 적용 후 현재 장치:", torch.cuda.current_device())
+print("사용 중인 장치 이름:", torch.cuda.get_device_name(torch.cuda.current_device()))
+
 
 def quantize_tensor_asym(tensor, num_bits=8):
     qmin = 0
@@ -56,7 +63,6 @@ for i in range(n_layers):
         q, _, zp = quantize_tensor_asym(mixer.in_proj.weight, 8)
         mixer.in_proj.weight.copy_(q)
 
-        q, _ = quantize_tensor_sym(mixer.conv1d.weight, 8)
         q, _ = quantize_tensor_per_channel_sym(mixer.conv1d.weight, 8)
         mixer.conv1d.weight.copy_(q)
 
@@ -87,7 +93,7 @@ for i in range(n_layers):
     # norm.weight.copy_(q_param)
 
 # 최종 저장
-torch.save(model.state_dict(), r"C:\Internship\mamba2-2.7b\mamba2_2.7b_quantized.pth")
+torch.save(model.state_dict(), save_path)
 
 
 '''
