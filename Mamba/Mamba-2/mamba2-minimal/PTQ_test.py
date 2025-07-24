@@ -19,10 +19,17 @@ import math
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
+print("Current device:", torch.cuda.current_device())
+print("Device name:", torch.cuda.get_device_name(torch.cuda.current_device()))
+print("Allocated:", torch.cuda.memory_allocated() / 1024**3, "GB")
+print("Reserved :", torch.cuda.memory_reserved() / 1024**3, "GB")
+
+
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 log_dir = os.path.join(current_dir, "log")
 model_path = os.path.join(current_dir, '../../..')
-model_path = os.path.join(model_path, 'mamba2-2.7b\mamba2_2.7b_quantized.pth')
+model_path = os.path.join(model_path, 'mamba2-2.7b/mamba2_2.7b_quantized.pth')
 
 os.makedirs(log_dir, exist_ok=True)
 # 로거 생성
@@ -181,18 +188,17 @@ h = [InferenceCache.alloc(
     device=device
 ) for _ in range(config.n_layer)]
 
-# prompt = """
-# Mamba is a new sequence model that can replace transformers in some cases. 
-# It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient.
-
-# Write a clear summary of how Mamba differs from Transformers.
-# """
+prompt = """
+Mamba is a new sequence model that can replace transformers in some cases. 
+It uses state space models instead of attention. Its advantage is that it is faster and more memory-efficient.
+Write a clear summary of how Mamba differs from Transformers.
+"""
 # prompt = """
 # John has 3 apples. He gives 1 to Mary and buys 4 more. How many apples does he have now?
 # """
-prompt = """
-Continue the story: "The robot slowly opened the door, not knowing what it would find on the other side..."
-"""
+#prompt = """
+#Continue the story: "The robot slowly opened the door, not knowing what it would find on the other side..."
+#"""
 # prompt = """
 # Write a Python function that returns the nth Fibonacci number using recursion.
 # """
