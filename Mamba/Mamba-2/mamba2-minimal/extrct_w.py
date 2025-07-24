@@ -72,14 +72,14 @@ for i in range(n_layers):
         q, _ = quantize_tensor_sym(mixer.dt_bias, 16)
         mixer.dt_bias.copy_(q)
 
-        # q, _ = quantize_tensor_sym(mixer.norm.weight, 8)
-        # mixer.norm.weight.copy_(q)
+        q, _ = quantize_tensor_sym(mixer.norm.weight, 16)
+        mixer.norm.weight.copy_(q)
 
         q, _, zp = quantize_tensor_asym(mixer.out_proj.weight, 8)
         mixer.out_proj.weight.copy_(q)
 
-        # q, _ = quantize_tensor_sym(norm.weight, 8)
-        # norm.weight.copy_(q)
+        q, _ = quantize_tensor_sym(norm.weight, 16)
+        norm.weight.copy_(q)
 
 # ▷ 레이어 외부 RMSNorm
 # with torch.no_grad():
