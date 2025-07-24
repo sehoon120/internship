@@ -8,7 +8,8 @@ os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 save_path = os.path.join(current_dir, "../../..")
-save_path = os.path.join(save_path, "mamba2-2.7b\mamba2_2.7b_quantized.pth")
+save_path = os.path.join(save_path, "mamba2-2.7b", "mamba2_2.7b_quantized.pth")
+# save_path = os.path.join(save_path, "mamba2-2.7b/mamba2_2.7b_quantized.pth")
 
 device = None # torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
