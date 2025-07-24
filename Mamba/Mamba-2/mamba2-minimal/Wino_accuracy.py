@@ -1,4 +1,4 @@
-import torch
+import torch, gc
 from transformers import AutoTokenizer
 from datasets import load_dataset
 from mamba2 import Mamba2LMHeadModel, Mamba2Config, ssd, InferenceCache
@@ -7,7 +7,17 @@ import os
 import torch.nn.functional as F
 from PTQ_mamba import Mamba_Block
 
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#print(torch.cuda.is_available())          # ✅ Truee 여야 함
+#print(torch.cuda.device_count())          # ex. 1
+#print(torch.cuda.get_device_name(0))      # 예: NVIDIA RTX 3090
+#print(device)                             # 예: cuda, cuda:0
+os.environ.pop("PYTORCH_CUDA_ALLOC_CONF", None)
+
+torch.cuda.empty_cache()
+torch.cuda.reset_peak_memory_stats()
+
 
 from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
 # 8-bit FXP 시뮬레이터
@@ -94,10 +104,15 @@ def q_dq(x, a, b):
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(current_dir, '../../..')
-model_path = os.path.join(path, 'mamba2-2.7b/mamba2_2.7b_quantized.pth')
+model_path = os.path.join(path, 'mamba2-1.3b/mamba2_1.3b_quantized.pth')
+
+
+print(torch.cuda.memory_summary())
+
 
 # ⬇️ 너의 모델 로드 경로 수정
-config = Mamba2Config(d_model=2560, n_layer=64, vocab_size=50288)
+#config = Mamba2Config(d_model=2560, n_layer=64, vocab_size=50288)
+config = Mamba2Config(d_model=2048, n_layer=48, vocab_size=50277)
 model = Mamba2LMHeadModel(config)
 model.load_state_dict(torch.load(model_path))
 model = model.to(device)
@@ -121,6 +136,8 @@ for sample in tqdm(dataset):
 
     prompt = f"{sent}\nQ: What does 'it' refer to?\nA:"
     input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(model.device)
+    
+    print(torch.cuda.memory_summary())
 
 # ==================== Generate Start ====================
     h = [InferenceCache.alloc(
@@ -178,6 +195,10 @@ for sample in tqdm(dataset):
     if pred_label == answer:
         correct += 1
     total += 1
+    del input_ids, output, decoded
+    torch.cuda.empty_cache()
+    gc.collect()
 
 accuracy = correct / total * 100
 print(f"✅ WinoGrande Accuracy: {accuracy:.2f}% ({correct}/{total})")
+

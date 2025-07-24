@@ -3,15 +3,15 @@ import torch
 from transformers import AutoTokenizer
 from mamba2 import Mamba2LMHeadModel
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 save_path = os.path.join(current_dir, "../../..")
-save_path = os.path.join(save_path, "mamba2-2.7b", "mamba2_2.7b_quantized.pth")
+save_path = os.path.join(save_path, "mamba2-1.3b", "mamba2_1.3b_quantized.pth")
 # save_path = os.path.join(save_path, "mamba2-2.7b/mamba2_2.7b_quantized.pth")
 
-device = None # torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print("CUDA_VISIBLE_DEVICES 적용 후 현재 장치:", torch.cuda.current_device())
 print("사용 중인 장치 이름:", torch.cuda.get_device_name(torch.cuda.current_device()))
@@ -51,7 +51,7 @@ def quantize_tensor_per_channel_sym(tensor, num_bits=8, dim=0):
     return dq_tensor, scales
 
 
-model = Mamba2LMHeadModel.from_pretrained("state-spaces/mamba2-2.7b", device=device)
+model = Mamba2LMHeadModel.from_pretrained("state-spaces/mamba2-1.3b", device=device)
 n_layers = len(model.backbone.layers)
 
 for i in range(n_layers):
