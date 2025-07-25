@@ -120,6 +120,27 @@ class FXP16Simulator:
         x_i32 = x.to(torch.int32)
         total = x_i32.sum()
         return total.clamp(self.qmin, self.qmax).to(torch.int16)
+    
+    def cast(self, x_int32: torch.Tensor, from_frac_bits=16) -> torch.Tensor:
+        """
+        FXP32(예: frac=16) → FXP16(frac=self.frac_bits) 로 변환
+
+        Parameters:
+            x_int32: torch.Tensor (dtype=torch.int32)
+            from_frac_bits: 입력 tensor가 가진 소수부 비트 수 (기본 16)
+        Returns:
+            torch.Tensor(dtype=torch.int16)
+        """
+        shift = from_frac_bits - self.frac_bits
+        if shift > 0:
+            x_shifted = x_int32.to(torch.int64) >> shift
+        elif shift < 0:
+            x_shifted = x_int32.to(torch.int64) << (-shift)
+        else:
+            x_shifted = x_int32.to(torch.int64)
+
+        x_clamped = torch.clamp(x_shifted, self.qmin, self.qmax)
+        return x_clamped.to(torch.int16)
 
 class FXP32Simulator:
     def __init__(self, frac_bits=16):
