@@ -1,8 +1,7 @@
 '''
     mamba2-130m quantization FXP8/16 standard
 
-    엔트로피가 작게나오는 issue가 있음
-    residual쪽은 32bit으로 하는 방법 고려해보기
+    Fully FXP operation으로 변경한 모델
 '''
 
 # 필요한 라이브러리 import
@@ -47,27 +46,6 @@ file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(messa
 logger.addHandler(file_handler)
 # logger.addHandler(console_handler)
 
-def list_l(x, lst):
-    logger.info(f"==================================================")
-    for i, layer_list in enumerate(lst):
-        if len(layer_list) == 0:
-            continue
-        layer_tensor = torch.cat([t.flatten() for t in layer_list])
-        min_val = np.percentile(layer_tensor.cpu().numpy(), 0.05)
-        max_val = np.percentile(layer_tensor.cpu().numpy(), 99.95)
-        logger.info(f"  |Layer{i}| {x} global min/max: {min_val:.3f} ~ {max_val:.3f}")
-
-    # 전체 통합
-    all_tensors = [t.flatten() for layer in lst for t in layer]
-    if len(all_tensors) > 0:
-        list_cat = torch.cat(all_tensors)
-        min_val = np.percentile(list_cat.cpu().numpy(), 0.05)
-        max_val = np.percentile(list_cat.cpu().numpy(), 99.95)
-        logger.info(f"  Total {x} global min/max: {min_val:.3f} ~ {max_val:.3f}")
-    logger.info(f"==================================================")
-
-
-
 from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
 # 8-bit FXP 시뮬레이터
 fxp8_2 = FXP8Simulator(frac_bits=2)
@@ -106,12 +84,12 @@ def fxp_multiply_and_cast_to_fxp16_11(x_fxp32_16, w_fxp16_13, out_bit = 16, out_
 
 def fxp_linear_in_proj(x_fxp16_11, W_qint8, scale, zp, in_frac=11, w_frac=6, out_frac=11):
     # x: (B, D_in), W: (D_out, D_in)
-    B, D_in = x_fxp16_11.shape
-    D_out = W_qint8.shape[0]
+    # B, D_in = x_fxp16_11.shape
+    # D_out = W_qint8.shape[0]
     
     # 1. Expand dimensions for broadcasting
-    x_int = (x_fxp16_11 * (1 << in_frac)).round().to(torch.int32)  # B x D_in
-    W_int = (W_qint8.to(torch.int32) - zp)  # D_out x D_in
+    x_int = (x_fxp16_11 * (1 << in_frac)).round().to(torch.int32).cpu()  # B x D_in
+    W_int = (W_qint8.to(torch.int32) - zp).cpu()  # D_out x D_in
 
     # 2. Integer matrix multiplication
     # shape: (B, D_out)
@@ -121,6 +99,7 @@ def fxp_linear_in_proj(x_fxp16_11, W_qint8, scale, zp, in_frac=11, w_frac=6, out
     # total fixed point product: in_frac + w_frac bits → need to match out_frac
     total_frac = in_frac + w_frac  # = 17
     scale_factor = scale * (1 << w_frac)  # float scale * 2^w_frac
+
     if out_frac >= total_frac:
         scale_int = int(round(scale_factor * (1 << (out_frac - total_frac))))
     else:
@@ -132,7 +111,7 @@ def fxp_linear_in_proj(x_fxp16_11, W_qint8, scale, zp, in_frac=11, w_frac=6, out
     out = torch.clamp(out, -2**15, 2**15 - 1).to(torch.int16)  # clamp to int16
 
     # 5. Convert back to FXP16.11 float form
-    return out.to(torch.float32) / (1 << out_frac)
+    return (out.to(torch.float32) / (1 << out_frac)).to(x_fxp16_11.device)
 
 def fxp_conv1d_step(conv_state_fxp611, weight_qint8_fx8_6, bias_fx8_4, in_frac=11, w_frac=6, bias_frac=4, out_frac=11):
     """
@@ -191,13 +170,13 @@ class ApproxLog1p_FXP(nn.Module):
         out_int[mask_low] = self.y_vals[0]
         out_int[mask_high] = self.y_vals[-1]
 
-        idx = torch.bucketize(y_clamped, self.x_pts) - 1
+        idx = torch.bucketize(y_clamped, self.x_pts.to(y.device)) - 1
         idx = torch.clamp(idx, 0, len(self.x_pts) - 2)
 
-        x0 = self.x_pts[idx]
-        x1 = self.x_pts[idx + 1]
-        y0 = self.y_vals[idx]
-        y1 = self.y_vals[idx + 1]
+        x0 = self.x_pts.to(y.device)[idx]
+        x1 = self.x_pts.to(y.device)[idx + 1]
+        y0 = self.y_vals.to(y.device)[idx]
+        y1 = self.y_vals.to(y.device)[idx + 1]
 
         dx = y_clamped - x0
         dx_total = x1 - x0
@@ -361,8 +340,8 @@ def fxp_linear_out_proj_32in_32out(x_fxp32_16, W_qint8, scale, zp, in_frac=16, w
     D_out = W_qint8.shape[0]
 
     # 1. 정수 변환
-    x_int = (x_fxp32_16 * (1 << in_frac)).round().to(torch.int64)  # FXP32.16 → int
-    W_int = (W_qint8.to(torch.int64) - zp)  # int8 → zero-centered
+    x_int = (x_fxp32_16 * (1 << in_frac)).round().to(torch.int64).cpu()  # FXP32.16 → int
+    W_int = (W_qint8.to(torch.int64) - zp).cpu()  # int8 → zero-centered
 
     # 2. 행렬 곱 (B, D_out)
     acc = torch.matmul(x_int, W_int.T)  # 결과: FXP(in + w) = FXP22
@@ -382,72 +361,7 @@ def fxp_linear_out_proj_32in_32out(x_fxp32_16, W_qint8, scale, zp, in_frac=16, w
 
     # 5. clamp + float 변환
     acc_clamped = torch.clamp(acc_scaled, -2**31, 2**31 - 1).to(torch.int32)
-    return acc_clamped.to(torch.float32) / (1 << out_frac)  # FXP32.16 의미
-
-
-
-
-def get_ppl(model, tokenizer, text):
-    inputs = tokenizer(text, return_tensors='pt').to(model.device)
-    with torch.no_grad():
-        output = model(**inputs, labels=inputs['input_ids'])
-    loss = output.loss.item()
-    return math.exp(loss)
-
-def q_dq(x, a, b):
-    if a == 8:
-        if b == 2:
-            return fxp8_2.dequantize(fxp8_2.quantize(x))
-        elif b == 3:
-            return fxp8_3.dequantize(fxp8_3.quantize(x))
-        elif b == 4:
-            return fxp8_4.dequantize(fxp8_4.quantize(x))
-        elif b == 5:
-            return fxp8_5.dequantize(fxp8_5.quantize(x))
-        elif b == 6:
-            return fxp8_6.dequantize(fxp8_6.quantize(x))
-        elif b == 7:
-            return fxp8_7.dequantize(fxp8_7.quantize(x))
-
-    elif a == 16:
-        if b == 4:
-            return fxp16_4.dequantize(fxp16_4.quantize(x))
-        elif b == 5:
-            return fxp16_5.dequantize(fxp16_5.quantize(x))
-        elif b == 6:
-            return fxp16_6.dequantize(fxp16_6.quantize(x))
-        elif b == 7:
-            return fxp16_7.dequantize(fxp16_7.quantize(x))
-        elif b == 8:
-            return fxp16_8.dequantize(fxp16_8.quantize(x))
-        elif b == 9:
-            return fxp16_9.dequantize(fxp16_9.quantize(x))
-        elif b == 10:
-            return fxp16_10.dequantize(fxp16_10.quantize(x))
-        elif b == 11:
-            return fxp16_11.dequantize(fxp16_11.quantize(x))
-        elif b == 12:
-            return fxp16_12.dequantize(fxp16_12.quantize(x))
-        elif b == 13:
-            return fxp16_13.dequantize(fxp16_13.quantize(x))
-        elif b == 14:
-            return fxp16_14.dequantize(fxp16_14.quantize(x))
-        elif b == 15:
-            return fxp16_15.dequantize(fxp16_15.quantize(x))
-
-    elif a == 32:
-        if b == 16:
-            return fxp32_16.dequantize(fxp32_16.quantize(x))
-        elif b == 18:
-            return fxp32_18.dequantize(fxp32_18.quantize(x))
-        elif b == 20:
-            return fxp32_20.dequantize(fxp32_20.quantize(x))
-        elif b == 21:
-            return fxp32_21.dequantize(fxp32_21.quantize(x))
-        elif b == 24:
-            return fxp32_24.dequantize(fxp32_24.quantize(x))
-
-    raise ValueError(f"Unsupported FXP format: {a} total bits with {b} fractional bits")
+    return (acc_clamped.to(torch.float32) / (1 << out_frac)).to(x_fxp32_16.device)  # FXP32.16 의미
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -717,23 +631,39 @@ with torch.no_grad():
             # ==================================================
 
             # ====================  RMSNorm  ====================
+            # 1. y^2 계산
             y2 = fxp32_16.mul(y, y)
             D = y2.shape[-1]
+
+            # 2. 평균 및 epsilon 더하기
             y2_sum = y2.to(torch.int64).sum(dim=-1, keepdim=True) 
             mean_y2 = (y2_sum // D).clamp(fxp32_16.qmin, fxp32_16.qmax).to(torch.int32)
-            # eps_fxp = fxp32_16.quantize(torch.tensor(eps, dtype=torch.float32))
             mean_y2_eps = fxp32_16.add(mean_y2, eps_fxp)
 
-            # 4. rsqrt 근사 (float으로 복원 후 근사 계산 → 다시 FXP16.13로 quant)
+            # 3. 역제곱근 근사 (dequant → float domain 계산 → re-quant)
             mean_y2_eps_f = fxp32_16.dequantize(mean_y2_eps)
             rsqrt_approx_f_y = 1.0 / torch.sqrt(mean_y2_eps_f + 1e-6)
             rsqrt_out_fxp32_y = fxp32_16.quantize(rsqrt_approx_f_y)  # FXP16.13
 
+            # 4. 정규화
             rsqrt_broadcasted = rsqrt_out_fxp32_y.expand_as(y)
             normed_fxp32_y = fxp32_16.mul(y, rsqrt_broadcasted)
-            norm_weight_expanded_y = model.backbone['layers'][i].norm.weight.view(1, -1).expand_as(normed_fxp32_y)
+
+            # 5. norm.weight 처리
+            norm_weight = model.backbone['layers'][i].norm.weight  # shape: [2560]
+
+            # 👉 중간 feature 확장 대응
+            if normed_fxp32_y.shape[1] == 2 * norm_weight.shape[0]:
+                norm_weight = norm_weight.repeat(2)  # shape: [5120]
+            elif normed_fxp32_y.shape[1] != norm_weight.shape[0]:
+                raise ValueError(
+                    f"Mismatch: norm.weight={norm_weight.shape}, normed_y={normed_fxp32_y.shape}"
+                )
+
+            # 6. weight broadcast 및 scaling 적용
+            norm_weight_expanded_y = norm_weight.view(1, -1).expand_as(normed_fxp32_y)
             y = fxp_multiply_and_cast_to_fxp16_11(normed_fxp32_y, norm_weight_expanded_y, out_bit=32, out_frac=16)
-            
+
             # y = model.backbone['layers'][i]['mixer'].norm(y)
             # y = q_dq(y, 32, 16)
             # y4_list[i].extend(y)
@@ -764,17 +694,6 @@ with torch.no_grad():
         probs = F.softmax(logits, dim=-1)
         next_token = torch.multinomial(probs, num_samples=1)
 
-        '''
-        # ✅ Output entropy (전체 분포 불확실성)
-        # entrophy_list.append(-(probs * probs.log()).sum(dim=-1).mean())
-        # print("Output entropy:", entropy.item())
-
-        # ✅ Cross-entropy loss (정답 토큰 기준)
-        # target_token_id = next_token.item()  # 정답은 sampling된 토큰
-        # log_probs = F.log_softmax(logits, dim=-1)
-        # loss = -log_probs[target_token_id]
-        # loss_list.append(loss.item())        # 리스트에 수집
-        '''
         # 종료 조건 확인 (EOS 토큰일 경우)
         if next_token.item() == tokenizer.eos_token_id:
             break
@@ -787,10 +706,6 @@ with torch.no_grad():
 # 토큰 결과 디코딩 후 출력
 print(tokenizer.decode(generated, skip_special_tokens=True))
 
-# rms1_list_cat = torch.cat([x.flatten() for x in rms1_list])
-# min_val = np.percentile(rms1_list_cat, 0.05)   # 하위 0.05%
-# max_val = np.percentile(rms1_list_cat, 99.95)  # 상위 0.05%
-# print(f"\n==================================================\nglobal min/max: {min_val:.3f} ~ {max_val:.3f}\n==================================================\n")
 
 '''
 # list_l('x1', x1_list)

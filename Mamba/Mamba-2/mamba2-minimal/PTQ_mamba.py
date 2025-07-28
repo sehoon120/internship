@@ -1,7 +1,7 @@
 '''
     mamba2-130m quantization FXP8/16 standard
 
-    mamba block 정의
+    mamba block 함수화
 '''
 
 # 필요한 라이브러리 import
@@ -25,7 +25,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 log_dir = os.path.join(current_dir, "log")
-model_path = os.path.join(current_dir, '../../..')
+model_path = os.path.join(current_dir, '../../../..')
 model_path = os.path.join(model_path, 'mamba2-2.7b/mamba2_2.7b_quantized.pth')
 
 from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
@@ -187,13 +187,13 @@ def Mamba_Block(model, config, residual, h, i):
     y = q_dq(y, 16, 7)
 
     # Apply SiLU(z)
+    y = rearrange(y, "b h p -> b (h p)")
     z = F.silu(z)
     z = q_dq(z, 16, 11)
     y = y * z
     y = q_dq(y, 32, 16)
 
     # Final norm + linear proj
-    y = rearrange(y, "b h p -> b (h p)")
     y = model.backbone['layers'][i]['mixer'].norm(y)
     y = q_dq(y, 32, 16)
     y = model.backbone['layers'][i]['mixer'].out_proj(y)

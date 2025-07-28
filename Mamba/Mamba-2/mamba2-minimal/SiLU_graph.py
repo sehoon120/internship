@@ -59,7 +59,7 @@ class ApproxSiLU16(nn.Module):
         out[~mask_right] = (y0 + t * (y1 - y0))[~mask_right]
 
         return out
-    
+  
 class ApproxSiLU16_FXP(nn.Module):
     def __init__(self, in_frac=11, out_frac=10):
         super().__init__()
@@ -67,43 +67,45 @@ class ApproxSiLU16_FXP(nn.Module):
         self.out_frac = out_frac
 
         # 16 segments: 17 points
-        self.segment_fp = torch.linspace(-8.0, 6.0, steps=17)
-        self.silu_fp = self.segment_fp * torch.sigmoid(self.segment_fp)
+        segment_fp = torch.linspace(-8.0, 6.0, steps=17)
+        silu_fp = segment_fp * torch.sigmoid(segment_fp)
 
-        # FXP 정수 테이블로 변환
-        self.segment = (self.segment_fp * (1 << in_frac)).round().to(torch.int16)     # FXP16.11
-        self.silu_vals = (self.silu_fp * (1 << out_frac)).round().to(torch.int16)     # FXP16.10
+        # register_buffer를 통해 자동 디바이스 전파
+        self.register_buffer("segment", (segment_fp * (1 << in_frac)).round().to(torch.int16))     # FXP16.11
+        self.register_buffer("silu_vals", (silu_fp * (1 << out_frac)).round().to(torch.int16))     # FXP16.10
 
     def forward(self, x):
+        device = x.device
+        segment = self.segment.to(device)
+        silu_vals = self.silu_vals.to(device)
+
         # x: float32지만 값은 FXP16.11로 표현된 값
         x_int = (x * (1 << self.in_frac)).round().to(torch.int32)
 
-        out_int = torch.empty_like(x_int)
+        out_int = torch.empty_like(x_int, dtype=torch.int32)
 
-        # 경계 처리: x > max segment → out = x - 0.0005 ≈ x (FXP 그대로 사용)
-        max_seg = self.segment[-1].item()
+        # 경계 처리: x > max segment → out = x
+        max_seg = segment[-1].item()
         mask_right = x_int > max_seg
         out_int[mask_right] = (x_int[mask_right] >> (self.in_frac - self.out_frac))  # FXP16.11 → FXP16.10
 
         # Clamp x to valid segment range
-        x_clamped = torch.clamp(x_int, self.segment[0].item(), self.segment[-1].item())
+        x_clamped = torch.clamp(x_int, segment[0].item(), segment[-1].item())
 
         # Bucket index 구하기
-        seg = self.segment.to(x_int.device)
-        idx = torch.bucketize(x_clamped, seg, right=False) - 1  # [0, 15]
-        idx = torch.clamp(idx, 0, len(seg) - 2)
+        idx = torch.bucketize(x_clamped, segment, right=False) - 1  # [0, 15]
+        idx = torch.clamp(idx, 0, len(segment) - 2)
 
         # 구간 점들
-        x0 = seg[idx]             # FXP16.11 int
-        x1 = seg[idx + 1]         # FXP16.11 int
-        y0 = self.silu_vals[idx]     # FXP16.10 int
-        y1 = self.silu_vals[idx + 1] # FXP16.10 int
+        x0 = segment[idx]             # FXP16.11 int
+        x1 = segment[idx + 1]         # FXP16.11 int
+        y0 = silu_vals[idx]           # FXP16.10 int
+        y1 = silu_vals[idx + 1]       # FXP16.10 int
 
         # 보간 비율 t = (x - x0) / (x1 - x0), fixed-point로 계산
         dx = x_clamped - x0
         dx_total = x1 - x0
-        eps = 1  # avoid division by zero
-        dx_total = torch.clamp(dx_total, min=eps)
+        dx_total = torch.clamp(dx_total, min=1)  # avoid division by zero
 
         t_fx = ((dx << self.out_frac) + (dx_total // 2)) // dx_total  # t_fx: FXP16.10
 
@@ -115,14 +117,14 @@ class ApproxSiLU16_FXP(nn.Module):
 
         # 정수형 → float로 변환하여 반환 (여전히 FXP16.10 형식)
         return out_int.to(torch.float32) / (1 << self.out_frac)
-
+    
     
 import torch.nn.functional as F
 
 if __name__ == '__main__':
     x = torch.linspace(-25, 25, 300)
     silu = nn.SiLU()
-    approx = ApproxSiLU16()
+    approx = ApproxSiLU16_FXP()
     y_ref = silu(x)
     # y_ref = x * F.sigmoid(x)
     y_approx = approx(x)

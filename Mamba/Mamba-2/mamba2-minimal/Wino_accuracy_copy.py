@@ -2,7 +2,8 @@
     WinoGrande dataset으로 모델 정확도 평가하기
     19개마다 메모리가 터짐. 연속 실행으로 이어갈 수 있게 하였으나, 장기적으로는 수정이 필요함.
 
-    version1
+    문장 option 2개로 loss-prob 비교하기
+    generate가 아닌 forward를 하도록 바꾸기
 """
 import os, gc, torch
 import torch.nn.functional as F

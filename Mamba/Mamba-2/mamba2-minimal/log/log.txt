@@ -1,0 +1,73 @@
+2025-07-27 21:25:38,277 [INFO] ==================================================
+2025-07-27 21:25:38,280 [INFO]   |Layer0| x1 global min/max: -1.181 ~ 1.115
+2025-07-27 21:25:38,280 [INFO]   |Layer1| x1 global min/max: -1.737 ~ 2.821
+2025-07-27 21:25:38,281 [INFO]   |Layer2| x1 global min/max: -1.130 ~ 2.575
+2025-07-27 21:25:38,281 [INFO]   |Layer3| x1 global min/max: -1.347 ~ 2.585
+2025-07-27 21:25:38,282 [INFO]   |Layer4| x1 global min/max: -1.812 ~ 2.814
+2025-07-27 21:25:38,282 [INFO]   |Layer5| x1 global min/max: -1.743 ~ 2.816
+2025-07-27 21:25:38,283 [INFO]   |Layer6| x1 global min/max: -1.600 ~ 2.435
+2025-07-27 21:25:38,283 [INFO]   |Layer7| x1 global min/max: -1.561 ~ 3.572
+2025-07-27 21:25:38,284 [INFO]   |Layer8| x1 global min/max: -1.702 ~ 4.031
+2025-07-27 21:25:38,284 [INFO]   |Layer9| x1 global min/max: -1.044 ~ 2.600
+2025-07-27 21:25:38,285 [INFO]   |Layer10| x1 global min/max: -1.372 ~ 2.854
+2025-07-27 21:25:38,285 [INFO]   |Layer11| x1 global min/max: -1.258 ~ 3.224
+2025-07-27 21:25:38,286 [INFO]   |Layer12| x1 global min/max: -1.241 ~ 2.250
+2025-07-27 21:25:38,286 [INFO]   |Layer13| x1 global min/max: -0.998 ~ 1.950
+2025-07-27 21:25:38,287 [INFO]   |Layer14| x1 global min/max: -1.025 ~ 1.966
+2025-07-27 21:25:38,288 [INFO]   |Layer15| x1 global min/max: -1.002 ~ 1.806
+2025-07-27 21:25:38,288 [INFO]   |Layer16| x1 global min/max: -0.871 ~ 1.682
+2025-07-27 21:25:38,289 [INFO]   |Layer17| x1 global min/max: -0.756 ~ 1.710
+2025-07-27 21:25:38,289 [INFO]   |Layer18| x1 global min/max: -0.688 ~ 1.417
+2025-07-27 21:25:38,290 [INFO]   |Layer19| x1 global min/max: -0.741 ~ 1.738
+2025-07-27 21:25:38,290 [INFO]   |Layer20| x1 global min/max: -0.633 ~ 1.631
+2025-07-27 21:25:38,291 [INFO]   |Layer21| x1 global min/max: -0.597 ~ 1.739
+2025-07-27 21:25:38,291 [INFO]   |Layer22| x1 global min/max: -0.705 ~ 1.808
+2025-07-27 21:25:38,292 [INFO]   |Layer23| x1 global min/max: -0.658 ~ 1.784
+2025-07-27 21:25:38,293 [INFO]   |Layer24| x1 global min/max: -0.642 ~ 1.648
+2025-07-27 21:25:38,293 [INFO]   |Layer25| x1 global min/max: -0.641 ~ 1.745
+2025-07-27 21:25:38,294 [INFO]   |Layer26| x1 global min/max: -0.528 ~ 1.257
+2025-07-27 21:25:38,295 [INFO]   |Layer27| x1 global min/max: -0.598 ~ 1.497
+2025-07-27 21:25:38,296 [INFO]   |Layer28| x1 global min/max: -0.591 ~ 2.151
+2025-07-27 21:25:38,296 [INFO]   |Layer29| x1 global min/max: -0.600 ~ 1.369
+2025-07-27 21:25:38,297 [INFO]   |Layer30| x1 global min/max: -0.765 ~ 1.409
+2025-07-27 21:25:38,298 [INFO]   |Layer31| x1 global min/max: -0.652 ~ 1.081
+2025-07-27 21:25:38,298 [INFO]   |Layer32| x1 global min/max: -0.831 ~ 1.426
+2025-07-27 21:25:38,299 [INFO]   |Layer33| x1 global min/max: -0.769 ~ 1.227
+2025-07-27 21:25:38,300 [INFO]   |Layer34| x1 global min/max: -0.932 ~ 2.128
+2025-07-27 21:25:38,301 [INFO]   |Layer35| x1 global min/max: -0.870 ~ 1.356
+2025-07-27 21:25:38,301 [INFO]   |Layer36| x1 global min/max: -1.166 ~ 2.070
+2025-07-27 21:25:38,302 [INFO]   |Layer37| x1 global min/max: -1.149 ~ 2.372
+2025-07-27 21:25:38,303 [INFO]   |Layer38| x1 global min/max: -1.141 ~ 2.422
+2025-07-27 21:25:38,303 [INFO]   |Layer39| x1 global min/max: -1.287 ~ 3.382
+2025-07-27 21:25:38,304 [INFO]   |Layer40| x1 global min/max: -1.306 ~ 3.302
+2025-07-27 21:25:38,305 [INFO]   |Layer41| x1 global min/max: -1.872 ~ 2.601
+2025-07-27 21:25:38,305 [INFO]   |Layer42| x1 global min/max: -2.233 ~ 1.428
+2025-07-27 21:25:38,306 [INFO]   |Layer43| x1 global min/max: -2.185 ~ 2.893
+2025-07-27 21:25:38,307 [INFO]   |Layer44| x1 global min/max: -2.329 ~ 3.501
+2025-07-27 21:25:38,307 [INFO]   |Layer45| x1 global min/max: -2.368 ~ 1.652
+2025-07-27 21:25:38,308 [INFO]   |Layer46| x1 global min/max: -2.368 ~ 1.605
+2025-07-27 21:25:38,308 [INFO]   |Layer47| x1 global min/max: -2.483 ~ 1.937
+2025-07-27 21:25:38,309 [INFO]   |Layer48| x1 global min/max: -2.293 ~ 3.631
+2025-07-27 21:25:38,310 [INFO]   |Layer49| x1 global min/max: -2.475 ~ 2.546
+2025-07-27 21:25:38,310 [INFO]   |Layer50| x1 global min/max: -2.279 ~ 1.869
+2025-07-27 21:25:38,311 [INFO]   |Layer51| x1 global min/max: -2.291 ~ 3.619
+2025-07-27 21:25:38,312 [INFO]   |Layer52| x1 global min/max: -1.995 ~ 1.553
+2025-07-27 21:25:38,312 [INFO]   |Layer53| x1 global min/max: -1.792 ~ 1.377
+2025-07-27 21:25:38,313 [INFO]   |Layer54| x1 global min/max: -1.638 ~ 1.352
+2025-07-27 21:25:38,313 [INFO]   |Layer55| x1 global min/max: -1.800 ~ 1.473
+2025-07-27 21:25:38,314 [INFO]   |Layer56| x1 global min/max: -1.889 ~ 1.508
+2025-07-27 21:25:38,314 [INFO]   |Layer57| x1 global min/max: -1.812 ~ 1.477
+2025-07-27 21:25:38,315 [INFO]   |Layer58| x1 global min/max: -2.368 ~ 1.968
+2025-07-27 21:25:38,315 [INFO]   |Layer59| x1 global min/max: -2.393 ~ 2.034
+2025-07-27 21:25:38,316 [INFO]   |Layer60| x1 global min/max: -2.049 ~ 1.781
+2025-07-27 21:25:38,316 [INFO]   |Layer61| x1 global min/max: -2.752 ~ 5.504
+2025-07-27 21:25:38,317 [INFO]   |Layer62| x1 global min/max: -4.168 ~ 8.716
+2025-07-27 21:25:38,317 [INFO]   |Layer63| x1 global min/max: -10.409 ~ 10.909
+2025-07-27 21:25:38,397 [INFO]   Total x1 global min/max: -1.693 ~ 2.514
+2025-07-27 21:25:38,397 [INFO] ==================================================
+2025-07-27 21:25:38,434 [INFO]   Entropy: 
+[tensor(5.0963, device='cuda:0'), tensor(6.8452, device='cuda:0'), tensor(0.5478, device='cuda:0'), tensor(6.9046, device='cuda:0'), tensor(5.5299, device='cuda:0'), tensor(2.7667, device='cuda:0'), tensor(1.8874, device='cuda:0'), tensor(3.8534, device='cuda:0'), tensor(3.0699, device='cuda:0'), tensor(3.5560, device='cuda:0')]
+
+2025-07-27 21:25:38,435 [INFO]   Cross Entropy Loss: 
+[4.269388198852539, 6.526578903198242, 0.09117332845926285, 9.159021377563477, 3.0186574459075928, 5.158883571624756, 12.543712615966797, 10.942217826843262, 1.6628451347351074, 8.321931838989258]
+

@@ -5,6 +5,10 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
 
 
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 class FastBiasedExp(nn.Module):
     def __init__(self):
         super().__init__()
@@ -61,13 +65,13 @@ class ApproxExp16_FXP(nn.Module):
         x_clamped = torch.clamp(x_int, min_x, max_x)
 
         # segment index
-        idx = torch.bucketize(x_clamped, self.x_pts, right=False) - 1
+        idx = torch.bucketize(x_clamped, self.x_pts.to(x.device), right=False) - 1
         idx = torch.clamp(idx, 0, len(self.x_pts) - 2)
 
-        x0 = self.x_pts[idx]
-        x1 = self.x_pts[idx + 1]
-        y0 = self.exp_vals[idx]
-        y1 = self.exp_vals[idx + 1]
+        x0 = self.x_pts.to(x.device)[idx]
+        x1 = self.x_pts.to(x.device)[idx + 1]
+        y0 = self.exp_vals.to(x.device)[idx]
+        y1 = self.exp_vals.to(x.device)[idx + 1]
 
         dx = x_clamped - x0
         dx_total = x1 - x0
@@ -104,23 +108,25 @@ class ApproxExp_FXP32in16out14(nn.Module):
         x: float32 값이지만 의미적으로는 FXP32.16 값 (e.g., -32768.0 ~ +32768.0)
         반환: FXP16.14 float 값 (실제 정수 기반)
         """
+        x_pts = self.x_pts.to(x.device)
+        exp_vals = self.exp_vals.to(x.device)
         x_int = (x * (1 << self.in_frac)).round().to(torch.int32)
         out_int = torch.empty_like(x_int)
 
         # 경계 처리
-        min_x, max_x = self.x_pts[0].item(), self.x_pts[-1].item()
+        min_x, max_x = x_pts[0].item(), x_pts[-1].item()
         mask_low = x_int <= min_x
         mask_high = x_int >= max_x
         x_clamped = torch.clamp(x_int, min_x, max_x)
 
         # 고정 구간 인덱싱
-        idx = torch.bucketize(x_clamped, self.x_pts) - 1
-        idx = torch.clamp(idx, 0, len(self.x_pts) - 2)
+        idx = torch.bucketize(x_clamped, x_pts) - 1
+        idx = torch.clamp(idx, 0, len(x_pts) - 2)
 
-        x0 = self.x_pts[idx]
-        x1 = self.x_pts[idx + 1]
-        y0 = self.exp_vals[idx]
-        y1 = self.exp_vals[idx + 1]
+        x0 = x_pts[idx]
+        x1 = x_pts[idx + 1]
+        y0 = exp_vals[idx]
+        y1 = exp_vals[idx + 1]
 
         dx = x_clamped - x0
         dx_total = x1 - x0
@@ -134,8 +140,8 @@ class ApproxExp_FXP32in16out14(nn.Module):
         interp = y0 + ((t_fx * dy + (1 << (self.out_frac - 1))) >> self.out_frac)
 
         # 경계 보정
-        out_int[mask_low] = self.exp_vals[0]
-        out_int[mask_high] = self.exp_vals[-1]
+        out_int[mask_low] = exp_vals[0]
+        out_int[mask_high] = exp_vals[-1]
         out_int[~(mask_low | mask_high)] = interp[~(mask_low | mask_high)]
 
         # 정수 기반 FXP16.14 float 형태로 반환
@@ -147,19 +153,32 @@ if __name__ == '__main__':
 
     fxp8 = FXP8Simulator(frac_bits = 4)
     fxp16 = FXP16Simulator(frac_bits = 14)
+    fxp16_13 = FXP16Simulator(frac_bits = 13)
+    fxp32 = FXP32Simulator(frac_bits = 16)
     
-    x = torch.linspace(-8, 1, 300)
+    x = torch.linspace(-10, 3, 500)
     x_q = fxp8.quantize(x)
     x_dq = fxp8.dequantize(x_q)
     # print(x_dq)
 
     y_true = torch.exp(x)
-    y_approx = FastBiasedExp()(x_dq)
-    y_approx_q = fxp16.quantize(y_approx)
-    y_approx_dq = fxp16.dequantize(y_approx_q)
+    # y_approx = FastBiasedExp()(x_dq)
+    x_q_16_13 = fxp16_13.quantize(x)
+    y_approx1 = ApproxExp16_FXP(in_frac=13, out_frac=16)
+    y_32_16 = y_approx1(x_q_16_13)
+    y1 = fxp32.dequantize(y_32_16)
+
+    x_q_32_16 = fxp32.quantize(x)
+    print(x_q_32_16)
+    y_approx2 = ApproxExp_FXP32in16out14(in_frac=16, out_frac=14)  
+    y_16_14 = y_approx2(x_q_32_16)
+    y2 = fxp16.dequantize(y_16_14)
+
+
+
 
     plt.plot(x.numpy(), y_true.numpy(), label="True exp(x)", linewidth=2)
-    plt.plot(x.numpy(), y_approx_dq.detach().numpy(), label="FBEA Approx", linestyle="--")
+    plt.plot(x.numpy(), y2.detach().numpy(), label="FBEA Approx", linestyle="--")
     plt.axvline(x=-7, color='gray', linestyle=':', linewidth=0.8)
     plt.axvline(x=0, color='gray', linestyle=':', linewidth=0.8)
     plt.title("Fast Biased Exponential Approximation (clipped to [-7, 0])")
