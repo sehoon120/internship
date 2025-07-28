@@ -11,7 +11,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neox-20b")
 tokenizer.pad_token_id = tokenizer.eos_token_id
 
-config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
+# config = Mamba2Config(d_model=768, n_layer=24, vocab_size=50277)
 # model = Mamba2LMHeadModel(config)
 # model.load_state_dict(torch.load(r"C:\Internship\mamba2-130m\mamba2_130m_quantized.pth"))
 # model.to(device)

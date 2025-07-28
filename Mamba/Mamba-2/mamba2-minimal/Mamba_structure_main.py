@@ -1,3 +1,13 @@
+"""
+    이 코드가 제작할 모델 구조의 확정 버전이 될것이다.
+
+    현재 제작중
+
+    SSM Block의 구현에 집중
+    FP16 operation in SSM Block
+
+    FXP8 with several components
+"""
 import time
 import torch
 from torch import nn
@@ -5,9 +15,22 @@ from transformers import AutoTokenizer
 from mamba2 import Mamba2LMHeadModel, Mamba2Config, ssd, InferenceCache
 import torch.nn.functional as F
 from einops import rearrange
+import os
 
-# 내부 구조 분석 진행중 코드
-# 정상 동작 확인
+# 이 부분 고치던중
+current_dir = os.path.dirname(os.path.abspath(__file__))
+save_dir = os.path.join(current_dir, "../../../..", "intermediate_datas")
+os.makedirs(save_dir, exist_ok=True)  # 디렉토리 없으면 생성
+
+# FP16 텐서를 .hex로 저장하는 함수
+def save_tensor_fp16_hex(tensor: torch.Tensor, filename: str):
+    tensor_fp16 = tensor.to(torch.float16).flatten()
+    u16_tensor = tensor_fp16.view(torch.uint16).cpu().numpy()  # vectorized
+
+    with open(filename, 'w') as f:
+        for val in u16_tensor:
+            f.write(f"{val:04x}\n")
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -57,7 +80,7 @@ for i in range(n_chunked, prefix.shape[1]):
 
 generated = [t.item() for t in input_ids[0]]  # 결과 누적 list
 with torch.no_grad():
-    for _ in range(20):
+    for token_num in range(50):
         seqlen = f_token.shape[1]
         input_tensor = torch.tensor([[f_token]], device=device)
 
@@ -74,45 +97,75 @@ with torch.no_grad():
                 [config.d_inner, config.d_inner + 2 * config.d_state, config.nheads],
                 dim=-1,
             )
-            # print('z: ', z.shape)
-            # print('xBC: ', xBC.shape)
-            # print('dt: ', dt.shape)
 
             h[i].conv_state.copy_(torch.roll(h[i].conv_state, shifts=-1, dims=-1))
             h[i].conv_state[:, :, -1] = xBC
-            # print('xBC: ', xBC.shape)
+
             xBC = torch.sum(
                 h[i].conv_state * rearrange(model.backbone['layers'][i]['mixer'].conv1d.weight, "d 1 w -> d w"), dim=-1
             )
-            # print('h[i].conv_state3', h[i].conv_state.shape)
-            # print('xBC2: ', xBC.shape)
+
             xBC += model.backbone['layers'][i]['mixer'].conv1d.bias
             xBC = F.silu(xBC)
             x, B, C = torch.split(xBC, [config.d_inner, config.d_state, config.d_state], dim=-1)
-            # print('x: ', x.shape)
-            # print('B: ', B.shape)
-            # print('C: ', C.shape)
+
             A = -torch.exp(model.backbone['layers'][i]['mixer'].A_log)  # (nheads,)
-            # print('A: ', A.shape)
 
             # SSM step
             dt = F.softplus(dt + model.backbone['layers'][i]['mixer'].dt_bias)  # (batch, nheads)
             dA = torch.exp(dt * A)  # (batch, nheads)
             x = rearrange(x, "b (h p) -> b h p", p=config.headdim)  # "b l (h p) -> b l h p"
-            # print('dt: ', dt.shape)
-            # print('B: ', B.shape)
-            # print('X: ', x.shape)
+# ====================  SSM Block Started  ====================
+# input: dA, dt, x, B, C, D, h[i].ssm_state  -  FP16
+# output: y  -  FP16
+            # FP32 -> FP16
+            dA = dA.to(dtype=torch.float16)
+            dt = dt.to(dtype=torch.float16)
+            x = x.to(dtype=torch.float16)
+            B = B.to(dtype=torch.float16)
+            C = C.to(dtype=torch.float16)
+            D = model.backbone['layers'][i]['mixer'].D.to(dtype=torch.float16)
+            h[i] = h[i]._replace(ssm_state=h[i].ssm_state.to(dtype=torch.float16))
+
+            # Save datas into .hex
+            if i == 0 and token_num == 0:
+                print(dA.shape)
+                print(dt.shape)
+                print(x.shape)
+                print(B.shape)
+                print(C.shape)
+                print(D.shape)
+                print(h[i].ssm_state.shape)
+            #     save_tensor_fp16_hex(dA,  os.path.join(save_dir, f"{i}_dA.hex"))
+            #     save_tensor_fp16_hex(dt,  os.path.join(save_dir, f"{i}_dt.hex"))
+            #     save_tensor_fp16_hex(x,   os.path.join(save_dir, f"{i}_x.hex"))
+            #     save_tensor_fp16_hex(B,   os.path.join(save_dir, f"{i}_B.hex"))
+            #     save_tensor_fp16_hex(C,   os.path.join(save_dir, f"{i}_C.hex"))
+            #     save_tensor_fp16_hex(D,   os.path.join(save_dir, f"{i}_D.hex"))
+            #     save_tensor_fp16_hex(h[i].ssm_state, os.path.join(save_dir, f"{i}_ssm_state.hex"))
+
             dBx = torch.einsum("bh, bn, bhp -> bhpn", dt, B, x)
+
             h[i].ssm_state.copy_(h[i].ssm_state * rearrange(dA, "b h -> b h 1 1") + dBx)
+
             y = torch.einsum("bhpn, bn -> bhp", h[i].ssm_state, C)
-            y = y + rearrange(model.backbone['layers'][i]['mixer'].D, "h -> h 1") * x
+
+            y = y + rearrange(D, "h -> h 1") * x
+            # print("dtype of ssm_state:", h[i].ssm_state.dtype)
+            # print("dtype of dA:", dA.dtype)
+            # print("dtype of dBx:", dBx.dtype)
             y = rearrange(y, "b h p -> b (h p)")
+            # if i == 0 and token_num == 0:
+            #     save_tensor_fp16_hex(y,   os.path.join(save_dir, f"{i}_y.hex"))
+
+            y = y.to(dtype=torch.float32)
+            
+# ====================  SSM Block Finished  ====================
+
             y = model.backbone['layers'][i]['mixer'].norm(y, z)
             y = model.backbone['layers'][i]['mixer'].out_proj(y)
 
             residual = residual + y.unsqueeze(1)
-            # return y.unsqueeze(1), h[i]
-            # print(y.unsqueeze(1)[0,0,:5])
 
         residual = model.backbone.norm_f(residual)
         logits = model.lm_head(residual)  # LMHead
