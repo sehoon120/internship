@@ -1,10 +1,11 @@
 // dBx[b][h][p][n] = dt[b][h] * Bmat[b][n] * x[b][h][p];
-// dBx_calc.v
+// dBx_calc_parallel.v
 // ================================================================================
-// 수정사항:
-// FLUSH stage 추가 - 연산 딜레이동안 조금 더 기다리기
-// shift reg 길이 연산 딜레이만큼 늘리기
-// output reg안거치고 바로 다음 연산으로 연결
+// 개선?��?��:
+// - FLUSH ?���? ?��?��
+// - 8-way 병렬 multiplier ?��?��
+// - Index shift pipeline 구조 ?���?
+// 
 // ================================================================================
 
 module dBx_calc_fp16 #(
@@ -13,7 +14,8 @@ module dBx_calc_fp16 #(
     parameter P = 4,
     parameter N = 4,
     parameter DW = 16,
-    parameter M_LAT = 6
+    parameter M_LAT = 6,
+    parameter PAR = 8
 )(
     input  wire clk,
     input  wire rst,
@@ -27,7 +29,6 @@ module dBx_calc_fp16 #(
     output reg  done
 );
 
-    // === 내부 배열 선언 (unpacked) ===
     wire [DW-1:0] dt   [0:B*H-1];
     wire [DW-1:0] Bmat [0:B*N-1];
     wire [DW-1:0] x    [0:B*H*P-1];
@@ -49,26 +50,27 @@ module dBx_calc_fp16 #(
         end
     endgenerate
 
-    // === FSM ===
     reg [1:0] state;
     localparam IDLE = 2'd0, CALC = 2'd1, STAGE_FLUSH = 2'd2, DONE = 2'd3;
-    reg [3:0] flush_cnt;  // M_LAT*2 까지
+    reg [3:0] flush_cnt;
 
     reg [9:0] b, h, p, n;
-    reg [9:0] b_shift[0:M_LAT+M_LAT], h_shift[0:M_LAT+M_LAT], p_shift[0:M_LAT+M_LAT], n_shift[0:M_LAT+M_LAT];
+    reg [9:0] b_shift [0:PAR-1][0:M_LAT*2];
+    reg [9:0] h_shift [0:PAR-1][0:M_LAT*2];
+    reg [9:0] p_shift [0:PAR-1][0:M_LAT*2];
+    reg [9:0] n_shift [0:PAR-1][0:M_LAT*2];
 
-    reg  [DW-1:0] in1_stage1, in2_stage1;
-    wire [DW-1:0] out_stage1;
-    wire          valid_stage1;
 
-    // reg  [DW-1:0] in1_stage2;
-    reg  [DW-1:0] in2_stage2;
-    wire [DW-1:0] out_stage2;
-    wire          valid_stage2;
+    reg  [DW-1:0] in1_stage1 [0:PAR-1], in2_stage1 [0:PAR-1];
+    wire [DW-1:0] out_stage1 [0:PAR-1];
+    wire          valid_stage1 [0:PAR-1];
+
+    reg  [DW-1:0] in2_stage2 [0:PAR-1];
+    wire [DW-1:0] out_stage2 [0:PAR-1];
+    wire          valid_stage2 [0:PAR-1];
 
     reg valid_in;
-
-    integer j;
+    integer i, j;
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -87,75 +89,80 @@ module dBx_calc_fp16 #(
                         valid_in <= 0;
                     end
                 end
-
                 CALC: begin
-                    // Stage 1
-                    in1_stage1 <= dt[b*H + h];
-                    in2_stage1 <= Bmat[b*N + n];
-                    valid_in   <= 1;
-
-                    // shift index
-                    b_shift[0] <= b; h_shift[0] <= h; p_shift[0] <= p; n_shift[0] <= n;
-                    for (j = 1; j < M_LAT+M_LAT+1; j = j + 1) begin
-                        b_shift[j] <= b_shift[j-1];
-                        h_shift[j] <= h_shift[j-1];
-                        p_shift[j] <= p_shift[j-1];
-                        n_shift[j] <= n_shift[j-1];
+                    valid_in <= 1;
+                    
+                    for (i = 0; i < PAR; i = i + 1) begin
+                        if (n + i < N) begin
+                            in1_stage1[i] <= dt[b*H + h];
+                            in2_stage1[i] <= Bmat[b*N + (n + i)];
+                            in2_stage2[i] <= x[b_shift[i][M_LAT-1]*H*P + h_shift[i][M_LAT-1]*P + p_shift[i][M_LAT-1]];
+                        end
+                        b_shift[i][0] <= b;
+                        h_shift[i][0] <= h;
+                        p_shift[i][0] <= p;
+                        n_shift[i][0] <= n + i;
+                        for (j = 1; j < M_LAT+M_LAT+1; j = j + 1) begin
+                            b_shift[i][j] <= b_shift[i][j-1];
+                            h_shift[i][j] <= h_shift[i][j-1];
+                            p_shift[i][j] <= p_shift[i][j-1];
+                            n_shift[i][j] <= n_shift[i][j-1];
+                        end
                     end
-
-                    // Stage 2
-                    // in1_stage2 <= out_stage1;
-                    in2_stage2 <= x[b_shift[M_LAT-1]*H*P + h_shift[M_LAT-1]*P + p_shift[M_LAT-1]];
-
-                    // 결과 저장
-                    if (valid_stage2) begin
-                        dBx[b_shift[M_LAT+M_LAT]*H*P*N + h_shift[M_LAT+M_LAT]*P*N + p_shift[M_LAT+M_LAT]*N + n_shift[M_LAT+M_LAT]] <= out_stage2;
+                    for (i = 0; i < PAR; i = i + 1) begin
+                        if (valid_stage2[i]) begin
+                            dBx[b_shift[i][M_LAT*2]*H*P*N + h_shift[i][M_LAT*2]*P*N + p_shift[i][M_LAT*2]*N + n_shift[i][M_LAT*2]] <= out_stage2[i];
+                        end
                     end
-
-                    // Index++
-                    if (n == N-1) begin
+                    if (n + PAR >= N) begin
                         n <= 0;
                         if (p == P-1) begin
                             p <= 0;
                             if (h == H-1) begin
                                 h <= 0;
                                 if (b == B-1) begin
-                                    // state <= DONE;
                                     state <= STAGE_FLUSH;
                                 end else b <= b + 1;
                             end else h <= h + 1;
                         end else p <= p + 1;
-                    end else n <= n + 1;
+                    end else n <= n + PAR;
                 end
-
                 STAGE_FLUSH: begin
                     flush_cnt <= flush_cnt + 1;
-                    for (j = 1; j < M_LAT+M_LAT+1; j = j + 1) begin
-                        b_shift[j] <= b_shift[j-1];
-                        h_shift[j] <= h_shift[j-1];
-                        p_shift[j] <= p_shift[j-1];
-                        n_shift[j] <= n_shift[j-1];
+                    for (i = 0; i < PAR; i = i + 1) begin
+                        if (n + i < N) begin
+                            in2_stage2[i] <= x[b_shift[i][M_LAT-1]*H*P + h_shift[i][M_LAT-1]*P + p];
+                        end
+                        for (j = 1; j < M_LAT+M_LAT+1; j = j + 1) begin
+                            b_shift[i][j] <= b_shift[i][j-1];
+                            h_shift[i][j] <= h_shift[i][j-1];
+                            p_shift[i][j] <= p_shift[i][j-1];
+                            n_shift[i][j] <= n_shift[i][j-1];
+                        end
                     end
-                    in2_stage2 <= x[b_shift[M_LAT-1]*H*P + h_shift[M_LAT-1]*P + p_shift[M_LAT-1]];
-                    if (valid_stage2) begin
-                        dBx[b_shift[M_LAT+M_LAT]*H*P*N + h_shift[M_LAT+M_LAT]*P*N + p_shift[M_LAT+M_LAT]*N + n_shift[M_LAT+M_LAT]] <= out_stage2;
+                    
+                    for (i = 0; i < PAR; i = i + 1) begin
+                        if (valid_stage2[i]) begin
+                            dBx[b_shift[i][M_LAT*2]*H*P*N + h_shift[i][M_LAT*2]*P*N + p_shift[i][M_LAT*2]*N + n_shift[i][M_LAT*2]] <= out_stage2[i];
+                        end
                     end
-                    if (n == N-1) begin
+
+                    if (n + PAR >= N) begin
                         n <= 0;
                         if (p == P-1) begin
                             p <= 0;
                             if (h == H-1) begin
                                 h <= 0;
                                 if (b == B-1) begin
+                                    // state <= STAGE_FLUSH;
                                 end else b <= b + 1;
                             end else h <= h + 1;
                         end else p <= p + 1;
-                    end else n <= n + 1;
+                    end else n <= n + PAR;
                     if (flush_cnt == M_LAT+M_LAT) begin
                         state <= DONE;
                     end
                 end
-
                 DONE: begin
                     done <= 1;
                     state <= IDLE;
@@ -164,24 +171,26 @@ module dBx_calc_fp16 #(
         end
     end
 
-    // === IP 연결 ===
-    fp16_mult_wrapper u_fp16_mul_1 (
-        .clk(clk),
-        .a(in1_stage1),
-        .b(in2_stage1),
-        .valid_in(valid_in),
-        .result(out_stage1),
-        .valid_out(valid_stage1)
-    );
+    generate
+        for (g = 0; g < PAR; g = g + 1) begin : PIPELINE
+            fp16_mult_wrapper mul1 (
+                .clk(clk),
+                .a(in1_stage1[g]),
+                .b(in2_stage1[g]),
+                .valid_in(valid_in),
+                .result(out_stage1[g]),
+                .valid_out(valid_stage1[g])
+            );
 
-    fp16_mult_wrapper u_fp16_mul_2 (
-        .clk(clk),
-        // .a(in1_stage2),
-        .a(out_stage1),
-        .b(in2_stage2),
-        .valid_in(valid_stage1),
-        .result(out_stage2),
-        .valid_out(valid_stage2)
-    );
+            fp16_mult_wrapper mul2 (
+                .clk(clk),
+                .a(out_stage1[g]),
+                .b(in2_stage2[g]),
+                .valid_in(valid_stage1[g]),
+                .result(out_stage2[g]),
+                .valid_out(valid_stage2[g])
+            );
+        end
+    endgenerate
 
 endmodule

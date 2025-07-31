@@ -77,10 +77,12 @@ for i in range(n_chunked, prefix.shape[1]):
 
 # tokens = input_ids[0].tolist()  # ex: [502, 321, 764]
 
-
+average_list = []
 generated = [t.item() for t in input_ids[0]]  # 결과 누적 list
 with torch.no_grad():
     for token_num in range(50):
+        ssm_time = []
+
         seqlen = f_token.shape[1]
         input_tensor = torch.tensor([[f_token]], device=device)
 
@@ -128,14 +130,14 @@ with torch.no_grad():
             h[i] = h[i]._replace(ssm_state=h[i].ssm_state.to(dtype=torch.float16))
 
             # Save datas into .hex
-            if i == 0 and token_num == 0:
-                print(dA.shape)
-                print(dt.shape)
-                print(x.shape)
-                print(B.shape)
-                print(C.shape)
-                print(D.shape)
-                print(h[i].ssm_state.shape)
+            # if i == 0 and token_num == 0:
+            #     print(dA.shape)
+            #     print(dt.shape)
+            #     print(x.shape)
+            #     print(B.shape)
+            #     print(C.shape)
+            #     print(D.shape)
+            #     print(h[i].ssm_state.shape)
             #     save_tensor_fp16_hex(dA,  os.path.join(save_dir, f"{i}_dA.hex"))
             #     save_tensor_fp16_hex(dt,  os.path.join(save_dir, f"{i}_dt.hex"))
             #     save_tensor_fp16_hex(x,   os.path.join(save_dir, f"{i}_x.hex"))
@@ -143,6 +145,8 @@ with torch.no_grad():
             #     save_tensor_fp16_hex(C,   os.path.join(save_dir, f"{i}_C.hex"))
             #     save_tensor_fp16_hex(D,   os.path.join(save_dir, f"{i}_D.hex"))
             #     save_tensor_fp16_hex(h[i].ssm_state, os.path.join(save_dir, f"{i}_ssm_state.hex"))
+
+            t1 = time.perf_counter()
 
             dBx = torch.einsum("bh, bn, bhp -> bhpn", dt, B, x)
 
@@ -158,6 +162,9 @@ with torch.no_grad():
             # if i == 0 and token_num == 0:
             #     save_tensor_fp16_hex(y,   os.path.join(save_dir, f"{i}_y.hex"))
 
+            t2 = time.perf_counter()
+            ssm_time.append(t2 - t1)
+            # print("SSM time: ", ssm_time)
             y = y.to(dtype=torch.float32)
             
 # ====================  SSM Block Finished  ====================
@@ -167,6 +174,7 @@ with torch.no_grad():
 
             residual = residual + y.unsqueeze(1)
 
+        average_list.append(sum(ssm_time) / len(ssm_time))
         residual = model.backbone.norm_f(residual)
         logits = model.lm_head(residual)  # LMHead
         out =  logits[:, :seqlen]
@@ -180,3 +188,4 @@ with torch.no_grad():
         f_token = next_token.unsqueeze(0)
 
 print(tokenizer.decode(generated, skip_special_tokens=True))
+print(f'\nAVG SSM time: {sum(average_list) / len(average_list)}\n')

@@ -33,19 +33,19 @@ h_prev = load_hex_tensor(f"{base_path}/0_ssm_state_copy.hex", (B_, H_, P_, N_))
 
 # 연산
 dBx = torch.einsum("bh, bn, bhp -> bhpn", dt, B, x)
-save_tensor_as_hex(dBx, f"{base_path}/0_dBx_copy_python.hex")
+# save_tensor_as_hex(dBx, f"{base_path}/0_dBx_copy_python.hex")
 
 h_new = h_prev * rearrange(dA, "b h -> b h 1 1") + dBx
-save_tensor_as_hex(h_new, f"{base_path}/0_h_new_copy_python.hex")
+# save_tensor_as_hex(h_new, f"{base_path}/0_h_new_copy_python.hex")
 
 y = torch.einsum("bhpn, bn -> bhp", h_new, C)
-save_tensor_as_hex(y, f"{base_path}/0_hc_copy_python.hex")
+# save_tensor_as_hex(y, f"{base_path}/0_hc_copy_python.hex")
 
 y = y + rearrange(D, "h -> h 1") * x
 y = rearrange(y, "b h p -> b (h p)")
 
 # 결과 저장
-save_tensor_as_hex(y, f"{base_path}/0_y_out_copy_python.hex")
+# save_tensor_as_hex(y, f"{base_path}/0_y_out_copy_python.hex")
 print("(❁´◡`❁) 연산 완료! 결과 저장 위치:", f"{base_path}/0_y_out_copy_python.hex")
 print("y_Python =\n", y.view(H_, P_))
 y_out_copy = load_hex_tensor(f"{base_path}/0_y_out_copy.hex", (B_, H_, P_))

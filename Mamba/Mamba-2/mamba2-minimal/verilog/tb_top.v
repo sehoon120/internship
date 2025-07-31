@@ -3,9 +3,9 @@
 // 수정중
 module testbench_fp16_tile;
 
-    parameter B = 1, H = 24, P = 64, N = 128;
-    // parameter B = 1, H = 16, P = 4, N = 16;
-    parameter H_tile = 4, P_tile = 4;
+    // parameter B = 1, H = 24, P = 64, N = 128;
+    parameter B = 1, H = 16, P = 4, N = 16;
+    parameter H_tile = 16, P_tile = 4;
     parameter DW = 16;
 
     reg clk;
@@ -70,13 +70,13 @@ module testbench_fp16_tile;
         $display("==== FP16 SSM Block Tiled Simulation ====");
         clk = 0; rst = 1; start = 0; add_valid_in = 0; waiting_for_add = 0;
 
-        $readmemh("C:/Internship/intermediate_datas/0_dt.hex",     dt_mem);
-        $readmemh("C:/Internship/intermediate_datas/0_dA.hex",     dA_mem);
-        $readmemh("C:/Internship/intermediate_datas/0_B.hex",   Bmat_mem);
-        $readmemh("C:/Internship/intermediate_datas/0_C.hex",      C_mem);
-        $readmemh("C:/Internship/intermediate_datas/0_D.hex",      D_mem);
-        $readmemh("C:/Internship/intermediate_datas/0_x.hex",      x_mem);
-        $readmemh("C:/Internship/intermediate_datas/0_ssm_state.hex", h_prev_mem);
+        $readmemh("C:/Internship/intermediate_datas/0_dt_copy.hex",     dt_mem);
+        $readmemh("C:/Internship/intermediate_datas/0_dA_copy.hex",     dA_mem);
+        $readmemh("C:/Internship/intermediate_datas/0_B_copy.hex",   Bmat_mem);
+        $readmemh("C:/Internship/intermediate_datas/0_C_copy.hex",      C_mem);
+        $readmemh("C:/Internship/intermediate_datas/0_D_copy.hex",      D_mem);
+        $readmemh("C:/Internship/intermediate_datas/0_x_copy.hex",      x_mem);
+        $readmemh("C:/Internship/intermediate_datas/0_ssm_state_copy.hex", h_prev_mem);
 
         for (i = 0; i < B*H*P; i = i + 1) y_accum[i] = 0;
 
@@ -164,7 +164,7 @@ module testbench_fp16_tile;
 
         #130
 
-        fout = $fopen("C:/Internship/intermediate_datas/0_y_out.hex", "w");
+        fout = $fopen("C:/Internship/intermediate_datas/0_y_out_copy.hex", "w");
         for (i = 0; i < B*H*P; i = i + 1) $fdisplay(fout, "%04h", y_accum[i]);
         $fclose(fout);
 
