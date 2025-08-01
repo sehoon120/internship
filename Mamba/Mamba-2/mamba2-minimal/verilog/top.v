@@ -36,7 +36,7 @@ module ssm_block_fp16_top #(
     output reg  done
 );
 
-    // FSM stage 관리
+    // FSM stage �?�?
     reg [2:0] stage;
     localparam STAGE_IDLE   = 0,
                STAGE_DBX    = 1,
@@ -46,15 +46,17 @@ module ssm_block_fp16_top #(
                STAGE_DONE   = 5;
 
     // 중간 버퍼
-    wire done_dBx, done_update, done_out, done_res;
+    wire done_dBx, done_mul, done_add, done_out, done_res, done_hC;
     wire [B*H*P*N*DW-1:0] dBx_flat;
     wire [B*H*P*N*DW-1:0] h_next_flat;
     wire [B*H*P*DW-1:0]   y_tmp_flat;
+    wire [B*H*P*N*DW-1:0] h_mul_flat;
+    wire [B*H*P*N*DW-1:0] hC_flat;
 
     reg stage_dBx_prev, stage_ssm_prev, stage_output_prev, stage_residual_prev;
     wire start_dBx, start_ssm, start_output, start_residual;
 
-    // 펄스 생성: 해당 단계로 처음 진입한 순간에만 1
+    // ?��?�� ?��?��: ?��?�� ?��계로 처음 진입?�� ?��간에�? 1
     assign start_dBx      = (stage == STAGE_DBX)    && !stage_dBx_prev;
     assign start_ssm      = (stage == STAGE_UPDATE) && !stage_ssm_prev;
     assign start_output   = (stage == STAGE_YCALC)  && !stage_output_prev;
@@ -72,7 +74,7 @@ module ssm_block_fp16_top #(
                         stage <= STAGE_DBX;
                 end
                 STAGE_DBX:    if (done_dBx)    stage <= STAGE_UPDATE;
-                STAGE_UPDATE: if (done_update) stage <= STAGE_YCALC;
+                STAGE_UPDATE: if (done_add) stage <= STAGE_YCALC;
                 STAGE_YCALC:  if (done_out)    stage <= STAGE_RESADD;
                 STAGE_RESADD: if (done_res)    stage <= STAGE_DONE;
                 STAGE_DONE: begin
@@ -104,23 +106,41 @@ module ssm_block_fp16_top #(
         .dBx_flat(dBx_flat), .done(done_dBx)
     );
 
+    dAh #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_dAh (
+        .clk(clk), .rst(rst), .start(start_dBx), .dBx_sig(done_dBx),
+        .dA_flat(dA_flat), .h_prev_flat(h_prev_flat),
+        .h_mul_flat(h_mul_flat), .done(done_mul)
+    );
+
+    dAh_dBx #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .A_LAT(A_LAT)) u_dAh_dBx (
+        .clk(clk), .rst(rst), .start1(done_dBx), .start2(done_mul),
+        .h_mul_flat(h_mul_flat), .dBx_flat(dBx_flat),
+        .h_next_flat(h_next_flat), .done(done_add)
+    );
+
     // h_next = h_prev × dA + dBx
-    ssm_update_fp16 #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_upd (
-        .clk(clk), .rst(rst), .start(start_ssm),
-        .dA_flat(dA_flat), .h_prev_flat(h_prev_flat), .dBx_flat(dBx_flat),
-        .h_next_flat(h_next_flat), .done(done_update)
+    // ssm_update_fp16 #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_upd (
+    //     .clk(clk), .rst(rst), .start(start_ssm),
+    //     .dA_flat(dA_flat), .h_prev_flat(h_prev_flat), .dBx_flat(dBx_flat),
+    //     .h_next_flat(h_next_flat), .done(done_update)
+    // );
+
+    hC #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_hC (
+        .clk(clk), .rst(rst), .start(done_add),
+        .C_flat(C_flat), .h_flat(h_next_flat),
+        .hC_flat(hC_flat), .done(done_hC)
     );
 
     // y_tmp = einsum(h_next × C)
     output_calc_fp16 #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_out (
-        .clk(clk), .rst(rst), .start(start_output),
+        .clk(clk), .rst(rst), .start(done_add),
         .h_flat(h_next_flat), .C_flat(C_flat),
         .y_flat(y_tmp_flat), .done(done_out)
     );
 
     // y_out = y_tmp + D × x
     residual_add_fp16 #(.B(B), .H(H), .P(P), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_res (
-        .clk(clk), .rst(rst), .start(start_residual),
+        .clk(clk), .rst(rst), .start(done_out),
         .y_in_flat(y_tmp_flat), .x_flat(x_flat), .D_flat(D_flat),
         .y_out_flat(y_flat), .done(done_res)
     );

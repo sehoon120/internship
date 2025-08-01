@@ -6,6 +6,8 @@
 // - 8-way 병렬 multiplier ?��?��
 // - Index shift pipeline 구조 ?���?
 // 
+// dB는 더 빨리 계산되기에 이 부분 단축 가능
+//
 // ================================================================================
 
 module dBx_calc_fp16 #(
@@ -15,7 +17,7 @@ module dBx_calc_fp16 #(
     parameter N = 4,
     parameter DW = 16,
     parameter M_LAT = 6,
-    parameter PAR = 8
+    parameter PAR = 16
 )(
     input  wire clk,
     input  wire rst,
@@ -25,7 +27,7 @@ module dBx_calc_fp16 #(
     input  wire [B*N*DW-1:0]    Bmat_flat,
     input  wire [B*H*P*DW-1:0]  x_flat,
 
-    output reg  [B*H*P*N*DW-1:0] dBx_flat,
+    output wire [B*H*P*N*DW-1:0] dBx_flat,
     output reg  done
 );
 
@@ -46,7 +48,7 @@ module dBx_calc_fp16 #(
             assign x[g] = x_flat[(g+1)*DW-1 -: DW];
         end
         for (g = 0; g < B*H*P*N; g = g + 1) begin
-            always @(*) dBx_flat[(g+1)*DW-1 -: DW] = dBx[g];
+            assign dBx_flat[(g+1)*DW-1 -: DW] = dBx[g];
         end
     endgenerate
 
