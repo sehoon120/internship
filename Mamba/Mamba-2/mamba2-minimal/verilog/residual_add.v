@@ -1,5 +1,6 @@
 // y_out[b*H*P + h*H*P + p] = y_in[b*H*P + h*H*P + p] + D[h] × x[b*H*P + h*H*P + p];
 // residual_add.v
+// 이거 mul, add 둘로 나누기
 
 module residual_add_fp16 #(
     parameter B = 1,

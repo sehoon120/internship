@@ -41,26 +41,28 @@ module ssm_block_fp16_top #(
     localparam STAGE_IDLE   = 0,
                STAGE_DBX    = 1,
                STAGE_UPDATE = 2,
-               STAGE_YCALC  = 3,
-               STAGE_RESADD = 4,
-               STAGE_DONE   = 5;
+               STAGE_HC     = 3,
+               STAGE_YCALC  = 4,
+               STAGE_RESADD = 5,
+               STAGE_DONE   = 6;
 
     // 중간 버퍼
-    wire done_dBx, done_mul, done_add, done_out, done_res, done_hC;
+    wire done_dBx, done_mul, done_add, done_out, done_res, done_hC, done_acc;
     wire [B*H*P*N*DW-1:0] dBx_flat;
     wire [B*H*P*N*DW-1:0] h_next_flat;
     wire [B*H*P*DW-1:0]   y_tmp_flat;
+    wire [B*H*P*DW-1:0]   y_sum_flat;
     wire [B*H*P*N*DW-1:0] h_mul_flat;
     wire [B*H*P*N*DW-1:0] hC_flat;
 
-    reg stage_dBx_prev, stage_ssm_prev, stage_output_prev, stage_residual_prev;
-    wire start_dBx, start_ssm, start_output, start_residual;
+    reg stage_dBx_prev, stage_dAh_dBx, stage_hC, stage_acc, stage_y;
+    wire start_dBx, start_ssm, start_hc, start_output, start_residual;
 
-    // ?��?�� ?��?��: ?��?�� ?��계로 처음 진입?�� ?��간에�? 1
     assign start_dBx      = (stage == STAGE_DBX)    && !stage_dBx_prev;
-    assign start_ssm      = (stage == STAGE_UPDATE) && !stage_ssm_prev;
-    assign start_output   = (stage == STAGE_YCALC)  && !stage_output_prev;
-    assign start_residual = (stage == STAGE_RESADD) && !stage_residual_prev;
+    assign start_ssm      = (stage == STAGE_UPDATE) && !stage_dAh_dBx;
+    assign start_hc      =  (stage == STAGE_HC)     && !stage_hC;
+    assign start_output   = (stage == STAGE_YCALC)  && !stage_acc;
+    assign start_residual = (stage == STAGE_RESADD) && !stage_y;
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -74,8 +76,9 @@ module ssm_block_fp16_top #(
                         stage <= STAGE_DBX;
                 end
                 STAGE_DBX:    if (done_dBx)    stage <= STAGE_UPDATE;
-                STAGE_UPDATE: if (done_add) stage <= STAGE_YCALC;
-                STAGE_YCALC:  if (done_out)    stage <= STAGE_RESADD;
+                STAGE_UPDATE: if (done_add)    stage <= STAGE_HC;
+                STAGE_HC:     if (done_hC)     stage <= STAGE_YCALC;
+                STAGE_YCALC:  if (done_acc)    stage <= STAGE_RESADD;
                 STAGE_RESADD: if (done_res)    stage <= STAGE_DONE;
                 STAGE_DONE: begin
                     done <= 1;
@@ -88,14 +91,16 @@ module ssm_block_fp16_top #(
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             stage_dBx_prev      <= 0;
-            stage_ssm_prev      <= 0;
-            stage_output_prev   <= 0;
-            stage_residual_prev <= 0;
+            stage_dAh_dBx      <= 0;
+            stage_hC    <= 0;
+            stage_acc   <= 0;
+            stage_y <= 0;
         end else begin
             stage_dBx_prev      <= (stage == STAGE_DBX);
-            stage_ssm_prev      <= (stage == STAGE_UPDATE);
-            stage_output_prev   <= (stage == STAGE_YCALC);
-            stage_residual_prev <= (stage == STAGE_RESADD);
+            stage_dAh_dBx      <= (stage == STAGE_UPDATE);
+            stage_hC    <= (stage == STAGE_HC);
+            stage_acc   <= (stage == STAGE_YCALC);
+            stage_y <= (stage == STAGE_RESADD);
         end
     end
 
@@ -131,17 +136,23 @@ module ssm_block_fp16_top #(
         .hC_flat(hC_flat), .done(done_hC)
     );
 
-    // y_tmp = einsum(h_next × C)
-    output_calc_fp16 #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_out (
-        .clk(clk), .rst(rst), .start(done_add),
-        .h_flat(h_next_flat), .C_flat(C_flat),
-        .y_flat(y_tmp_flat), .done(done_out)
+    accumulator #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .ADD_LAT(A_LAT)) u_acc (
+        .clk(clk), .rst(rst), .start(done_hC),
+        .hC_flat(hC_flat),
+        .hC_sum_flat(y_sum_flat), .done(done_acc)
     );
+
+    // // y_tmp = einsum(h_next × C)
+    // output_calc_fp16 #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_out (
+    //     .clk(clk), .rst(rst), .start(done_add),
+    //     .h_flat(h_next_flat), .C_flat(C_flat),
+    //     .y_flat(y_tmp_flat), .done(done_out)
+    // );
 
     // y_out = y_tmp + D × x
     residual_add_fp16 #(.B(B), .H(H), .P(P), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_res (
-        .clk(clk), .rst(rst), .start(done_out),
-        .y_in_flat(y_tmp_flat), .x_flat(x_flat), .D_flat(D_flat),
+        .clk(clk), .rst(rst), .start(done_acc),
+        .y_in_flat(y_sum_flat), .x_flat(x_flat), .D_flat(D_flat),
         .y_out_flat(y_flat), .done(done_res)
     );
 

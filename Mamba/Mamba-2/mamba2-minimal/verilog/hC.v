@@ -1,5 +1,4 @@
-// 이거 고치는중 원인은 아직 찾아보지도 않음
-// 아마 고친거같기도?? 다음에 보고 돌려서 확인해보기
+// h*C
 
 module hC #(
     parameter B = 1,
@@ -17,7 +16,7 @@ module hC #(
     input  wire [B*H*P*N*DW-1:0] h_flat,
     input  wire [B*N*DW-1:0]     C_flat,
 
-    output wire [B*H*P*DW-1:0]   hC_flat,
+    output wire [B*H*P*N*DW-1:0]   hC_flat,
     output reg  done
 );
 
@@ -81,7 +80,7 @@ module hC #(
                     for (i = 0; i < PAR; i = i + 1) begin
                         if (n + i < N) begin
                             in1_mul[i] <= h[b*H*P*N + h_idx*P*N + p*N + n + i];
-                            in2_mul[i] <= C[b*N + n];    
+                            in2_mul[i] <= C[b*N + n + i];    
                         end
                         b_shift[i][0] <= b;
                         h_shift[i][0] <= h_idx;

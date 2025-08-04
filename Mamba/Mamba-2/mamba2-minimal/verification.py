@@ -39,6 +39,8 @@ h_new = h_prev * rearrange(dA, "b h -> b h 1 1") + dBx
 # save_tensor_as_hex(h_new, f"{base_path}/0_h_new_copy_python.hex")
 
 y = torch.einsum("bhpn, bn -> bhp", h_new, C)
+# acac = torch.einsum("bhpn, bn -> bhpn", h_new, C)
+# save_tensor_as_hex(acac, f"{base_path}/0_acac_copy_python.hex")
 # save_tensor_as_hex(y, f"{base_path}/0_hc_copy_python.hex")
 
 y = y + rearrange(D, "h -> h 1") * x
