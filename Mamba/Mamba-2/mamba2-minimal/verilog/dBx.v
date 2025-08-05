@@ -85,6 +85,7 @@ module dBx_calc_fp16 #(
             case (state)
                 IDLE: begin
                     done <= 0;
+                    flush_cnt <= 0;
                     if (start) begin
                         b <= 0; h <= 0; p <= 0; n <= 0;
                         state <= CALC;

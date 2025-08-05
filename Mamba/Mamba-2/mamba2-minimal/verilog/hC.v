@@ -69,6 +69,7 @@ module hC #(
             case (state)
                 IDLE: begin
                     done <= 0;
+                    flush_cnt <= 0;
                     valid_in <= 0;
                     n <= 0; b <= 0; h_idx <= 0; p <= 0;
                     // for (i = 0; i < B*H*P; i = i + 1) acc[i] <= 0; n <= 0; b <= 0; h_idx <= 0; p <= 0;

@@ -9,7 +9,7 @@ module y_res #(
     parameter DW = 16,
     // parameter M_LAT = 6,
     parameter A_LAT = 11,
-    PAR_H = 16
+    PAR_H = 12
 )(
     input  wire clk,
     input  wire rst,
@@ -73,6 +73,7 @@ module y_res #(
                 IDLE: begin
                     done <= 0;
                     valid_in <= 0;
+                    flush_cnt <= 0;
                     if (start) begin
                         b <= 0; h <= 0; p <= 0;
                         state <= CALC;

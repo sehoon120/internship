@@ -26,17 +26,17 @@ def print_tensor_fp16_hex_inline(tensor):
 
 
 B_ = 1
-H_ = 16
+H_ = 24
 P_ = 4
-N_ = 16
+N_ = 32
 
 # B_ = 1
 # H_ = 24
 # P_ = 64
 # N_ = 128
 
-h_slice = 4
-p_slice = 4
+h_slice = 12
+p_slice = 2
 n_slice = 16  # 128  # 이 축으로는 slice 불가
 
 # 경로 지정

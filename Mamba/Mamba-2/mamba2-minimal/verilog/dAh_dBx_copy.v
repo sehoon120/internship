@@ -54,6 +54,7 @@ module dAh_dBx #(parameter B=1, H=4, P=4, N=4, DW=16, A_LAT=11, PAR = 16) (
             case (state)
                 IDLE: begin
                     done <= 0;
+                    flush_cnt <= 0;
                     valid_in <= 0;
                     if (start) begin
                         b <= 0; h <= 0; p <= 0; n <= 0;

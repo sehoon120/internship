@@ -9,7 +9,7 @@ module xD #(
     parameter DW = 16,
     parameter M_LAT = 6,
     // parameter A_LAT = 11,
-    parameter PAR_H = 16
+    parameter PAR_H = 12
 )(
     input  wire clk,
     input  wire rst,
@@ -25,7 +25,7 @@ module xD #(
 
     localparam SHIFT_DEPTH = (M_LAT + 1);
 
-    // ?‚´ë¶? ë°°ì—´ ?„ ?–¸
+    // ?ï¿½ï¿½ï¿½? ë°°ì—´ ?ï¿½ï¿½?ï¿½ï¿½
     // wire [DW-1:0] y_in [0:B*H*P-1];
     wire [DW-1:0] x     [0:B*H*P-1];
     wire [DW-1:0] D     [0:H-1];
@@ -54,7 +54,7 @@ module xD #(
     reg [9:0] h_shift[0:PAR_H-1][0:SHIFT_DEPTH-1];
     reg [9:0] p_shift[0:PAR_H-1][0:SHIFT_DEPTH-1];
 
-    // IP ?ž…? ¥/ì¶œë ¥
+    // IP ?ï¿½ï¿½?ï¿½ï¿½/ì¶œë ¥
     reg  [DW-1:0] in1_mul[0:PAR_H-1], in2_mul[0:PAR_H-1];
     wire [DW-1:0] out_mul[0:PAR_H-1];
     wire          valid_mul[0:PAR_H-1];
@@ -79,6 +79,7 @@ module xD #(
                 IDLE: begin
                     done <= 0;
                     valid_in <= 0;
+                    flush_cnt <= 0;
                     if (start) begin
                         b <= 0; h <= 0; p <= 0;
                         state <= CALC;
@@ -88,7 +89,7 @@ module xD #(
                 CALC: begin
                     valid_in <= 1;
 
-                    // ê³±ì…ˆ ?ž…? ¥
+                    // ê³±ì…ˆ ?ï¿½ï¿½?ï¿½ï¿½
                     for (i = 0; i < PAR_H; i = i + 1) begin
                         if (h + i < H) begin
                             // Stage 1: D Ã— x
@@ -107,14 +108,14 @@ module xD #(
                         end
                     end
 
-                    // ê²°ê³¼ ???ž¥
+                    // ê²°ê³¼ ???ï¿½ï¿½
                     for (i = 0; i < PAR_H; i = i + 1) begin
                         if (valid_mul[i]) begin
                             xD[b_shift[i][SHIFT_DEPTH-1]*H*P + h_shift[i][SHIFT_DEPTH-1]*P + p_shift[i][SHIFT_DEPTH-1]] <= out_mul[i];
                         end
                     end
 
-                    // ?¸?±?Š¤ ì¦ê?
+                    // ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì¦ï¿½?
                     if (p == P-1) begin
                         p <= 0;
                         if (h + PAR_H >= H) begin
@@ -156,7 +157,7 @@ module xD #(
 
                 DONE: begin
                     done <= 1;
-                    if (acc_sig == 1) state <= IDLE;  // acc stage ??‚ ?•Œ ì¢…ë£Œ
+                    if (acc_sig == 1) state <= IDLE;  // acc stage ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì¢…ë£Œ
                 end
             endcase
         end

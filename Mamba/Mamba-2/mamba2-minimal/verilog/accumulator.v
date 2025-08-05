@@ -1,6 +1,8 @@
 // N = 128 기준으로 생성
 // N = 16 or 128에 따라 다른 구조를 사용하도록 수동 교체 필요
 // 나중에 이것도 병렬 fp16_adder_tree_128 모듈 사용하도록 개선 가능할것으로 보임
+// 이거 지금 N=32 인 상태임 그런데 이거 안건드렸는데 왜 되는거지????
+// 원인 확인해보기
 
 module accumulator #(
     parameter B  = 1,
@@ -10,7 +12,7 @@ module accumulator #(
     parameter DW = 16,
     parameter ADD_LAT = 11,
     // parameter TREE_DEPTH = 7,    // N = 128일시 교체
-    parameter TREE_DEPTH = 4,                      // log2(N)
+    parameter TREE_DEPTH = 5,                      // log2(N)
     parameter TREE_LAT = ADD_LAT * TREE_DEPTH      // total latency through the tree
 )(
     input  wire                   clk,
@@ -57,7 +59,14 @@ module accumulator #(
             tile_index_in <= 0;
             valid_in <= 0;
         end else begin
-            if (start) feeding <= 1;
+            // if (start) feeding <= 1;
+            if (start) begin
+                feeding <= 1;
+                tile_index_in <= 0;
+            end else if (feeding && tile_index_in == TOTAL_TILES) begin
+                feeding <= 0;
+            end
+
 
             if (feeding && tile_index_in < TOTAL_TILES) begin
                 for (i = 0; i < N; i = i + 1)
@@ -76,7 +85,7 @@ module accumulator #(
     // Adder tree instantiation
     wire [DW-1:0] tree_sum;
     wire valid_out;
-    fp16_adder_tree_128 #(.DW(DW)) tree (
+    fp16_adder_tree_128 #(.DW(DW), .N(N)) tree (
         .clk(clk),
         .rst(rst),
         .valid_in(valid_in),
@@ -107,8 +116,13 @@ module accumulator #(
                 done_pulse <= 0;
 
             if (start) begin
+                // 새로운 run 시작 시 초기화
                 tile_index_out <= 0;
-                done_pulse_ack <= 0;  // 새로운 run 시작 시 초기화
+                tile_index_in  <= 0;
+                done           <= 0;
+                done_pulse     <= 0;
+                done_pulse_ack <= 0;
+                feeding        <= 1;
             end
 
             done <= done_pulse;
@@ -122,7 +136,7 @@ endmodule
 // Assumes latency-insensitive, pipelined valid_in → valid_out structure
 // 128일시 N = 128로 교체, 주석 해제 등
 
-module fp16_adder_tree_128 #(parameter DW=16, N=16)(
+module fp16_adder_tree_128 #(parameter DW=16, N=32)(    // N에 따라 교체
     input  wire clk,
     input  wire rst,
     input  wire valid_in,
@@ -145,7 +159,7 @@ module fp16_adder_tree_128 #(parameter DW=16, N=16)(
     generate
         for (i = 0; i < N; i = i + 1) begin : UNPACK
             // assign in_level0[i] = in_flat[(i+1)*DW-1 -: DW]; // 128일시 교체
-            assign level3[i] = in_flat[(i+1)*DW-1 -: DW];
+            assign level2[i] = in_flat[(i+1)*DW-1 -: DW];
         end
     endgenerate
 
@@ -154,7 +168,7 @@ module fp16_adder_tree_128 #(parameter DW=16, N=16)(
     wire valid_l1, valid_l2, valid_l3, valid_l4, valid_l5, valid_l6, valid_l7;
 
     // assign valid_l1 = valid_in;  // 128일시 교체
-    assign valid_l4 = valid_in;
+    assign valid_l3 = valid_in;
 
     // // 128일시 주석 해제
     // // Level 1 (128 → 64)
@@ -185,19 +199,19 @@ module fp16_adder_tree_128 #(parameter DW=16, N=16)(
     //     end
     // endgenerate
 
-    // // Level 3 (32 → 16)
-    // generate
-    //     for (i = 0; i < 16; i = i + 1) begin : L3
-    //         fp16_add_wrapper add (
-    //             .clk(clk),
-    //             .a(level2[2*i]),
-    //             .b(level2[2*i+1]),
-    //             .valid_in(valid_l3),
-    //             .result(level3[i]),
-    //             .valid_out(valid_l4)
-    //         );
-    //     end
-    // endgenerate
+    // Level 3 (32 → 16)
+    generate
+        for (i = 0; i < 16; i = i + 1) begin : L3
+            fp16_add_wrapper add (
+                .clk(clk),
+                .a(level2[2*i]),
+                .b(level2[2*i+1]),
+                .valid_in(valid_l3),
+                .result(level3[i]),
+                .valid_out(valid_l4)
+            );
+        end
+    endgenerate
 
     // Level 4 (16 → 8)
     generate
