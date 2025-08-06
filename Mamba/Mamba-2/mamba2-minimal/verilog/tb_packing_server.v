@@ -51,13 +51,13 @@ module testbench_fp16_wrapper;
         $display("==== FP16 SSM Block Full Wrapper Testbench ====");
         clk = 0; rst = 1; start = 0;
 
-        $readmemh("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dt.hex",     dt_mem);
-        $readmemh("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dA.hex",     dA_mem);
-        $readmemh("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_B.hex",      Bmat_mem);
-        $readmemh("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_C.hex",      C_mem);
-        $readmemh("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_D.hex",      D_mem);
-        $readmemh("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_x.hex",      x_mem);
-        $readmemh("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_ssm_state.hex", h_prev_mem);
+        $readmemh("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dt.hex",     dt_mem);
+        $readmemh("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dA.hex",     dA_mem);
+        $readmemh("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_B.hex",      Bmat_mem);
+        $readmemh("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_C.hex",      C_mem);
+        $readmemh("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_D.hex",      D_mem);
+        $readmemh("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_x.hex",      x_mem);
+        $readmemh("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_ssm_state.hex", h_prev_mem);
 
          // Flatten
         for (i = 0; i < B*H; i = i + 1) begin
@@ -86,7 +86,7 @@ module testbench_fp16_wrapper;
 
         $display("✅ Wrapper done. Writing result...");
         
-        fout = $fopen("C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_y_out.hex", "w");
+        fout = $fopen("/home/intern-2501//internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_y_out.hex", "w");
         for (i = 0; i < B*H*P; i = i + 1)
             $fdisplay(fout, "%04h", y_flat_out[DW*i +: DW]);
         $fclose(fout);
