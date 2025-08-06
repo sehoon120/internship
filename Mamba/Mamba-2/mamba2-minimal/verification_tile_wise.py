@@ -37,7 +37,7 @@ N_ = 32
 
 h_slice = 12
 p_slice = 2
-n_slice = 16  # 128  # 이 축으로는 slice 불가
+n_slice = 32  # 128  # 이 축으로는 slice 불가
 
 # 경로 지정
 base_path = "C:/Internship/intermediate_datas"
@@ -63,18 +63,21 @@ for h_idx in range(0, H_, h_slice):
             h_tile = h_prev[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice, n_idx:n_idx+n_slice]
             # print_tensor_fp16_hex_inline(h_tile)
             # tile tensor로 변경해서 연산
-            dBx_tile = torch.einsum("bh, bn, bhp -> bhpn", dt_tile, B_tile, x_tile)
+            dx_tile = torch.einsum("bh, bhp -> bhp", dt_tile, x_tile)
+            dxB_tile = torch.einsum("bhp, bn -> bhpn", dx_tile, B_tile)
+            # dBx_tile = torch.einsum("bh, bn, bhp -> bhpn", dt_tile, B_tile, x_tile)
             # save_tensor_as_hex(dBx_tile, f"{base_path}/0_dBx_python.hex")
-            # print('dBx: ')
-            # print_tensor_fp16_hex_inline(dBx_tile)
+            # print('dx: ')
+            # print_tensor_fp16_hex_inline(dx_tile)
             
-            h_new = h_tile * rearrange(dA_tile, "b h -> b h 1 1") + dBx_tile
+            h_new = h_tile * rearrange(dA_tile, "b h -> b h 1 1") + dxB_tile
             # save_tensor_as_hex(h_new, f"{base_path}/0_h_new_python.hex")
             # print('h_new: ')
             # print_tensor_fp16_hex_inline(h_new)
 
             y = torch.einsum("bhpn, bn -> bhp", h_new, C_tile)
-            # save_tensor_as_hex(y, f"{base_path}/0_hc_python.hex")
+            # if h_idx == 0 and p_idx == 0:
+                # save_tensor_as_hex(y, f"{base_path}/0_hc_python.hex")
             # print('y: ')
             # print_tensor_fp16_hex_inline(y)
 

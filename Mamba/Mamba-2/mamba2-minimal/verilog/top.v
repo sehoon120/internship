@@ -39,15 +39,17 @@ module ssm_block_fp16_top #(
     // FSM stage �?�?
     reg [2:0] stage;
     localparam STAGE_IDLE   = 0,
-               STAGE_DBX    = 1,
-               STAGE_UPDATE = 2,
-               STAGE_HC     = 3,
-               STAGE_YCALC  = 4,
-               STAGE_RESADD = 5,
-               STAGE_DONE   = 6;
+               STAGE_DX     = 1,
+               STAGE_DBX    = 2,
+               STAGE_UPDATE = 3,
+               STAGE_HC     = 4,
+               STAGE_YCALC  = 5,
+               STAGE_RESADD = 6,
+               STAGE_DONE   = 7;
 
     // 중간 버퍼
-    wire done_dBx, done_mul, done_add, done_out, done_res, done_hC, done_acc, done_xD;
+    wire done_dx, done_dBx, done_mul, done_add, done_out, done_res, done_hC, done_acc, done_xD;
+    wire [B*H*P*DW-1:0]   dx_flat;
     wire [B*H*P*N*DW-1:0] dBx_flat;
     wire [B*H*P*N*DW-1:0] h_next_flat;
     wire [B*H*P*DW-1:0]   y_tmp_flat;
@@ -56,12 +58,13 @@ module ssm_block_fp16_top #(
     wire [B*H*P*N*DW-1:0] hC_flat;
     wire [B*H*P*DW-1:0]   xD_flat;
 
-    reg stage_dBx_prev, stage_dAh_dBx, stage_hC, stage_acc, stage_y;
-    wire start_dBx, start_ssm, start_hc, start_output, start_residual;
+    reg stage_dx_prev, stage_dBx_prev, stage_dAh_dBx, stage_hC, stage_acc, stage_y;
+    wire start_dx, start_dBx, start_ssm, start_hc, start_output, start_residual;
 
+    assign start_dx       = (stage == STAGE_DX)     && !stage_dx_prev;
     assign start_dBx      = (stage == STAGE_DBX)    && !stage_dBx_prev;
     assign start_ssm      = (stage == STAGE_UPDATE) && !stage_dAh_dBx;
-    assign start_hc      =  (stage == STAGE_HC)     && !stage_hC;
+    assign start_hc       = (stage == STAGE_HC)     && !stage_hC;
     assign start_output   = (stage == STAGE_YCALC)  && !stage_acc;
     assign start_residual = (stage == STAGE_RESADD) && !stage_y;
 
@@ -74,8 +77,9 @@ module ssm_block_fp16_top #(
                 STAGE_IDLE: begin
                     done <= 0;
                     if (start)
-                        stage <= STAGE_DBX;
+                        stage <= STAGE_DX;
                 end
+                STAGE_DX:     if (done_dx)     stage <= STAGE_DBX;
                 STAGE_DBX:    if (done_dBx)    stage <= STAGE_UPDATE;
                 STAGE_UPDATE: if (done_add)    stage <= STAGE_HC;
                 STAGE_HC:     if (done_hC)     stage <= STAGE_YCALC;
@@ -91,12 +95,14 @@ module ssm_block_fp16_top #(
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
+            stage_dx_prev       <= 0;
             stage_dBx_prev      <= 0;
-            stage_dAh_dBx      <= 0;
+            stage_dAh_dBx       <= 0;
             stage_hC    <= 0;
             stage_acc   <= 0;
             stage_y <= 0;
         end else begin
+            stage_dx_prev       <= (stage == STAGE_DX);
             stage_dBx_prev      <= (stage == STAGE_DBX);
             stage_dAh_dBx      <= (stage == STAGE_UPDATE);
             stage_hC    <= (stage == STAGE_HC);
@@ -106,14 +112,20 @@ module ssm_block_fp16_top #(
     end
 
     // dBx 계산
-    dBx_calc_fp16 #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_dBx (
-        .clk(clk), .rst(rst), .start(start_dBx),
-        .dt_flat(dt_flat), .Bmat_flat(Bmat_flat), .x_flat(x_flat),
+    dx #(.B(B), .H(H), .P(P), .DW(DW), .M_LAT(M_LAT)) u_dx (
+        .clk(clk), .rst(rst), .start(start_dx),
+        .dt_flat(dt_flat), .x_flat(x_flat),
+        .dx_flat(dx_flat), .done(done_dx)
+    );
+
+    dxB #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_dxB (
+        .clk(clk), .rst(rst), .start(done_dx),
+        .Bmat_flat(Bmat_flat), .dx_flat(dx_flat),
         .dBx_flat(dBx_flat), .done(done_dBx)
     );
 
     dAh #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_dAh (
-        .clk(clk), .rst(rst), .start(start_dBx), .dBx_sig(done_dBx),
+        .clk(clk), .rst(rst), .start(start_dx), .dBx_sig(done_dBx),
         .dA_flat(dA_flat), .h_prev_flat(h_prev_flat),
         .h_mul_flat(h_mul_flat), .done(done_mul)
     );
