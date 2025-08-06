@@ -163,13 +163,13 @@ module ssm_block_fp16_top #(
     // );
 
     // xD = x*D
-    xD #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_dxD (
+    xD #(.B(B), .H(H), .P(P), .DW(DW), .M_LAT(M_LAT)) u_dxD (
         .clk(clk), .rst(rst), .start(done_add), .acc_sig(done_acc),
         .D_flat(D_flat), .x_flat(x_flat),
         .xD_flat(xD_flat), .done(done_xD)
     );
 
-    y_res #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .A_LAT(A_LAT)) u_y_res (
+    y_res #(.B(B), .H(H), .P(P), .DW(DW), .A_LAT(A_LAT)) u_y_res (
         .clk(clk), .rst(rst), .start1(done_acc), .start2(done_xD),
         .y_in_flat(y_sum_flat), .xD_flat(xD_flat),
         .y_out_flat(y_flat), .done(done_res)
