@@ -25,29 +25,29 @@ def print_tensor_fp16_hex_inline(tensor):
     print('\n')  # 마지막 줄바꿈
 
 
-B_ = 1
-H_ = 24
-P_ = 4
-N_ = 32
-
 # B_ = 1
 # H_ = 24
-# P_ = 64
-# N_ = 128
+# P_ = 4
+# N_ = 32
+
+B_ = 1
+H_ = 24
+P_ = 64
+N_ = 128
 
 h_slice = 12
-p_slice = 2
-n_slice = 32  # 128  # 이 축으로는 slice 불가
+p_slice = 16
+n_slice = 128  # 128  # 이 축으로는 slice 불가
 
 # 경로 지정
 base_path = "C:/Internship/intermediate_datas"
-dA = load_hex_tensor(f"{base_path}/0_dA_copy.hex", (B_, H_))
-dt = load_hex_tensor(f"{base_path}/0_dt_copy.hex", (B_, H_))
-x = load_hex_tensor(f"{base_path}/0_x_copy.hex", (B_, H_, P_))
-B = load_hex_tensor(f"{base_path}/0_B_copy.hex", (B_, N_))
-C = load_hex_tensor(f"{base_path}/0_C_copy.hex", (B_, N_))
-D = load_hex_tensor(f"{base_path}/0_D_copy.hex", (H_,))
-h_prev = load_hex_tensor(f"{base_path}/0_ssm_state_copy.hex", (B_, H_, P_, N_))
+dA = load_hex_tensor(f"{base_path}/0_dA.hex", (B_, H_))
+dt = load_hex_tensor(f"{base_path}/0_dt.hex", (B_, H_))
+x = load_hex_tensor(f"{base_path}/0_x.hex", (B_, H_, P_))
+B = load_hex_tensor(f"{base_path}/0_B.hex", (B_, N_))
+C = load_hex_tensor(f"{base_path}/0_C.hex", (B_, N_))
+D = load_hex_tensor(f"{base_path}/0_D.hex", (H_,))
+h_prev = load_hex_tensor(f"{base_path}/0_ssm_state.hex", (B_, H_, P_, N_))
 
 Y = torch.zeros((B_, H_, P_), dtype=torch.float16)
 
@@ -90,7 +90,7 @@ for h_idx in range(0, H_, h_slice):
 Y = rearrange(Y, "b h p -> b (h p)")
 
 # 결과 저장
-save_tensor_as_hex(Y, f"{base_path}/0_y_out_copy_python.hex")
+save_tensor_as_hex(Y, f"{base_path}/0_y_out_python.hex")
 # print("(❁´◡`❁) 연산 완료! 결과 저장 위치:", f"{base_path}/0_y_out_python.hex")
 # # print("y_Python =\n", Y.view(H_, P_))
 # y_out = load_hex_tensor(f"{base_path}/0_y_out.hex", (B_, H_, P_))
@@ -131,6 +131,6 @@ def compare_fp16_hex(file1, file2):
         print(f"[{i}] Py={t1[i].item():.6f}, Verilog={t2[i].item():.6f}, AbsErr={val.item():.6f}")
 
 # 사용 예시
-file_py = f"{base_path}/0_y_out_copy_python.hex"
-file_v =  f"{base_path}/0_y_out_copy.hex"
+file_py = f"{base_path}/0_y_out_python.hex"
+file_v =  f"{base_path}/0_y_out.hex"
 compare_fp16_hex(file_py, file_v)
