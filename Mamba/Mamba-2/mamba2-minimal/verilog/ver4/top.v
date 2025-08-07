@@ -62,7 +62,7 @@ module ssm_block_fp16_top #(
     reg stage_dx_prev, stage_hC, stage_acc, stage_y;
     // reg stage_dBx_prev, stage_dAh_dBx;
     wire start_dx, start_hc, start_output, start_residual;
-    // wire start_dBx, start_ssm;
+    // start_dBx, start_ssm, 
 
     assign start_dx       = (stage == STAGE_UPDATE) && !stage_dx_prev;
     assign start_hc       = (stage == STAGE_UPDATE) && !stage_hC;         // pipelined_hC

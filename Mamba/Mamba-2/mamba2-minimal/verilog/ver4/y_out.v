@@ -9,7 +9,7 @@ module y_res #(
     parameter DW = 16,
     // parameter M_LAT = 6,
     parameter A_LAT = 11,
-    PAR_H = 12
+    PAR_P = 16
 )(
     input  wire clk,
     input  wire rst,
@@ -48,15 +48,15 @@ module y_res #(
     reg [4:0] flush_cnt;
 
     reg [9:0] b, h, p;
-    reg [9:0] b_shift[0:PAR_H-1][0:SHIFT_DEPTH-1];
-    reg [9:0] h_shift[0:PAR_H-1][0:SHIFT_DEPTH-1];
-    reg [9:0] p_shift[0:PAR_H-1][0:SHIFT_DEPTH-1];
+    reg [9:0] b_shift[0:PAR_P-1][0:SHIFT_DEPTH-1];
+    reg [9:0] h_shift[0:PAR_P-1][0:SHIFT_DEPTH-1];
+    reg [9:0] p_shift[0:PAR_P-1][0:SHIFT_DEPTH-1];
 
     // IP ?��?��/출력
-    reg  [DW-1:0] in1_add[0:PAR_H-1];
-    reg  [DW-1:0] in2_add[0:PAR_H-1];
-    wire [DW-1:0] out_add[0:PAR_H-1];
-    wire          valid_add[0:PAR_H-1];
+    reg  [DW-1:0] in1_add[0:PAR_P-1];
+    reg  [DW-1:0] in2_add[0:PAR_P-1];
+    wire [DW-1:0] out_add[0:PAR_P-1];
+    wire          valid_add[0:PAR_P-1];
 
     reg valid_in;
     integer i, j;
@@ -83,15 +83,15 @@ module y_res #(
                 CALC: begin
                     // input
                     valid_in <= 1;
-                    for (i = 0; i < PAR_H; i = i + 1) begin
-                        if (h + i < H) begin
+                    for (i = 0; i < PAR_P; i = i + 1) begin
+                        if (p + i < P) begin
                             // Stage 1: y + xD
-                            in1_add[i] <= xD[b*H*P + (h+i)*P + p];
-                            in2_add[i] <= y_in[b*H*P + (h+i)*P + p];
+                            in1_add[i] <= xD[b*H*P + h*P + p+i];
+                            in2_add[i] <= y_in[b*H*P + h*P + p+i];
                         end
                         b_shift[i][0] <= b;
-                        h_shift[i][0] <= h + i;
-                        p_shift[i][0] <= p;
+                        h_shift[i][0] <= h;
+                        p_shift[i][0] <= p + i;
                         // n_shift[i][0] <= n;
                         for (j = 1; j < SHIFT_DEPTH; j = j + 1) begin
                             b_shift[i][j] <= b_shift[i][j-1];
@@ -102,27 +102,27 @@ module y_res #(
                     end
 
                     // 결과 ???��
-                    for (i = 0; i < PAR_H; i = i + 1) begin
+                    for (i = 0; i < PAR_P; i = i + 1) begin
                         if (valid_add[i]) begin
                             y_out[b_shift[i][SHIFT_DEPTH-1]*H*P + h_shift[i][SHIFT_DEPTH-1]*P + p_shift[i][SHIFT_DEPTH-1]] <= out_add[i];
                         end
                     end
             
                     // ?��?��?�� 증�?
-                    if (p == P-1) begin
+                    if (p + PAR_P >= P) begin
                         p <= 0;
-                        if (h + PAR_H >= H) begin
+                        if (h == H-1) begin
                             h <= 0;
                             if (b == B-1) begin
                                 state <= FLUSH;
                             end else b <= b + 1;
-                        end else h <= h + PAR_H;
-                    end else p <= p + 1;
+                        end else h <= h + 1;
+                    end else p <= p + PAR_P;
                 end
 
                 FLUSH: begin
                     flush_cnt <= flush_cnt + 1;
-                    for (i = 0; i < PAR_H; i = i + 1) begin
+                    for (i = 0; i < PAR_P; i = i + 1) begin
                         for (j = 1; j < SHIFT_DEPTH; j = j + 1) begin
                             b_shift[i][j] <= b_shift[i][j-1];
                             h_shift[i][j] <= h_shift[i][j-1];
@@ -131,7 +131,7 @@ module y_res #(
                         end
                     end
                     
-                    for (i = 0; i < PAR_H; i = i + 1) begin
+                    for (i = 0; i < PAR_P; i = i + 1) begin
                         if (valid_add[i]) begin
                             y_out[b_shift[i][SHIFT_DEPTH-1]*H*P + h_shift[i][SHIFT_DEPTH-1]*P + p_shift[i][SHIFT_DEPTH-1]] <= out_add[i];
                         end
@@ -152,7 +152,7 @@ module y_res #(
 
     // FP16 IP
     generate
-        for (g = 0; g < PAR_H; g = g + 1) begin : PIPELINE
+        for (g = 0; g < PAR_P; g = g + 1) begin : PIPELINE
             fp16_add_wrapper u_add (
                 .clk(clk),
                 .a(in1_add[g]),

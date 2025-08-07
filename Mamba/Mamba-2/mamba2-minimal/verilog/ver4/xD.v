@@ -9,7 +9,7 @@ module xD #(
     parameter DW = 16,
     parameter M_LAT = 6,
     // parameter A_LAT = 11,
-    parameter PAR_H = 12
+    parameter PAR_H = 6
 )(
     input  wire clk,
     input  wire rst,
