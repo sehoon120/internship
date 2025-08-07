@@ -48,7 +48,8 @@ module ssm_block_fp16_top #(
                STAGE_DONE   = 7;
 
     // 중간 버퍼
-    wire done_dx, done_dBx, done_mul, done_add, done_out, done_res, done_hC, done_acc, done_xD;
+    // wire done_dx, done_dBx, done_mul, done_add, done_out;
+    wire done_res, done_hC, done_acc, done_xD;
     wire [B*H*P*DW-1:0]   dx_flat;
     wire [B*H*P*N*DW-1:0] dBx_flat;
     wire [B*H*P*N*DW-1:0] h_next_flat;
@@ -58,15 +59,16 @@ module ssm_block_fp16_top #(
     wire [B*H*P*N*DW-1:0] hC_flat;
     wire [B*H*P*DW-1:0]   xD_flat;
 
-    reg stage_dx_prev, stage_dBx_prev, stage_dAh_dBx, stage_hC, stage_acc, stage_y;
-    wire start_dx, start_dBx, start_ssm, start_hc, start_output, start_residual;
+    reg stage_dx_prev, stage_hC, stage_acc, stage_y;
+    // reg stage_dBx_prev, stage_dAh_dBx;
+    wire start_dx, start_hc, start_output, start_residual;
+    // wire start_dBx, start_ssm;
 
-    assign start_dx       = (stage == STAGE_DX)     && !stage_dx_prev;
-    assign start_dBx      = (stage == STAGE_DBX)    && !stage_dBx_prev;
-    assign start_ssm      = (stage == STAGE_UPDATE) && !stage_dAh_dBx;
-    assign start_hc       = (stage == STAGE_HC)     && !stage_hC;
-    assign start_output   = (stage == STAGE_YCALC)  && !stage_acc;
-    assign start_residual = (stage == STAGE_RESADD) && !stage_y;
+    assign start_dx       = (stage == STAGE_UPDATE) && !stage_dx_prev;
+    assign start_hc       = (stage == STAGE_UPDATE) && !stage_hC;         // pipelined_hC
+    assign start_output   = (stage == STAGE_YCALC)  && !stage_acc;        // accumulator
+    assign start_residual = (stage == STAGE_RESADD) && !stage_y;          // y_res
+
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -77,12 +79,9 @@ module ssm_block_fp16_top #(
                 STAGE_IDLE: begin
                     done <= 0;
                     if (start)
-                        stage <= STAGE_DX;
+                        stage <= STAGE_UPDATE; // dx~dAh_dBx 통합
                 end
-                STAGE_DX:     if (done_dx)     stage <= STAGE_DBX;
-                STAGE_DBX:    if (done_dBx)    stage <= STAGE_UPDATE;
-                STAGE_UPDATE: if (done_add)    stage <= STAGE_HC;
-                STAGE_HC:     if (done_hC)     stage <= STAGE_YCALC;
+                STAGE_UPDATE: if (done_hC)     stage <= STAGE_YCALC;
                 STAGE_YCALC:  if (done_acc)    stage <= STAGE_RESADD;
                 STAGE_RESADD: if (done_res)    stage <= STAGE_DONE;
                 STAGE_DONE: begin
@@ -93,23 +92,21 @@ module ssm_block_fp16_top #(
         end
     end
 
+
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            stage_dx_prev       <= 0;
-            stage_dBx_prev      <= 0;
-            stage_dAh_dBx       <= 0;
-            stage_hC    <= 0;
-            stage_acc   <= 0;
-            stage_y <= 0;
+            stage_dx_prev  <= 0;
+            stage_hC       <= 0;
+            stage_acc      <= 0;
+            stage_y        <= 0;
         end else begin
-            stage_dx_prev       <= (stage == STAGE_DX);
-            stage_dBx_prev      <= (stage == STAGE_DBX);
-            stage_dAh_dBx      <= (stage == STAGE_UPDATE);
-            stage_hC    <= (stage == STAGE_HC);
-            stage_acc   <= (stage == STAGE_YCALC);
-            stage_y <= (stage == STAGE_RESADD);
+            stage_dx_prev  <= (stage == STAGE_UPDATE);
+            stage_hC       <= (stage == STAGE_UPDATE);
+            stage_acc      <= (stage == STAGE_YCALC);
+            stage_y        <= (stage == STAGE_RESADD);
         end
     end
+
 
     // dBx 계산
     // dx #(.B(B), .H(H), .P(P), .DW(DW), .M_LAT(M_LAT)) u_dx (
