@@ -11,8 +11,8 @@ module accumulator #(
     parameter N  = 128,
     parameter DW = 16,
     parameter ADD_LAT = 11,
-    // parameter TREE_DEPTH = 7,    // N = 128일시 교체
-    parameter TREE_DEPTH = 5,                      // log2(N)
+     parameter TREE_DEPTH = 7,    // N = 128일시 교체
+//    parameter TREE_DEPTH = 5,                      // log2(N)
     parameter TREE_LAT = ADD_LAT * TREE_DEPTH      // total latency through the tree
 )(
     input  wire                   clk,
@@ -136,7 +136,7 @@ endmodule
 // Assumes latency-insensitive, pipelined valid_in → valid_out structure
 // 128일시 N = 128로 교체, 주석 해제 등
 
-module fp16_adder_tree_128 #(parameter DW=16, N=32)(    // N에 따라 교체
+module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
     input  wire clk,
     input  wire rst,
     input  wire valid_in,
@@ -158,8 +158,8 @@ module fp16_adder_tree_128 #(parameter DW=16, N=32)(    // N에 따라 교체
     genvar i;
     generate
         for (i = 0; i < N; i = i + 1) begin : UNPACK
-            // assign in_level0[i] = in_flat[(i+1)*DW-1 -: DW]; // 128일시 교체
-            assign level2[i] = in_flat[(i+1)*DW-1 -: DW];
+            assign in_level0[i] = in_flat[(i+1)*DW-1 -: DW]; // 128일시 교체
+//            assign level2[i] = in_flat[(i+1)*DW-1 -: DW];
         end
     endgenerate
 
@@ -167,37 +167,37 @@ module fp16_adder_tree_128 #(parameter DW=16, N=32)(    // N에 따라 교체
 
     wire valid_l1, valid_l2, valid_l3, valid_l4, valid_l5, valid_l6, valid_l7;
 
-    // assign valid_l1 = valid_in;  // 128일시 교체
-    assign valid_l3 = valid_in;
+     assign valid_l1 = valid_in;  // 128일시 교체
+//    assign valid_l3 = valid_in;
 
-    // // 128일시 주석 해제
-    // // Level 1 (128 → 64)
-    // generate
-    //     for (i = 0; i < 64; i = i + 1) begin : L1
-    //         fp16_add_wrapper add (
-    //             .clk(clk),
-    //             .a(in_level0[2*i]),
-    //             .b(in_level0[2*i+1]),
-    //             .valid_in(valid_l1),
-    //             .result(level1[i]),
-    //             .valid_out(valid_l2)
-    //         );
-    //     end
-    // endgenerate
+     // 128일시 주석 해제
+     // Level 1 (128 → 64)
+     generate
+         for (i = 0; i < 64; i = i + 1) begin : L1
+             fp16_add_wrapper add (
+                 .clk(clk),
+                 .a(in_level0[2*i]),
+                 .b(in_level0[2*i+1]),
+                 .valid_in(valid_l1),
+                 .result(level1[i]),
+                 .valid_out(valid_l2)
+             );
+         end
+     endgenerate
 
-    // // Level 2 (64 → 32)
-    // generate
-    //     for (i = 0; i < 32; i = i + 1) begin : L2
-    //         fp16_add_wrapper add (
-    //             .clk(clk),
-    //             .a(level1[2*i]),
-    //             .b(level1[2*i+1]),
-    //             .valid_in(valid_l2),
-    //             .result(level2[i]),
-    //             .valid_out(valid_l3)
-    //         );
-    //     end
-    // endgenerate
+     // Level 2 (64 → 32)
+     generate
+         for (i = 0; i < 32; i = i + 1) begin : L2
+             fp16_add_wrapper add (
+                 .clk(clk),
+                 .a(level1[2*i]),
+                 .b(level1[2*i+1]),
+                 .valid_in(valid_l2),
+                 .result(level2[i]),
+                 .valid_out(valid_l3)
+             );
+         end
+     endgenerate
 
     // Level 3 (32 → 16)
     generate

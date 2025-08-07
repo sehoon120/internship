@@ -36,7 +36,7 @@ module pipelined_hC #(
     wire [DW-1:0] Bmat   [0:B*N-1];
     wire [DW-1:0] C      [0:B*N-1];
     wire [DW-1:0] x      [0:B*H*P-1];
-    wire [DW-1:0] h_prev [0:B*H*P-1];
+    wire [DW-1:0] h_prev [0:B*H*P*N-1];
     // wire [DW-1:0] dAh    [0:B*H*P*N-1];
     
     reg  [DW-1:0] dAh    [0:B*H*P*N-1];
@@ -64,7 +64,7 @@ module pipelined_hC #(
 
     reg [1:0] state;
     localparam IDLE = 2'd0, CALC = 2'd1, STAGE_FLUSH = 2'd2, DONE = 2'd3;
-    reg [3:0] flush_cnt;
+    reg [4:0] flush_cnt;
 
     reg [9:0] b, h, p, n;
     localparam SHIFT_DEPTH = (3*M_LAT + A_LAT + 1);
@@ -254,7 +254,7 @@ module pipelined_hC #(
                 .clk(clk),
                 .a(out_stage2[g]),
                 .b(in2_stage3[g]),
-                .valid_in(valid_add[g]),
+                .valid_in(valid_stage2[g]),  // valid_add
                 .result(out_stage3[g]),
                 .valid_out(valid_stage3[g])
             );

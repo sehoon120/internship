@@ -1,0 +1,590 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Thu Aug  7 13:41:42 2025
+# Process ID: 1861176
+# Current directory: /home/intern-2501/internship
+# Command line: vivado
+# Log file: /home/intern-2501/internship/vivado.log
+# Journal file: /home/intern-2501/internship/vivado.jou
+# Running On        :broccoli
+# Platform          :RedHatEnterprise
+# Operating System  :Red Hat Enterprise Linux release 8.10 (Ootpa)
+# Processor Detail  :Intel(R) Xeon(R) Gold 6242R CPU @ 3.10GHz
+# CPU Frequency     :3800.001 MHz
+# CPU Physical cores:40
+# CPU Logical cores :80
+# Host memory       :539818 MB
+# Swap memory       :4294 MB
+# Total Virtual     :544113 MB
+# Available Virtual :496662 MB
+#-----------------------------------------------------------
+start_gui
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+create_project Mamba_SSM_Block_ver4 /home/intern-2501/Mamba_SSM_Block_ver4 -part xc7a75tfgg484-1
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/TOOLS/Xilinx/Vivado/2024.1/data/ip'.
+create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name floating_point_0
+set_property -dict [list \
+  CONFIG.A_Precision_Type {Half} \
+  CONFIG.Add_Sub_Value {Both} \
+  CONFIG.C_A_Exponent_Width {5} \
+  CONFIG.C_A_Fraction_Width {11} \
+  CONFIG.C_Accum_Input_Msb {15} \
+  CONFIG.C_Accum_Lsb {-24} \
+  CONFIG.C_Accum_Msb {32} \
+  CONFIG.C_Latency {6} \
+  CONFIG.C_Mult_Usage {Full_Usage} \
+  CONFIG.C_Rate {1} \
+  CONFIG.C_Result_Exponent_Width {5} \
+  CONFIG.C_Result_Fraction_Width {11} \
+  CONFIG.Flow_Control {NonBlocking} \
+  CONFIG.Has_RESULT_TREADY {false} \
+  CONFIG.Operation_Type {Multiply} \
+  CONFIG.Result_Precision_Type {Half} \
+] [get_ips floating_point_0]
+generate_target {instantiation_template} [get_files /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_0/floating_point_0.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'floating_point_0'...
+update_compile_order -fileset sources_1
+generate_target all [get_files  /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_0/floating_point_0.xci]
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'floating_point_0'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'floating_point_0'...
+INFO: [IP_Flow 19-1686] Generating 'C Simulation' target for IP 'floating_point_0'...
+INFO: [IP_Flow 19-1686] Generating 'Test Bench' target for IP 'floating_point_0'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'floating_point_0'...
+catch { config_ip_cache -export [get_ips -all floating_point_0] }
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_0
+export_ip_user_files -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_0/floating_point_0.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_0/floating_point_0.xci]
+launch_runs floating_point_0_synth_1 -jobs 40
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_0
+[Thu Aug  7 13:45:24 2025] Launched floating_point_0_synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.runs/floating_point_0_synth_1/runme.log
+export_simulation -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_0/floating_point_0.xci] -directory /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.ip_user_files/sim_scripts -ip_user_files_dir /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.ip_user_files -ipstatic_source_dir /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/modelsim} {questa=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/questa} {xcelium=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/xcelium} {vcs=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/vcs} {riviera=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name floating_point_1
+set_property -dict [list \
+  CONFIG.A_Precision_Type {Half} \
+  CONFIG.Add_Sub_Value {Add} \
+  CONFIG.C_A_Exponent_Width {5} \
+  CONFIG.C_A_Fraction_Width {11} \
+  CONFIG.C_Accum_Input_Msb {15} \
+  CONFIG.C_Accum_Lsb {-24} \
+  CONFIG.C_Accum_Msb {32} \
+  CONFIG.C_Latency {11} \
+  CONFIG.C_Mult_Usage {Full_Usage} \
+  CONFIG.C_Rate {1} \
+  CONFIG.C_Result_Exponent_Width {5} \
+  CONFIG.C_Result_Fraction_Width {11} \
+  CONFIG.Flow_Control {NonBlocking} \
+  CONFIG.Has_RESULT_TREADY {false} \
+  CONFIG.Result_Precision_Type {Half} \
+] [get_ips floating_point_1]
+generate_target {instantiation_template} [get_files /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_1/floating_point_1.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'floating_point_1'...
+generate_target all [get_files  /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_1/floating_point_1.xci]
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'floating_point_1'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'floating_point_1'...
+INFO: [IP_Flow 19-1686] Generating 'C Simulation' target for IP 'floating_point_1'...
+INFO: [IP_Flow 19-1686] Generating 'Test Bench' target for IP 'floating_point_1'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'floating_point_1'...
+catch { config_ip_cache -export [get_ips -all floating_point_1] }
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_1
+export_ip_user_files -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_1/floating_point_1.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_1/floating_point_1.xci]
+launch_runs floating_point_1_synth_1 -jobs 40
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_1
+[Thu Aug  7 13:47:52 2025] Launched floating_point_1_synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.runs/floating_point_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.srcs/sources_1/ip/floating_point_1/floating_point_1.xci] -directory /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.ip_user_files/sim_scripts -ip_user_files_dir /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.ip_user_files -ipstatic_source_dir /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/modelsim} {questa=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/questa} {xcelium=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/xcelium} {vcs=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/vcs} {riviera=/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+add_files -norecurse -scan_for_includes {/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/y_out.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/xD.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 -norecurse -scan_for_includes /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v
+update_compile_order -fileset sim_1
+update_compile_order -fileset sim_1
+set_property -name {xsim.simulate.runtime} -value {10000ns} -objects [get_filesets sim_1]
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/TOOLS/Xilinx/Vivado/2024.1/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'testbench_fp16_wrapper' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+WARNING: [VRFC 10-8332] begin/end is required for generate-for in this mode of Verilog [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v:16]
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module packing
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pipelined_hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
+ERROR: [VRFC 10-1247] port connections cannot be mixed ordered and named [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:145]
+ERROR: [VRFC 10-8530] module 'ssm_block_fp16_top' is ignored due to previous errors [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:17]
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+INFO: [USF-XSim-99] Step results log file:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim/xvlog.log'
+ERROR: [USF-XSim-62] 'compile' step failed with error(s). Please check the Tcl console output or '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim/xvlog.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/TOOLS/Xilinx/Vivado/2024.1/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'testbench_fp16_wrapper' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+WARNING: [VRFC 10-8332] begin/end is required for generate-for in this mode of Verilog [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v:16]
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module packing
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pipelined_hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
+ERROR: [VRFC 10-1247] port connections cannot be mixed ordered and named [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:145]
+ERROR: [VRFC 10-8530] module 'ssm_block_fp16_top' is ignored due to previous errors [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:17]
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim/xvlog.log'
+ERROR: [USF-XSim-62] 'compile' step failed with error(s). Please check the Tcl console output or '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim/xvlog.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/TOOLS/Xilinx/Vivado/2024.1/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'testbench_fp16_wrapper' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+WARNING: [VRFC 10-8332] begin/end is required for generate-for in this mode of Verilog [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v:16]
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module packing
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pipelined_hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/xD.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module xD
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/y_out.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module y_res
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module testbench_fp16_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+xvhdl --incr --relax -prj testbench_fp16_wrapper_vhdl.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '3' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2024.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package floating_point_v7_1_18.floating_point_v7_1_18_viv_comp
+Compiling package ieee.numeric_std
+Compiling package xbip_utils_v3_0_13.xbip_utils_v3_0_13_pkg
+Compiling package axi_utils_v2_0_9.axi_utils_v2_0_9_pkg
+Compiling package floating_point_v7_1_18.floating_point_v7_1_18_consts
+Compiling package ieee.math_real
+Compiling package floating_point_v7_1_18.floating_point_v7_1_18_exp_table...
+Compiling package mult_gen_v12_0_21.mult_gen_v12_0_21_pkg
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_signed
+Compiling package floating_point_v7_1_18.floating_point_v7_1_18_pkg
+Compiling package floating_point_v7_1_18.flt_utils
+Compiling package unisim.vcomponents
+Compiling package mult_gen_v12_0_21.dsp_pkg
+Compiling package ieee.vital_timing
+Compiling package ieee.vital_primitives
+Compiling package unisim.vpkg
+Compiling package xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv_comp
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=13,fast_input=true)...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=2,fast_input=true)\]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.delay_line [\delay_line(c_xdevicefamily="art...]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.delay_line [\delay_line(c_xdevicefamily="art...]
+Compiling architecture dsp48e1_v of entity unisim.DSP48E1 [\DSP48E1(alumodereg=0,carryinreg...]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.delay_line [\delay_line(c_xdevicefamily="art...]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.delay_line [\delay_line(c_xdevicefamily="art...]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.op_resize [\op_resize(ai_width=11,bi_width=...]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.dsp [\dsp(c_xdevicefamily="artix7",c_...]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.mult_gen_v12_0_21_viv [\mult_gen_v12_0_21_viv(c_verbosi...]
+Compiling architecture rtl of entity floating_point_v7_1_18.fix_mult_xx [\fix_mult_xx(c_xdevicefamily="ar...]
+Compiling architecture rtl of entity floating_point_v7_1_18.fix_mult [\fix_mult(c_xdevicefamily="artix...]
+Compiling architecture muxcy_v of entity unisim.MUXCY [muxcy_default]
+Compiling architecture xorcy_v of entity unisim.XORCY [xorcy_default]
+Compiling architecture fdre_v of entity unisim.FDRE [fdre_default]
+Compiling architecture fde_v of entity unisim.FDE [fde_default]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=4)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=5,fast_input=true)\]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=16,length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=2,length=0)\]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture synth of entity floating_point_v7_1_18.compare_eq_im [\compare_eq_im(c_xdevicefamily="...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(fast_input=true)\]
+Compiling architecture rtl of entity floating_point_v7_1_18.special_detect [\special_detect(c_xdevicefamily=...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [delay_default]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=3)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=2,length=3,fast_inp...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=3,fast_input=true)...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=4,fast_input=true)...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=4,length=3,fast_inp...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=5,length=3)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=3,length=0,fast_inp...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=4,fast_input=true)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=0,fast_input=true)...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=14)\]
+Compiling architecture rtl of entity floating_point_v7_1_18.flt_mult_exp [\flt_mult_exp(c_xdevicefamily="a...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=5)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=5,length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=4,length=0)\]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=6,fast_input=true)\]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=7,length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=8,length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=12,length=0,fast_in...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=3,length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=2,length=0,fast_inp...]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture rtl of entity floating_point_v7_1_18.flt_round_bit [\flt_round_bit(c_xdevicefamily="...]
+Compiling architecture rtl of entity floating_point_v7_1_18.renorm_and_round_logic [\renorm_and_round_logic(c_xdevic...]
+Compiling architecture rtl of entity floating_point_v7_1_18.flt_mult_round [\flt_mult_round(c_xdevicefamily=...]
+Compiling architecture synth of entity floating_point_v7_1_18.flt_dec_op_lat [\flt_dec_op_lat(c_xdevicefamily=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.flt_mult [\flt_mult(c_xdevicefamily="artix...]
+Compiling module unisims_ver.x_lut1_mux2
+Compiling module unisims_ver.LUT1
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
+Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
+Compiling module xil_defaultlib.floating_point_0
+Compiling module xil_defaultlib.fp16_mult_wrapper
+Compiling module xil_defaultlib.dAh(H=12,P=16,N=128)
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=2,fast_in...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=16)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=2)\]
+Compiling architecture dsp48e1_v of entity unisim.DSP48E1 [\DSP48E1(mask="11111111111111111...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=48,length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=0)\]
+Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a75t...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=14,length=0)\]
+Compiling architecture synth of entity floating_point_v7_1_18.align_add_dsp48e1_hp [\align_add_dsp48e1_hp(c_xdevicef...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000001111...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000000000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000000000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00000000000000000000...]
+Compiling architecture rtl of entity floating_point_v7_1_18.lead_zero_encode_shift_hp [\lead_zero_encode_shift_hp(regis...]
+Compiling architecture lut6_v of entity unisim.LUT6 [\LUT6(init="11111110010101001011...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="00010001010111110000...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="11101110101000001111...]
+Compiling architecture dsp48e1_v of entity unisim.DSP48E1 [\DSP48E1(acascreg=2,alumodereg=0...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=13,length=0)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=25,length=0)\]
+Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(a_width=13,c_wi...]
+Compiling architecture rtl of entity floating_point_v7_1_18.norm_and_round_dsp48e1_hp [\norm_and_round_dsp48e1_hp(c_xde...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="10011001100110011001...]
+Compiling architecture lut5_v of entity unisim.LUT5 [\LUT5(init="11111111000000001111...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=6,length=0)\]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=6)\]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=6,length=5)\]
+Compiling architecture lut6_2_v of entity unisim.LUT6_2 [\LUT6_2(init="000011111111000011...]
+Compiling architecture lut6_2_v of entity unisim.LUT6_2 [\LUT6_2(init="111010111011111010...]
+Compiling architecture lut6_2_v of entity unisim.LUT6_2 [\LUT6_2(init="111111111111000000...]
+Compiling architecture xilinx of entity mult_gen_v12_0_21.three_input_adder [\three_input_adder(c_a_width=7,c...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=7)\]
+Compiling architecture struct of entity floating_point_v7_1_18.carry_chain [\carry_chain(c_xdevicefamily="ar...]
+Compiling architecture synth of entity floating_point_v7_1_18.compare_gt [\compare_gt(c_xdevicefamily="art...]
+Compiling architecture synth of entity floating_point_v7_1_18.compare [\compare(c_xdevicefamily="artix7...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=2,length=8,fast_inp...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=9,fast_input=true)...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(length=8,fast_input=true)...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=12)\]
+Compiling architecture rtl of entity floating_point_v7_1_18.flt_add_exp_hp [\flt_add_exp_hp(c_xdevicefamily=...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=10)\]
+Compiling architecture synth of entity floating_point_v7_1_18.flt_dec_op [\flt_dec_op(c_xdevicefamily="art...]
+Compiling architecture rtl of entity floating_point_v7_1_18.flt_add_dsp [\flt_add_dsp(c_xdevicefamily="ar...]
+Compiling architecture rtl of entity floating_point_v7_1_18.flt_add [\flt_add(c_xdevicefamily="artix7...]
+Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
+Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
+Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
+Compiling module xil_defaultlib.floating_point_1
+Compiling module xil_defaultlib.fp16_add_wrapper
+Compiling module xil_defaultlib.pipelined_hC(H=12,P=16,N=128)
+Compiling module xil_defaultlib.fp16_adder_tree_128_default
+Compiling module xil_defaultlib.accumulator(H=12,P=16)
+Compiling module xil_defaultlib.xD(H=12,P=16)
+Compiling module xil_defaultlib.y_res(H=12,P=16)
+Compiling module xil_defaultlib.ssm_block_fp16_top(H=12,P=16,N=1...
+Compiling module xil_defaultlib.packing(H=24,P=64,N=128,H_tile=1...
+Compiling module xil_defaultlib.testbench_fp16_wrapper
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot testbench_fp16_wrapper_behav
+execute_script: Time (s): cpu = 00:07:14 ; elapsed = 00:02:45 . Memory (MB): peak = 9154.230 ; gain = 7.004 ; free physical = 267107 ; free virtual = 471837
+INFO: [USF-XSim-69] 'elaborate' step finished in '165' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "testbench_fp16_wrapper_behav -key {Behavioral:sim_1:Functional:testbench_fp16_wrapper} -tclbatch {testbench_fp16_wrapper.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source testbench_fp16_wrapper.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/h_prev_flat" to the wave window because it has 3145728 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/h_prev_mem" to the wave window because it has 3145728 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+# run 10000ns
+==== FP16 SSM Block Full Wrapper Testbench ====
+run: Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 9370.547 ; gain = 0.000 ; free physical = 266725 ; free virtual = 471478
+xsim: Time (s): cpu = 00:00:21 ; elapsed = 00:00:14 . Memory (MB): peak = 9370.547 ; gain = 197.754 ; free physical = 266725 ; free virtual = 471478
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'testbench_fp16_wrapper_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 10000ns
+launch_simulation: Time (s): cpu = 00:07:40 ; elapsed = 00:03:03 . Memory (MB): peak = 9370.547 ; gain = 223.320 ; free physical = 266725 ; free virtual = 471478
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
+add_files -fileset sim_1 -norecurse /home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg
+set_property xsim.view /home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg [get_filesets sim_1]
+run all
+run: Time (s): cpu = 00:00:10 ; elapsed = 00:00:45 . Memory (MB): peak = 9430.520 ; gain = 52.922 ; free physical = 266635 ; free virtual = 471383
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+relaunch_sim
+INFO: xsimkernel Simulation Memory Usage: 365244 KB (Peak: 401460 KB), Simulation CPU Usage: 55860 ms
+Command: launch_simulation -step compile -simset sim_1 -mode behavioral
+INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/TOOLS/Xilinx/Vivado/2024.1/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'testbench_fp16_wrapper' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
+xvhdl --incr --relax -prj testbench_fp16_wrapper_vhdl.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '3' seconds
+Command: launch_simulation -step elaborate -simset sim_1 -mode behavioral
+INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2024.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+execute_script: Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 9430.520 ; gain = 0.000 ; free physical = 266647 ; free virtual = 471499
+INFO: [USF-XSim-69] 'elaborate' step finished in '12' seconds
+launch_simulation: Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 9430.520 ; gain = 0.000 ; free physical = 266647 ; free virtual = 471499
+Time resolution is 1 ps
+==== FP16 SSM Block Full Wrapper Testbench ====
+run: Time (s): cpu = 00:00:05 ; elapsed = 00:00:15 . Memory (MB): peak = 9638.641 ; gain = 208.121 ; free physical = 266325 ; free virtual = 471185
+relaunch_xsim_kernel: Time (s): cpu = 00:00:05 ; elapsed = 00:00:16 . Memory (MB): peak = 9638.641 ; gain = 208.121 ; free physical = 266325 ; free virtual = 471185
+relaunch_sim: Time (s): cpu = 00:01:16 ; elapsed = 00:00:31 . Memory (MB): peak = 9638.641 ; gain = 208.121 ; free physical = 266325 ; free virtual = 471185
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+INFO: [Wavedata 42-43] There are no traceable objects to add.
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+INFO: [Wavedata 42-43] There are no traceable objects to add.
+run all
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:15 . Memory (MB): peak = 9644.652 ; gain = 0.000 ; free physical = 266355 ; free virtual = 471151
+run all
+run: Time (s): cpu = 00:00:01 ; elapsed = 00:00:07 . Memory (MB): peak = 9644.652 ; gain = 0.000 ; free physical = 266357 ; free virtual = 471153
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+INFO: [Wavedata 42-43] There are no traceable objects to add.
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+INFO: [Wavedata 42-43] There are no traceable objects to add.
+WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+INFO: [Wavedata 42-43] There are no traceable objects to add.
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
+close_sim
+INFO: xsimkernel Simulation Memory Usage: 365244 KB (Peak: 401460 KB), Simulation CPU Usage: 34360 ms
+INFO: [Simtcl 6-16] Simulation closed
+close_sim: Time (s): cpu = 00:00:36 ; elapsed = 00:00:06 . Memory (MB): peak = 9650.676 ; gain = 0.000 ; free physical = 266637 ; free virtual = 471350
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Aug  7 14:14:45 2025...
