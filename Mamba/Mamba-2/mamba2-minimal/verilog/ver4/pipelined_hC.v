@@ -15,13 +15,16 @@ module pipelined_hC #(
 )(
     input  wire clk,
     input  wire rst,
-    input  wire start, dAh_done,
+    input  wire start,
 
     input  wire [B*H*DW-1:0]     dt_flat,
     input  wire [B*N*DW-1:0]     Bmat_flat,
     input  wire [B*N*DW-1:0]     C_flat,
     input  wire [B*H*P*DW-1:0]   x_flat,
-    input  wire [B*H*P*N*DW-1:0] dAh_flat,
+    // input  wire [B*H*P*N*DW-1:0] dAh_flat,
+    input  wire [B*H*DW-1:0]      dA_flat,
+    input  wire [B*H*P*N*DW-1:0]  h_prev_flat,
+    // output wire [B*H*P*N*DW-1:0]  h_mul_flat,
 
     output wire [B*H*P*N*DW-1:0] hC_flat,
     // output reg  done_dx, done_dxB, don_dAh_dxB,
@@ -29,17 +32,21 @@ module pipelined_hC #(
 );
 
     wire [DW-1:0] dt     [0:B*H-1];
+    wire [DW-1:0] dA     [0:B*H-1];
     wire [DW-1:0] Bmat   [0:B*N-1];
     wire [DW-1:0] C      [0:B*N-1];
     wire [DW-1:0] x      [0:B*H*P-1];
-    wire [DW-1:0] dAh    [0:B*H*P*N-1];
+    wire [DW-1:0] h_prev [0:B*H*P-1];
+    // wire [DW-1:0] dAh    [0:B*H*P*N-1];
     
+    reg  [DW-1:0] dAh    [0:B*H*P*N-1];
     reg  [DW-1:0] hC     [0:B*H*P*N-1];
 
     genvar g;
     generate
         for (g = 0; g < B*H; g = g + 1) begin
             assign dt[g] = dt_flat[(g+1)*DW-1 -: DW];
+            assign dA[g] = dA_flat[(g+1)*DW-1 -: DW];
         end
         for (g = 0; g < B*N; g = g + 1) begin
             assign Bmat[g] = Bmat_flat[(g+1)*DW-1 -: DW];
@@ -49,7 +56,8 @@ module pipelined_hC #(
             assign x[g] = x_flat[(g+1)*DW-1 -: DW];
         end
         for (g = 0; g < B*H*P*N; g = g + 1) begin
-            assign dAh[g] = dAh_flat[(g+1)*DW-1 -: DW];
+            // assign dAh[g] = dAh_flat[(g+1)*DW-1 -: DW];
+            assign h_prev[g] = h_prev_flat[(g+1)*DW-1 -: DW];
             assign hC_flat[(g+1)*DW-1 -: DW] = hC[g];
         end
     endgenerate
@@ -70,13 +78,18 @@ module pipelined_hC #(
     wire [DW-1:0] out_stage1 [0:PAR-1];
     wire          valid_stage1 [0:PAR-1];
 
+    reg  [DW-1:0] in1_dAh [0:PAR-1], in2_dAh [0:PAR-1];
+    wire [DW-1:0] out_dAh [0:PAR-1];
+    wire          valid_dAh [0:PAR-1];
+
     reg  [DW-1:0] in2_stage2 [0:PAR-1];
     wire [DW-1:0] out_stage2 [0:PAR-1];
     wire          valid_stage2 [0:PAR-1], valid_add [0:PAR-1];
+
     genvar vi;
     generate
         for (vi = 0; vi < PAR; vi = vi + 1) begin
-            assign valid_add[vi] = valid_stage2[vi] && dAh_done;
+            assign valid_add[vi] = valid_stage2[vi] && valid_dAh[vi];
         end
     endgenerate
 
@@ -118,6 +131,10 @@ module pipelined_hC #(
                         if (n + i < N) begin    // input 채우기
                             in1_stage1[i] <= dt[b*H + h];
                             in2_stage1[i] <= x[b*H*P + h*P + p];
+
+                            in1_dAh[i]    <= dA[b*H + h];
+                            in2_dAh[i]    <= h_prev[b*H*P*N + h*P*N + p*N + n+i];
+
                             in2_stage2[i] <= Bmat[b_shift[i][M_LAT-1]*N + n_shift[i][M_LAT-1]];
                             in2_stage3[i] <= dAh[b_shift[i][2*M_LAT-1]*H*P*N + h_shift[i][2*M_LAT-1]*P*N + p_shift[i][2*M_LAT-1]*N + n_shift[i][2*M_LAT-1]];
                             in2_stage4[i] <= C[b_shift[i][2*M_LAT+A_LAT-1]*N + n_shift[i][2*M_LAT+A_LAT-1]];
@@ -134,6 +151,9 @@ module pipelined_hC #(
                         end
                     end
                     for (i = 0; i < PAR; i = i + 1) begin   // result 연결
+                        if (valid_dAh[i]) begin
+                            dAh[b_shift[i][M_LAT]*H*P*N + h_shift[i][M_LAT]*P*N + p_shift[i][M_LAT]*N + n_shift[i][M_LAT]] <= out_dAh[i];
+                        end
                         if (valid_stage4[i]) begin
                             hC[b_shift[i][SHIFT_DEPTH - 1]*H*P*N + h_shift[i][SHIFT_DEPTH - 1]*P*N + p_shift[i][SHIFT_DEPTH - 1]*N + n_shift[i][SHIFT_DEPTH - 1]] <= out_stage4[i];
                         end
@@ -168,6 +188,9 @@ module pipelined_hC #(
                     end
                     
                     for (i = 0; i < PAR; i = i + 1) begin   // result 연결
+                        if (valid_dAh[i]) begin
+                            dAh[b_shift[i][M_LAT]*H*P*N + h_shift[i][M_LAT]*P*N + p_shift[i][M_LAT]*N + n_shift[i][M_LAT]] <= out_dAh[i];
+                        end
                         if (valid_stage4[i]) begin
                             hC[b_shift[i][SHIFT_DEPTH - 1]*H*P*N + h_shift[i][SHIFT_DEPTH - 1]*P*N + p_shift[i][SHIFT_DEPTH - 1]*N + n_shift[i][SHIFT_DEPTH - 1]] <= out_stage4[i];
                         end
@@ -207,6 +230,15 @@ module pipelined_hC #(
                 .valid_in(valid_in),
                 .result(out_stage1[g]),
                 .valid_out(valid_stage1[g])
+            );
+
+            fp16_mult_wrapper muldAh (
+                .clk(clk),
+                .a(in1_dAh[g]),
+                .b(in2_dAh[g]),
+                .valid_in(valid_in),
+                .result(out_dAh[g]),
+                .valid_out(valid_dAh[g])
             );
 
             fp16_mult_wrapper mul2 (

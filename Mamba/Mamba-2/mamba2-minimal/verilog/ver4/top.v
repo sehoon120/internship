@@ -124,11 +124,11 @@ module ssm_block_fp16_top #(
     //     .dBx_flat(dBx_flat), .done(done_dBx)
     // );
 
-    dAh #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_dAh (
-        .clk(clk), .rst(rst), .start(start_dx), .done_hC(done_hC),
-        .dA_flat(dA_flat), .h_prev_flat(h_prev_flat),
-        .h_mul_flat(h_mul_flat), .done(done_mul)
-    );
+    // dAh #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT)) u_dAh (
+    //     .clk(clk), .rst(rst), .start(start_dx), .done_hC(done_hC),
+    //     .dA_flat(dA_flat), .h_prev_flat(h_prev_flat),
+    //     .h_mul_flat(h_mul_flat), .done(done_mul)
+    // );
 
     // dAh_dBx #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .A_LAT(A_LAT)) u_dAh_dBx (
     //     .clk(clk), .rst(rst), .start1(done_dBx), .start2(done_mul),
@@ -143,8 +143,9 @@ module ssm_block_fp16_top #(
     // );
 
     pipelined_hC #(.B(B), .H(H), .P(P), .N(N), .DW(DW), .M_LAT(M_LAT), .A_LAT(A_LAT)) u_pipelined_hC (
-        .clk(clk), .rst(rst), .start(start_dx), dAh_done(done_mul),
-        .dt_flat(dt_flat), .Bmat_flat(Bmat_flat), .C_flat(C_flat), .x_flat(x_flat), dAh_flat(h_mul_flat),
+        .clk(clk), .rst(rst), .start(start_dx),
+        .dt_flat(dt_flat), .Bmat_flat(Bmat_flat), .C_flat(C_flat), .x_flat(x_flat), 
+        .dA_flat(dA_flat), .h_prev_flat(h_prev_flat), 
         // .done_dx(done_dx), .done_dxB(done_dxB), .don_dAh_dxB(don_dAh_dxB),
         .hC_flat(hC_flat), .done(done_hC)
     );
@@ -157,7 +158,7 @@ module ssm_block_fp16_top #(
 
     // xD = x*D
     xD #(.B(B), .H(H), .P(P), .DW(DW), .M_LAT(M_LAT)) u_dxD (
-        .clk(clk), .rst(rst), .start(done_hC), .acc_sig(done_acc),
+        .clk(clk), .rst(rst), .start(start_dx), .acc_sig(done_acc),
         .D_flat(D_flat), .x_flat(x_flat),
         .xD_flat(xD_flat), .done(done_xD)
     );
