@@ -2,11 +2,11 @@
 
 module packing #(
     parameter B = 1,
-    parameter H = 16,
-    parameter P = 4,
-    parameter N = 16,
-    parameter H_tile = 16,
-    parameter P_tile = 4,
+    parameter H = 24,
+    parameter P = 64,
+    parameter N = 128,
+    parameter H_tile = 12,
+    parameter P_tile = 16,
     parameter DW = 16
 )(
     input  wire clk,

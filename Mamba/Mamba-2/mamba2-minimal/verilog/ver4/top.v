@@ -15,7 +15,7 @@
 // ============================================================
 
 module ssm_block_fp16_top #(
-    parameter B = 1, H = 4, P = 4, N = 4,
+    parameter B = 1, H = 12, P = 16, N = 128,
     parameter DW = 16,
     parameter M_LAT = 6,
     parameter A_LAT = 11

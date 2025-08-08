@@ -3,7 +3,8 @@
 module testbench_fp16_wrapper;
     parameter B = 1, H = 24, P = 64, N = 128;
     // parameter B = 1, H = 24, P = 4, N = 32;
-    parameter H_tile = 12, P_tile = 16;
+    // parameter H_tile = 12, P_tile = 16;
+    parameter H_tile = 24, P_tile = 64;
     parameter DW = 16;
 
     reg clk;
