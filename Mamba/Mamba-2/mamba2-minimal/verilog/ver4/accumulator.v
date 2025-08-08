@@ -53,34 +53,6 @@ module accumulator #(
     // Tile feeding
     reg feeding;
     reg valid_in;
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            feeding <= 0;
-            tile_index_in <= 0;
-            valid_in <= 0;
-        end else begin
-            // if (start) feeding <= 1;
-            if (start) begin
-                feeding <= 1;
-                tile_index_in <= 0;
-            end else if (feeding && tile_index_in == TOTAL_TILES) begin
-                feeding <= 0;
-            end
-
-
-            if (feeding && tile_index_in < TOTAL_TILES) begin
-                for (i = 0; i < N; i = i + 1)
-                    tree_input[i] <= hC[tile_index_in*N + i];
-                valid_in <= 1;
-                tile_index_in <= tile_index_in + 1;
-            end else begin
-                valid_in <= 0;
-            end
-
-            if (tile_index_in == TOTAL_TILES)
-                feeding <= 0;
-        end
-    end
 
     // Adder tree instantiation
     wire [DW-1:0] tree_sum;
@@ -103,29 +75,53 @@ module accumulator #(
             done <= 0;
             done_pulse <= 0;
             done_pulse_ack <= 0;
+            feeding <= 0;
+            tile_index_in <= 0;
+            valid_in <= 0;
         end else begin
-            if (valid_out) begin
-                sum[tile_index_out] <= tree_sum;
-                tile_index_out <= tile_index_out + 1;
-            end
-
-            if (!done_pulse_ack && tile_index_out == TOTAL_TILES && !feeding && !valid_in && !valid_out) begin
-                done_pulse <= 1;
-                done_pulse_ack <= 1;
-            end else
-                done_pulse <= 0;
-
             if (start) begin
                 // 새로운 run 시작 시 초기화
-                tile_index_out <= 0;
-                tile_index_in  <= 0;
-                done           <= 0;
-                done_pulse     <= 0;
-                done_pulse_ack <= 0;
-                feeding        <= 1;
-            end
+                tile_index_out   <= 0;
+                tile_index_in    <= 0;
+                feeding          <= 1;
+                valid_in         <= 0;
+                done             <= 0;
+                done_pulse       <= 0;
+                done_pulse_ack   <= 0;
+            end else begin
+                // 2) 트리 출력 수거 (경계 가드)
+                if (valid_out && (tile_index_out < TOTAL_TILES)) begin
+                    sum[tile_index_out] <= tree_sum;
+                    tile_index_out      <= tile_index_out + 1;
+                end
 
-            done <= done_pulse;
+                // 3) 입력 피딩
+                if (feeding && (tile_index_in < TOTAL_TILES)) begin
+                    for (integer i2 = 0; i2 < N; i2 = i2 + 1)
+                        tree_input[i2] <= hC[tile_index_in*N + i2];
+                    valid_in       <= 1;
+                    tile_index_in  <= tile_index_in + 1;
+                end else begin
+                    valid_in <= 0;
+                end
+
+                // 4) 피딩 종료
+                if (feeding && (tile_index_in == TOTAL_TILES)) begin
+                    feeding <= 0;
+                end
+
+                // 5) done 펄스 생성 (모든 출력 배출 + 파이프라인 비움)
+                if (!done_pulse_ack &&
+                    (tile_index_out == TOTAL_TILES) &&
+                    !feeding && !valid_in && !valid_out) begin
+                    done_pulse     <= 1;
+                    done_pulse_ack <= 1;
+                end else begin
+                    done_pulse <= 0;
+                end
+
+                done <= done_pulse; // 1사이클 펄스
+            end
         end
     end
 
