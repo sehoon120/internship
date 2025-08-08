@@ -42,7 +42,7 @@ module accumulator #(
     reg [$clog2(TOTAL_TILES):0] tile_index_out;
     reg [DW-1:0] tree_input [0:N-1];
     reg [N*DW-1:0] tree_input_flat;
-    integer i;
+    integer i, j;
 
     always @(*) begin
         for (i = 0; i < N; i = i + 1) begin
@@ -97,8 +97,8 @@ module accumulator #(
 
                 // 3) 입력 피딩
                 if (feeding && (tile_index_in < TOTAL_TILES)) begin
-                    for (integer i2 = 0; i2 < N; i2 = i2 + 1)
-                        tree_input[i2] <= hC[tile_index_in*N + i2];
+                    for (j = 0; j < N; j = j + 1)
+                        tree_input[j] <= hC[tile_index_in*N + j];
                     valid_in       <= 1;
                     tile_index_in  <= tile_index_in + 1;
                 end else begin
