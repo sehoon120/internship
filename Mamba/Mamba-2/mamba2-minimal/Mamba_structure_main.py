@@ -78,10 +78,13 @@ for i in range(n_chunked, prefix.shape[1]):
 # tokens = input_ids[0].tolist()  # ex: [502, 321, 764]
 
 average_list = []
+average_list_m = []
 generated = [t.item() for t in input_ids[0]]  # 결과 누적 list
 with torch.no_grad():
     for token_num in range(50):
+        t1_m = time.perf_counter()
         ssm_time = []
+        mamba_time = []
 
         seqlen = f_token.shape[1]
         input_tensor = torch.tensor([[f_token]], device=device)
@@ -174,7 +177,11 @@ with torch.no_grad():
 
             residual = residual + y.unsqueeze(1)
 
+            t2_m = time.perf_counter()
+            mamba_time.append(t2_m - t1_m)
+
         average_list.append(sum(ssm_time) / len(ssm_time))
+        average_list_m.append(sum(mamba_time) / len(mamba_time))
         residual = model.backbone.norm_f(residual)
         logits = model.lm_head(residual)  # LMHead
         out =  logits[:, :seqlen]
@@ -188,4 +195,5 @@ with torch.no_grad():
         f_token = next_token.unsqueeze(0)
 
 print(tokenizer.decode(generated, skip_special_tokens=True))
-print(f'\nAVG SSM time: {sum(average_list) / len(average_list)}\n')
+print(f'\nAVG SSM time:   {sum(average_list) / len(average_list)}\n')
+print(f'\nAVG Mamba time: {sum(average_list_m) / len(average_list_m)}\n')
