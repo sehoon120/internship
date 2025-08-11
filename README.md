@@ -70,7 +70,7 @@ pip install scipy
     Computes
 
     $$
-    hC = ((d \times x) \times B\_mat + dA \times h\_prev) \times C
+    hC = ((d \times x) \times `B\_mat` + dA \times `h\_prev`) \times C
     $$
 
     Pipelined for higher throughput.
@@ -86,14 +86,14 @@ pip install scipy
     Performs summation along the N dimension:
 
     $$
-    y\_tmp = \sum_{n} hC
+    `y\_tmp` = \sum_{n} hC
     $$
 
     * **`y_out.v`**
     Produces the final output:
 
     $$
-    y\_out = y\_tmp + xD
+    `y\_out` = `y\_tmp` + xD
     $$
 
     * **`top.v`**
