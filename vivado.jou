@@ -57,3 +57,12 @@ set_property top packing [current_fileset]
 # Re-enabling previously disabled source management mode.
 set_property source_mgmt_mode All [current_project]
 update_compile_order -fileset sources_1
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg
+source testbench_fp16_wrapper.tcl
+run all
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
+close_sim

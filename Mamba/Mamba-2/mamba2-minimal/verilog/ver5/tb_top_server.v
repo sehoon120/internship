@@ -1,24 +1,24 @@
 `timescale 1ns / 1ps
 
-// packing + tb_packing_server를 합친 버전 (패킹 모듈 제거)
-// - 타일 슬라이싱/어셈블/FSM을 TB가 직접 수행
-// - DUT는 ssm_block_fp16_top 하나만 사용
-module tb_top;
+// packing + tb 기능을 합친 순수 Verilog 테스트벤치
+module tb_packing_merged;
     parameter B = 1, H = 24, P = 64, N = 128;
-    parameter H_tile = 1, P_tile = 1;   // 원하는 타일 크기로 조정
+    parameter H_tile = 6, P_tile = 4;   // 타일 크기
     parameter DW = 16;
 
     // 파생 파라미터
-    localparam integer NUM_TILE_H = H / H_tile;
-    localparam integer NUM_TILE_P = P / P_tile;
+    localparam NUM_TILE_H = H / H_tile;
+    localparam NUM_TILE_P = P / P_tile;
 
-    // 유효성 체크
+    // 유효성 체크 (시뮬 시간 출력용)
     initial begin
         if (H % H_tile != 0) begin
-            $error("H(%0d) %% H_tile(%0d) != 0", H, H_tile); $finish;
+            $display("ERROR: H(%0d) %% H_tile(%0d) != 0", H, H_tile);
+            $finish;
         end
         if (P % P_tile != 0) begin
-            $error("P(%0d) %% P_tile(%0d) != 0", P, P_tile); $finish;
+            $display("ERROR: P(%0d) %% P_tile(%0d) != 0", P, P_tile);
+            $finish;
         end
     end
 
@@ -26,7 +26,7 @@ module tb_top;
     reg  clk;
     reg  rst;
     reg  start;    // 전체 실행 트리거
-    reg  done;     // 모든 타일 완료 신호 (TB가 생성)
+    reg  done;     // 모든 타일 완료 (TB에서 생성)
 
     // 전체 플랫 버스 (입력은 고정, 출력은 타일마다 채워넣음)
     reg  [B*H*DW-1:0]        dt_flat;
@@ -48,8 +48,8 @@ module tb_top;
     reg [DW-1:0] h_prev_mem [0:B*H*P*N-1];
 
     // 타일 I/O (packing이 하던 분배/수집을 TB에서 수행)
-    reg                  start_top;
-    wire                 done_top;
+    reg                   start_top;
+    wire                  done_top;
 
     reg  [B*H_tile*DW-1:0]           dt_tile;
     reg  [B*H_tile*DW-1:0]           dA_tile;
@@ -58,14 +58,14 @@ module tb_top;
     reg  [B*H_tile*P_tile*N*DW-1:0]  h_prev_tile;
     wire [B*H_tile*P_tile*DW-1:0]    y_tile;
 
-    // DUT: 패킹 없이 타일만 먹임
+    // DUT: 패킹 없이 타일만 먹임 (포트명은 실제 모듈에 맞춰 사용)
     ssm_block_fp16_top #(
         .B(B), .H(H_tile), .P(P_tile), .N(N), .DW(DW)
     ) dut (
         .clk(clk), .rst(rst), .start(start_top),
         .dt_flat(dt_tile), .dA_flat(dA_tile),
-        .Bmat_flat(Bmat_flat),  // 타일 경계와 무관 → 그대로 공유
-        .C_flat(C_flat),        // 타일 경계와 무관 → 그대로 공유
+        .Bmat_flat(Bmat_flat),  // 타일 경계 무관 → 공유
+        .C_flat(C_flat),        // 타일 경계 무관 → 공유
         .D_flat(D_tile),
         .x_flat(x_tile),
         .h_prev_flat(h_prev_tile),
@@ -80,9 +80,9 @@ module tb_top;
 
     // 초기화/로드/플래튼
     initial begin
-        $display("==== FP16 SSM Block (TILED, NO PACKING) Testbench ====");
+        $display("==== FP16 SSM Block (TILED, NO PACKING) Testbench [pure Verilog] ====");
         clk = 0; rst = 1; start = 0; done = 0; start_top = 0;
-        y_flat_out = '0;
+        y_flat_out = {B*H*P*DW{1'b0}};
 
         // 경로는 환경 맞게 수정
         $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dt.hex",        dt_mem);
@@ -118,7 +118,6 @@ module tb_top;
     end
 
     // ========= 타일 슬라이싱(조합) =========
-    // 현재 (h_idx, p_idx)에 해당하는 타일 데이터를 생성
     reg [31:0] h_idx, p_idx;
     integer t, h_rel, p_rel, h_abs, p_abs, n, hp_idx;
 
@@ -139,8 +138,8 @@ module tb_top;
         end
         // h_prev : (h,p,n) 따라감
         for (t = 0; t < H_tile*P_tile*N; t = t + 1) begin
-            hp_idx = t / N;
-            n      = t % N;
+            hp_idx = t / N;       // 0 .. (H_tile*P_tile-1)
+            n      = t % N;       // 0 .. (N-1)
             h_rel  = hp_idx / P_tile;
             p_rel  = hp_idx % P_tile;
             h_abs  = h_idx * H_tile + h_rel;
@@ -149,9 +148,15 @@ module tb_top;
         end
     end
 
-    // ========= FSM: 타일 순회 & 어셈블 =========
-    typedef enum logic [2:0] {S_IDLE, S_PULSE, S_WAIT, S_WRITE, S_NEXT, S_DONE} state_t;
-    state_t state;
+    // ========= FSM: 타일 순회 & 어셈블 (순수 Verilog: parameter 상태) =========
+    parameter S_IDLE  = 3'd0;
+    parameter S_PULSE = 3'd1;
+    parameter S_WAIT  = 3'd2;
+    parameter S_WRITE = 3'd3;
+    parameter S_NEXT  = 3'd4;
+    parameter S_DONE  = 3'd5;
+
+    reg [2:0] state;
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
