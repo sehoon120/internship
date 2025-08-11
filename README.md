@@ -66,35 +66,22 @@ pip install scipy
 
 * Designed modular structure:
 
-    * **`pipelined_hC.v`**
-    Computes
+    * **`pipelined_hC.v`**  
+      Computes  
+      `hC = ((d * x) * B_mat + dA * h_prev) * C`  
+      Pipelined for higher throughput.
 
-    $$
-    hC = ((d \times x) \times `B\_mat` + dA \times `h\_prev`) \times C
-    $$
+    * **`xD.v`**  
+      Calculates  
+      `xD = x * D`
 
-    Pipelined for higher throughput.
+    * **`accumulator.v`**  
+      Performs summation along the N dimension:  
+      `y_tmp = Σ(hC)`
 
-    * **`xD.v`**
-    Calculates
-
-    $$
-    xD = x \times D
-    $$
-
-    * **`accumulator.v`**
-    Performs summation along the N dimension:
-
-    $$
-    `y\_tmp` = \sum_{n} hC
-    $$
-
-    * **`y_out.v`**
-    Produces the final output:
-
-    $$
-    `y\_out` = `y\_tmp` + xD
-    $$
+    * **`y_out.v`**  
+      Produces the final output:  
+      `y_out = y_tmp + xD`
 
     * **`top.v`**
     Wires all submodules to form the complete **SSM Block**.
@@ -151,4 +138,3 @@ pip install scipy
 * [mamba2-minimal GitHub](https://github.com/tommyip/mamba2-minimal)
 
 ---
-
