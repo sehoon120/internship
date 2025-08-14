@@ -3,7 +3,7 @@
 // packing + tb 기능을 합친 순수 Verilog 테스트벤치
 module tb_packing_merged;
     parameter B = 1, H = 24, P = 64, N = 128;
-    parameter H_tile = 6, P_tile = 4;   // 타일 크기
+    parameter H_tile = 12, P_tile = 64;   // 타일 크기
     parameter DW = 16;
 
     // 파생 파라미터

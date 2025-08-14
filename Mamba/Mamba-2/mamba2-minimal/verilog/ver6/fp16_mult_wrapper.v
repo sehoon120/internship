@@ -6,7 +6,7 @@ module fp16_mult_wrapper (
     output wire [15:0] result,
     output wire        valid_out
 );
-    floating_point_0 u_fp16_mult (
+    floating_point_1 u_fp16_mult (
         .aclk(clk),
         .s_axis_a_tvalid(valid_in),
         .s_axis_a_tdata(a),
