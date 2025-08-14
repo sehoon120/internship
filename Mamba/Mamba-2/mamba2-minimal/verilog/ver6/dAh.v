@@ -27,7 +27,7 @@ module dAh #(
         .result(y[n]),
         .valid_out(vld[n])
       );
-      assign dBx_o[n*DW +: DW] = y[n];
+      assign dAh_o[n*DW +: DW] = y[n];
     end
   endgenerate
 
