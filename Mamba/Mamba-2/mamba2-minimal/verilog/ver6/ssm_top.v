@@ -3,6 +3,8 @@
 //  - B=H=P=1 (scalars: dt,dA,x,D; tile vectors: B_tile,C_tile,hprev_tile)
 //  - II=1 가정 (내부 FP16 IP도 throughput=1)
 //  - N_TOTAL=128, N_TILE=16 → TILES_PER_GROUP=8
+// 고쳐야할것: B, C input 딜레이 주기 / 
+// xD 였나 input이 다음 그룹으로 넘어갈때 신호 초기화 시키지 않아도 되는가? 확인하기
 // ================================================================
 module SSMBLOCK_TOP #(
     parameter integer DW        = 16,
@@ -67,7 +69,7 @@ module SSMBLOCK_TOP #(
         .rstn    (rstn),
         .valid_i (v_dx),
         .dx_i    (dx_w),
-        .Bmat_i  (B_tile_i),
+        .Bmat_i  (B_tile_i),  // B_mat가 LAT_M 만큼 딜레이된 값이 들어가야함 - 6사이클
         .dBx_o   (dBx_w),
         .valid_o (v_dBx)
     );
@@ -129,7 +131,7 @@ module SSMBLOCK_TOP #(
         .rstn     (rstn),
         .valid_i  (v_hnext),
         .hnext_i  (hnext_w),
-        .C_i      (C_tile_i),
+        .C_i      (C_tile_i),  // C도 여기까지만큼 딜레이 시켜서 넣어야함 - 23사이클
         .hC_o     (hC_tile_o),
         .valid_o  (v_hC)
     );

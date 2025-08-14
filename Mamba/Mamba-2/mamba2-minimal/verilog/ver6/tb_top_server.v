@@ -2,6 +2,7 @@
 
 // 전체 데이터(B=1,H=24,P=64,N=128)를 H_tile×P_tile 블로킹 순서로 모두 순회하여
 // (h,p)마다 N=128을 16씩(=8타일) 스트리밍 → SSMBLOCK_TOP → y_final 수집 TB
+// 고쳐야할것: 결과 인덱스에 맞춰서 저장하기. 지금은 그 과정이 없음
 module tb_ssmblock_fullscan;
   // -----------------------------
   // Parameters
