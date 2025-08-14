@@ -1,29 +1,26 @@
 // ================================================================
-// SSMBLOCK_TOP — tile-in → tile-out(hC), + Acc across tiles, + y_out (= y_tmp + xD)
-// Assumptions:
-//  - B=H=P=1 (스칼라 3개: dt, dA, x; 스칼라 1개: D; 타일 벡터 3개: B_tile, C_tile, hprev_tile)
-//  - 매 클록 1타일(N_TILE) 입력 가능 (II=1), 내부 IP도 throughput=1 필요
-//  - tile_last_i=1 이 마지막 타일임을 의미 (TB에서 제공)
-//  - 하위 모듈: dx, dBx, dAh, h_next, hC, fp16_mult_wrapper, fp16_add_wrapper 존재 가정
+// SSMBLOCK_TOP — tile-in → 8 tiles collect → sum128 → +xD → y_final
+//  - B=H=P=1 (scalars: dt,dA,x,D; tile vectors: B_tile,C_tile,hprev_tile)
+//  - II=1 가정 (내부 FP16 IP도 throughput=1)
+//  - N_TOTAL=128, N_TILE=16 → TILES_PER_GROUP=8
 // ================================================================
 module SSMBLOCK_TOP #(
     parameter integer DW        = 16,
     parameter integer N_TILE    = 16,
+    parameter integer N_TOTAL   = 128,
     // Latency params (IP 설정에 맞춰 조정)
-    parameter integer LAT_DX_M  = 6,  // dx: dt*x (mul)
-    parameter integer LAT_DBX_M = 6,  // dBx: dx*B (mul)
-    parameter integer LAT_DAH_M = 6,  // dAh: dA*hprev (mul)
+    parameter integer LAT_DX_M  = 6,   // dx: dt*x (mul)
+    parameter integer LAT_DBX_M = 6,   // dBx: dx*B (mul)
+    parameter integer LAT_DAH_M = 6,   // dAh: dA*hprev (mul)
     parameter integer LAT_ADD_A = 11,  // h_next: add
-    parameter integer LAT_HC_M  = 6,  // hC: h_next*C (mul)
-    parameter integer LAT_ACC_A = 11   // adder latency used inside Acc (fp16 add)
+    parameter integer LAT_HC_M  = 6    // hC: h_next*C (mul)
 )(
     input  wire                   clk,
     input  wire                   rstn,
 
-    // 타일 유효/마지막 표시 (TB에서 분배/종료 관리)
+    // 타일 유효(연속 타일 스트리밍), 마지막 타일 표시는 TB가 관리(여기선 불필요)
     input  wire                   tile_valid_i,
-    input  wire                   tile_last_i,
-    output wire                   tile_ready_o,   // 필요시 backpressure 연결, 기본 항상 1
+    output wire                   tile_ready_o,   // 필요시 backpressure, 기본 1
 
     // Scalars
     input  wire [DW-1:0]          dt_i,
@@ -36,49 +33,48 @@ module SSMBLOCK_TOP #(
     input  wire [N_TILE*DW-1:0]   C_tile_i,
     input  wire [N_TILE*DW-1:0]   hprev_tile_i,
 
-    // Tile output: hC[n] (중간값 관찰용)
-    output wire [N_TILE*DW-1:0]   hC_tile_o,
-    output wire                   hC_tile_valid_o,
-
-    // 최종 출력: y = sum_over_all_tiles(hC) + x*D  (프레임당 1회 펄스)
+    // 최종 출력: y = sum_{n=0..127} hC[n] + x*D  (N=128 처리 끝날 때 1펄스)
     output wire [DW-1:0]          y_final_o,
     output wire                   y_final_valid_o
 );
+    // ------------------------------------------------------------
+    localparam integer TILES_PER_GROUP = N_TOTAL / N_TILE; // 8
 
-    // ---------------------------------------------
+    // ============================================================
     // 1) dx = dt * x   (scalar)
-    // ---------------------------------------------
+    // ============================================================
     wire [DW-1:0] dx_w;
     wire          v_dx;
+
     dx #(.DW(DW), .MUL_LAT(LAT_DX_M)) u_dx (
         .clk     (clk),
         .rstn    (rstn),
-        .valid_i (tile_valid_i), // 처음 타일 들어오는 시점에 발사(지속 입력도 OK)
+        .valid_i (tile_valid_i), // 첫 타일부터 계속 공급(II=1)
         .dt_i    (dt_i),
         .x_i     (x_i),
         .dx_o    (dx_w),
         .valid_o (v_dx)
     );
 
-    // ---------------------------------------------
+    // ============================================================
     // 2) dBx = dx * B[n] (N_TILE 병렬)
-    // ---------------------------------------------
+    // ============================================================
     wire [N_TILE*DW-1:0] dBx_w;
     wire                 v_dBx;
+
     dBx #(.DW(DW), .N_TILE(N_TILE), .MUL_LAT(LAT_DBX_M)) u_dBx (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_dx),
         .dx_i    (dx_w),
-        .Bmat_i  (B_tile_i),  // B LAT_M 만큼 delay
+        .Bmat_i  (B_tile_i),
         .dBx_o   (dBx_w),
         .valid_o (v_dBx)
     );
 
-    // ---------------------------------------------
-    // 3) dAh = dA * hprev[n] (N_TILE 병렬)
-    //    dBx 경로와 정렬: (LAT_DX_M + LAT_DBX_M - LAT_DAH_M)
-    // ---------------------------------------------
+    // ============================================================
+    // 3) dAh = dA * hprev[n] (N_TILE 병렬) + dBx 경로와 정렬
+    // ============================================================
     wire [N_TILE*DW-1:0] dAh_raw_w, dAh_w;
     wire                 v_dAh_raw,  v_dAh;
 
@@ -88,26 +84,30 @@ module SSMBLOCK_TOP #(
         .valid_i  (tile_valid_i),
         .dA_i     (dA_i),
         .hprev_i  (hprev_tile_i),
-        .dAh_o    (dAh_raw_w),  // dBx 끝날때까지 결과 delay -> pipe_bus
+        .dAh_o    (dAh_raw_w),
         .valid_o  (v_dAh_raw)
     );
 
+    // dAh가 더 빨리 나오면 그만큼 늦춰서 h_next 입력 타이밍 맞춤
     localparam integer DLY_DAH_ALIGN = (LAT_DX_M + LAT_DBX_M) - LAT_DAH_M;
     wire [N_TILE*DW-1:0] dAh_dly_w;
     wire                 v_dAh_dly;
+
     pipe_bus #(.W(N_TILE*DW), .D((DLY_DAH_ALIGN>0)?DLY_DAH_ALIGN:0)) u_dly_dAh_bus (
         .clk   (clk), .rstn(rstn),
         .din   (dAh_raw_w), .vin(v_dAh_raw),
         .dout  (dAh_dly_w), .vout(v_dAh_dly)
     );
+
     assign dAh_w = (DLY_DAH_ALIGN>0) ? dAh_dly_w : dAh_raw_w;
     assign v_dAh = (DLY_DAH_ALIGN>0) ? v_dAh_dly : v_dAh_raw;
 
-    // ---------------------------------------------
+    // ============================================================
     // 4) h_next = dBx + dAh (lane-wise)
-    // ---------------------------------------------
+    // ============================================================
     wire [N_TILE*DW-1:0] hnext_w;
     wire                 v_hnext;
+
     h_next #(.DW(DW), .N_TILE(N_TILE), .ADD_LAT(LAT_ADD_A)) u_hnext (
         .clk      (clk),
         .rstn     (rstn),
@@ -118,94 +118,110 @@ module SSMBLOCK_TOP #(
         .valid_o  (v_hnext)
     );
 
-    // ---------------------------------------------
-    // 5) hC = h_next * C[n] (lane-wise) → 타일 출력
-    // ---------------------------------------------
+    // ============================================================
+    // 5) hC = h_next * C[n] (lane-wise) → 타일 hC[16]
+    // ============================================================
+    wire [N_TILE*DW-1:0] hC_tile_o;
     wire                 v_hC;
+
     hC #(.DW(DW), .N_TILE(N_TILE), .MUL_LAT(LAT_HC_M)) u_hC (
         .clk      (clk),
         .rstn     (rstn),
         .valid_i  (v_hnext),
         .hnext_i  (hnext_w),
-        .C_i      (C_tile_i),  // 앞쪽 지연만큼 delay
+        .C_i      (C_tile_i),
         .hC_o     (hC_tile_o),
         .valid_o  (v_hC)
     );
-    assign hC_tile_valid_o = v_hC;
 
-    // ---------------------------------------------
-    // 6) 타일 합산(Σ lanes) → tile_sum (DW)
-    //    16 → 8 → 4 → 2 → 1 의 tree, 각 단계 fp16_add LAT_ACC_A
-    // ---------------------------------------------
-    wire [DW-1:0] tile_sum_w;
-    wire          tile_sum_v;
-    AccTileSum16 #(.DW(DW), .ADD_LAT(LAT_ACC_A)) u_tile_sum (
-        .clk     (clk),
-        .rstn    (rstn),
-        .valid_i (v_hC),
-        .hC_i    (hC_tile_o),
-        .sum_o   (tile_sum_w),
-        .valid_o (tile_sum_v)
-    );
+    // ============================================================
+    // 6) 타일 수집기: hC[16]을 8장 모아 128-lane 버스 구성
+    // ============================================================
+    reg  [N_TILE*DW-1:0] hC_buf [0:TILES_PER_GROUP-1]; // 8개 타일 버퍼
+    reg  [2:0]           tile_ptr;   // 0..7
+    reg                  grp_emit;   // 이번 싸이클에 8타일이 모였다는 펄스
+    wire                 accept_tile = v_hC;
 
-    // ---------------------------------------------
-    // 7) 전체 타일 누적(Σ over tiles) — 스트리밍 파이프 누산기
-    //    clear는 "프레임 시작"에서 TB가 tile_last_i 이전 사이클에 넣어주는 식으로 구현,
-    //    여기서는 간단히 '첫 유효 타일'에서 내부 초기화.
-    // ---------------------------------------------
-    wire [DW-1:0] y_tmp_w;
-    wire          y_tmp_v;
-    wire          last_sum_v;  // 마지막 타일의 누적 결과가 나오는 싸이클 표시
-
-    AccTilesStream #(.DW(DW), .ADD_LAT(LAT_ACC_A)) u_acc_stream (
-        .clk        (clk),
-        .rstn       (rstn),
-        .sum_i      (tile_sum_w),
-        .sum_valid_i(tile_sum_v),
-        .last_i     (tile_sum_v & tile_last_i),  // 마지막 타일 sum에 태깅
-        .y_tmp_o    (y_tmp_w),                   // running sum (파이프 딜레이 포함)
-        .y_tmp_valid_o(y_tmp_v),
-        .last_o     (last_sum_v)                 // y_tmp_o가 "최종"일 때 1
-    );
-
-    // ---------------------------------------------
-    // 8) xD = x * D  (미리 계산해 보관)
-    // ---------------------------------------------
-    wire [DW-1:0] xD_w;
-    wire          v_xD;
-    xD_scalar #(.DW(DW)) u_xD (
-        .clk     (clk),
-        .rstn    (rstn),
-        .valid_i (tile_valid_i), // 첫 타일에서 1이면 충분(연속 타일도 OK)
-        .x_i     (x_i),
-        .D_i     (D_i),
-        .xD_o    (xD_w),  // 결과 딜레이
-        .valid_o (v_xD)
-    );
-
-    // xD 보관 (최종 합산 때까지 유지)
+    // xD = x*D (한 그룹의 첫 타일에서 한 번 계산 후 보관)
     reg  [DW-1:0] xD_hold;
     reg           xD_hold_v;
+    wire [DW-1:0] xD_w;
+    wire          v_xD_w;
+
+    // 필요하면 여길 네가 쓰는 xD 래퍼로 교체해도 됨
+    fp16_mult_wrapper u_mul_xD (
+        .clk       (clk),
+        .valid_in  (accept_tile && (tile_ptr==3'd0)),
+        .a         (x_i),
+        .b         (D_i),
+        .result    (xD_w),
+        .valid_out (v_xD_w)
+    );
+
+    integer ti;
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
+            tile_ptr  <= 3'd0;
+            grp_emit  <= 1'b0;
             xD_hold   <= {DW{1'b0}};
             xD_hold_v <= 1'b0;
-        end else if (v_xD) begin
-            xD_hold   = xD_w;
-            xD_hold_v = 1'b1;
+            for (ti=0; ti<TILES_PER_GROUP; ti=ti+1) hC_buf[ti] <= {N_TILE*DW{1'b0}};
+        end else begin
+            grp_emit <= 1'b0;
+
+            if (accept_tile) begin
+                // 현재 타일 저장
+                hC_buf[tile_ptr] <= hC_tile_o;
+
+                // xD 보관 (첫 타일에서 계산 완료되면 래치)
+                if (v_xD_w) begin
+                    xD_hold   <= xD_w;
+                    xD_hold_v <= 1'b1;
+                end
+
+                // 타일 포인터 증가 및 그룹 완료
+                if (tile_ptr == TILES_PER_GROUP-1) begin
+                    tile_ptr <= 3'd0;
+                    grp_emit <= 1'b1;    // 8번째 타일이 막 들어온 싸이클
+                end else begin
+                    tile_ptr <= tile_ptr + 3'd1;
+                end
+            end
         end
-        // 프레임 경계 관리는 TB에서 tile_last_i로 하므로 여기선 유지
     end
 
-    // ---------------------------------------------
-    // 9) 최종 y = y_tmp + xD (마지막 타일 누적이 나온 싸이클에 트리거)
-    // ---------------------------------------------
+    // 8개 타일을 128-lane 버스로 평탄화
+    wire [N_TOTAL*DW-1:0] hC_128_bus;
+    assign hC_128_bus = {
+        hC_buf[7], hC_buf[6], hC_buf[5], hC_buf[4],
+        hC_buf[3], hC_buf[2], hC_buf[1], hC_buf[0]
+    };
+
+    // ============================================================
+    // 7) 128합 트리: y_tmp = Σ_{n=0..127} hC[n]
+    //    (네 모듈 포트명에 맞춰 연결. 아래는 예시)
+    // ============================================================
+    wire [DW-1:0] y_tmp_w;
+    wire          y_tmp_v;
+
+    fp16_adder_tree_128 u_sum128 (
+        .clk       (clk),
+        .rst       (rstn),          // 네 모듈이 rstn이면 포트명만 바꿔
+        .valid_in  (grp_emit),      // 8타일 모였을 때 1싸이클 펄스
+        .in_flat   (hC_128_bus),    // 128*DW 입력
+        .sum       (y_tmp_w),       // Σ128 결과
+        .valid_out (y_tmp_v)        // 트리 내부 지연 후 1
+    );
+
+    // ============================================================
+    // 8) 최종 y = y_tmp + xD  (그룹 완료 시점에 1펄스)
+    // ============================================================
     wire [DW-1:0] y_final_w;
     wire          v_y_final_w;
 
     fp16_add_wrapper u_add_yfinal (
         .clk       (clk),
-        .valid_in  (last_sum_v & y_tmp_v & xD_hold_v),
+        .valid_in  (y_tmp_v & xD_hold_v),
         .a         (y_tmp_w),
         .b         (xD_hold),
         .result    (y_final_w),
@@ -215,191 +231,14 @@ module SSMBLOCK_TOP #(
     assign y_final_o        = y_final_w;
     assign y_final_valid_o  = v_y_final_w;
 
-    // 타일 입력 항상 수락 (필요시 backpressure로 교체)
+    // 타일 입력 항상 수락 (필요시 내부 ready와 AND 하세요)
     assign tile_ready_o = 1'b1;
 
 endmodule
 
 
 // ------------------------------------------------------------
-// 16-lane tile sum (adder tree)
-// ------------------------------------------------------------
-module AccTileSum16 #(
-  parameter integer DW = 16,
-  parameter integer ADD_LAT = 7
-)(
-  input  wire               clk,
-  input  wire               rstn,
-  input  wire               valid_i,
-  input  wire [16*DW-1:0]   hC_i,
-  output wire [DW-1:0]      sum_o,
-  output wire               valid_o
-);
-  // 16→8
-  wire [DW-1:0] s1 [0:7];
-  genvar i;
-  generate
-    for (i=0;i<8;i=i+1) begin: L1
-      fp16_add_wrapper u_add1 (
-        .clk(clk), .valid_in(valid_i),
-        .a(hC_i[(2*i+0)*DW +: DW]),
-        .b(hC_i[(2*i+1)*DW +: DW]),
-        .result(s1[i]), .valid_out(/*unused*/)
-      );
-    end
-  endgenerate
-  wire v1 = valid_i;
-
-  // 8→4
-  wire [DW-1:0] s2 [0:3];
-  generate
-    for (i=0;i<4;i=i+1) begin: L2
-      fp16_add_wrapper u_add2 (
-        .clk(clk), .valid_in(v1),
-        .a(s1[2*i+0]), .b(s1[2*i+1]),
-        .result(s2[i]), .valid_out()
-      );
-    end
-  endgenerate
-  wire v2 = v1;
-
-  // 4→2
-  wire [DW-1:0] s3 [0:1];
-  generate
-    for (i=0;i<2;i=i+1) begin: L3
-      fp16_add_wrapper u_add3 (
-        .clk(clk), .valid_in(v2),
-        .a(s2[2*i+0]), .b(s2[2*i+1]),
-        .result(s3[i]), .valid_out()
-      );
-    end
-  endgenerate
-  wire v3 = v2;
-
-  // 2→1
-  fp16_add_wrapper u_add4 (
-    .clk(clk), .valid_in(v3),
-    .a(s3[0]), .b(s3[1]),
-    .result(sum_o), .valid_out(valid_o)
-  );
-endmodule
-
-
-// ------------------------------------------------------------
-// Streaming accumulator across tiles with pipelined FP adder
-//  - Throughput 1 유지: 매 클록 tile_sum + (과거 누적값) 을 더함
-//  - ADD_LAT 단계 파이프라인 피드백 (지연선) 사용
-// ------------------------------------------------------------
-module AccTilesStream #(
-  parameter integer DW = 16,
-  parameter integer ADD_LAT = 7
-)(
-  input  wire         clk,
-  input  wire         rstn,
-  input  wire [DW-1:0] sum_i,
-  input  wire         sum_valid_i,
-  input  wire         last_i,        // 이 sum_i가 마지막 타일임을 표시
-  output wire [DW-1:0] y_tmp_o,      // 누적 합(파이프 지연 포함)
-  output wire         y_tmp_valid_o,
-  output wire         last_o         // 위 출력이 최종임을 표시
-);
-  // 누적값 파이프 (지연선)
-  reg  [DW-1:0] acc_pipe [0:ADD_LAT-1];
-  reg           vld_pipe [0:ADD_LAT-1];
-  reg           last_pipe[0:ADD_LAT-1];
-
-  // 피드백: 가장 오래된 누적값 + 현재 sum_i
-  wire [DW-1:0] adder_out;
-  wire          adder_vout;
-  fp16_add_wrapper u_add_acc (
-    .clk       (clk),
-    .valid_in  (sum_valid_i),
-    .a         (acc_pipe[ADD_LAT-1]),  // c-ADD_LAT 시점 누적값
-    .b         (sum_i),
-    .result    (adder_out),
-    .valid_out (adder_vout)
-  );
-
-  integer k;
-  always @(posedge clk or negedge rstn) begin
-    if (!rstn) begin
-      for (k=0;k<ADD_LAT;k=k+1) begin
-        acc_pipe[k]  <= {DW{1'b0}};
-        vld_pipe[k]  <= 1'b0;
-        last_pipe[k] <= 1'b0;
-      end
-    end else begin
-      // 파이프 시프트 (유효할 때만 진행)
-      if (adder_vout) begin
-        // 최신 누적 결과를 pipe[0]에 적재
-        acc_pipe[0]  <= adder_out;
-        vld_pipe[0]  <= 1'b1;
-        last_pipe[0] <= last_pipe[ADD_LAT-1]; // last 플래그도 동일 지연으로 전달
-
-        for (k=ADD_LAT-1; k>0; k=k-1) begin
-          acc_pipe[k]  <= acc_pipe[k-1];
-          vld_pipe[k]  <= vld_pipe[k-1];
-          last_pipe[k] <= last_pipe[k-1];
-        end
-      end
-
-      // last_i를 adder 입력 경로의 지연에 맞춰 전달
-      if (sum_valid_i) begin
-        // sum_i가 adder에 들어가는 사이클에 last_i를 ADD_LAT 지연 뒤로 보냄
-        // 여기서는 간단히 last_pipe의 꼬리를 덮어쓰기 위한 준비로,
-        // adder_vout 시점에 위에서 last_pipe[0]에 acc_pipe[ADD_LAT-1]의 last를 복사한다.
-      end
-    end
-  end
-
-  // sum_valid_i가 들어오는 사이클에 last_i를 ADD_LAT 후에 맞춰주기 위한 쉬프트 레지스터
-  reg [ADD_LAT-1:0] last_sr;
-  always @(posedge clk or negedge rstn) begin
-    if (!rstn) last_sr <= 'b0;
-    else begin
-      last_sr <= {last_sr[ADD_LAT-2:0], (sum_valid_i ? last_i : 1'b0)};
-      // ADD_LAT 뒤에 last_sr[ADD_LAT-1] == adder_vout에 해당
-      if (adder_vout) begin
-        // 위 파이프 갱신과 동시에 꼬리에 last 플래그 주입
-        last_pipe[0] <= last_sr[ADD_LAT-1];
-      end
-    end
-  end
-
-  assign y_tmp_o       = acc_pipe[ADD_LAT-1];
-  assign y_tmp_valid_o = vld_pipe[ADD_LAT-1];
-  assign last_o        = last_pipe[ADD_LAT-1];
-
-endmodule
-
-
-// ------------------------------------------------------------
-// xD = x * D (scalar) — 간단 래퍼
-// ------------------------------------------------------------
-module xD_scalar #(
-  parameter integer DW = 16
-)(
-  input  wire         clk,
-  input  wire         rstn,
-  input  wire         valid_i,
-  input  wire [DW-1:0] x_i,
-  input  wire [DW-1:0] D_i,
-  output wire [DW-1:0] xD_o,
-  output wire         valid_o
-);
-  fp16_mult_wrapper u_mul (
-    .clk       (clk),
-    .valid_in  (valid_i),
-    .a         (x_i),
-    .b         (D_i),
-    .result    (xD_o),
-    .valid_out (valid_o)
-  );
-endmodule
-
-
-// ------------------------------------------------------------
-// Data+valid pipeline utility
+// Data+valid pipeline utility (데이터+valid를 D싸이클 지연)
 // ------------------------------------------------------------
 module pipe_bus #(
     parameter integer W = 16,
@@ -417,8 +256,8 @@ module pipe_bus #(
             assign dout = din;
             assign vout = vin;
         end else begin : G_DN
-            reg [W-1:0] q   [0:D-1];
-            reg         qv  [0:D-1];
+            reg [W-1:0] q  [0:D-1];
+            reg         qv [0:D-1];
             integer i;
             always @(posedge clk or negedge rstn) begin
                 if (!rstn) begin
