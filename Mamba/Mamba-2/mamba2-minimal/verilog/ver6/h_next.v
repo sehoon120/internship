@@ -13,12 +13,12 @@ module h_next #(
   output wire [N_TILE*DW-1:0] hnext_o,
   output wire                 valid_o
 );
-  wire [DW-1:0] y   [N_TILE];
-  wire          vld [N_TILE];
+  wire [DW-1:0] y   [0:N_TILE-1];
+  wire          vld [0:N_TILE-1];
 
   genvar n;
   generate
-    for (n=0; n<N_TILE; n++) begin : g_add
+    for (n=0; n<N_TILE; n=n+1) begin : g_add
       fp16_add_wrapper u_mul (
         .clk(clk),
         .valid_in(valid_i),
