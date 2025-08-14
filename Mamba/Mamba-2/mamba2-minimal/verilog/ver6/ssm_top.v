@@ -149,13 +149,14 @@ module SSMBLOCK_TOP #(
     wire          v_xD_w;
 
     // 필요하면 여길 네가 쓰는 xD 래퍼로 교체해도 됨
-    fp16_mult_wrapper u_mul_xD (
+    xD u_mul_xD (
         .clk       (clk),
-        .valid_in  (accept_tile && (tile_ptr==3'd0)),
-        .a         (x_i),
-        .b         (D_i),
-        .result    (xD_w),
-        .valid_out (v_xD_w)
+        .rstn      (rstn), 
+        .valid_i  (accept_tile && (tile_ptr==3'd0)),
+        .x_i         (x_i),
+        .D_i         (D_i),
+        .xD_o    (xD_w),
+        .valid_o (v_xD_w)
     );
 
     integer ti;
@@ -219,13 +220,14 @@ module SSMBLOCK_TOP #(
     wire [DW-1:0] y_final_w;
     wire          v_y_final_w;
 
-    fp16_add_wrapper u_add_yfinal (
+    y_out u_add_yfinal (
         .clk       (clk),
-        .valid_in  (y_tmp_v & xD_hold_v),
-        .a         (y_tmp_w),
-        .b         (xD_hold),
-        .result    (y_final_w),
-        .valid_out (v_y_final_w)
+        .rstn      (rstn),
+        .valid_i  (y_tmp_v & xD_hold_v),
+        .ytmp_i         (y_tmp_w),
+        .xD_i         (xD_hold),
+        .y_o    (y_final_w),
+        .valid_o (v_y_final_w)
     );
 
     assign y_final_o        = y_final_w;

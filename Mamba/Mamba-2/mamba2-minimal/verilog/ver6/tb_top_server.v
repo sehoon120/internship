@@ -167,8 +167,8 @@ module tb_ssmblock_fullscan;
   initial begin
     rstn = 1'b0;
     tile_valid_i = 1'b0;
-    dt_i = '0; dA_i = '0; D_i = '0; x_i = '0;
-    B_tile_i = '0; C_tile_i = '0; hprev_tile_i = '0;
+    dt_i = 0; dA_i = 0; D_i = 0; x_i = 0;
+    B_tile_i = 0; C_tile_i = 0; hprev_tile_i = 0;
 
     // 파일 경로는 환경에 맞게 수정
     $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dt.hex",        dt_mem);

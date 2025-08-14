@@ -83,8 +83,8 @@ module tb_ssmblock_tile_stream;
     initial begin
         rstn = 1'b0;
         tile_valid_i = 1'b0;
-        B_tile_i = '0; C_tile_i = '0; hprev_tile_i = '0;
-        dt_i = '0; dA_i = '0; x_i = '0; D_i = '0;
+        B_tile_i = 0; C_tile_i = 0; hprev_tile_i = 0;
+        dt_i = 0; dA_i = 0; x_i = 0; D_i = 0;
 
         // 경로는 환경에 맞게 수정하세요.
         // 파일이 더 큰 사이즈여도, 여기 메모리 크기만큼만 앞에서부터 읽힙니다.
