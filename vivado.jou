@@ -129,3 +129,6 @@ save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_be
 add_files -fileset sim_1 -norecurse /home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg
 set_property xsim.view /home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg [get_filesets sim_1]
 run all
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg}
+relaunch_sim
+run all

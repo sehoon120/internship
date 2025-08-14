@@ -121,44 +121,35 @@ module tb_ssmblock_fullscan;
   endtask
 
   // (h_abs, p_abs) 그룹 처리: 스칼라 세팅 → 8타일 연속 전송 → y_final 수신
-  task process_one_hp(input integer h_a, input integer p_a);
-    begin
-        h_abs = h_a;
-        p_abs = p_a;
-
-        // 스칼라 세팅 (dt/dA/D는 h 기반, x는 (h,p) 기반)
-        dt_i <= dt_mem[h_abs];
-        dA_i <= dA_mem[h_abs];
-        D_i  <= D_mem[h_abs];
-        x_i  <= x_mem[h_abs*P + p_abs];
-
-        // 스칼라 안정화 1클록
-        @(posedge clk);
-
-        // === N=128을 16개씩, 8사이클 연속 전송 (II=1) ===
+    task process_one_hp(input integer h_a, input integer p_a);
+      integer t, j, base;
+      begin
+        // 스칼라 세팅 (바뀌자마자 첫 타일과 함께 사용됨)
+        dt_i <= dt_mem[h_a];
+        dA_i <= dA_mem[h_a];
+        D_i  <= D_mem[h_a];
+        x_i  <= x_mem[h_a*P + p_a];
+    
+        // === 8사이클 연속 주입 (II=1) ===
         tile_valid_i <= 1'b1;
-        for (t = 0; t < TILES; t = t + 1) begin
-            base = t * N_TILE;
-
-            // 필요 시: while (tile_ready_o == 1'b0) @(posedge clk);
-
-            // 이번 타일 payload 패킹
-            for (j = 0; j < N_TILE; j = j + 1) begin
-                B_tile_i     [DW*j +: DW] = B_mem[base + j];
-                C_tile_i     [DW*j +: DW] = C_mem[base + j];
-                hprev_tile_i [DW*j +: DW] = h_mem[((h_abs*P) + p_abs)*N + (base + j)];
-            end
-
-            // 다음 타일로 넘어가기 (valid 유지)
-            @(posedge clk);
+        for (t = 0; t < (N/N_TILE); t = t + 1) begin
+          base = t * N_TILE;
+    
+          // 필요시 백프레셔: while (!tile_ready_o) @(posedge clk);
+    
+          // 이번 타일 payload 패킹
+          for (j = 0; j < N_TILE; j = j + 1) begin
+            B_tile_i     [DW*j +: DW] = B_mem[base + j];
+            C_tile_i     [DW*j +: DW] = C_mem[base + j];
+            hprev_tile_i [DW*j +: DW] = h_mem[((h_a*P) + p_a)*N + (base + j)];
+          end
+    
+          @(posedge clk); // 다음 타일로 즉시 진행 (valid 유지)
         end
         tile_valid_i <= 1'b0;
-
-        // 이 (h,p)의 최종 y 대기/저장
-        while (y_final_valid_o == 1'b0) @(posedge clk);
-        y_out_mem[h_abs*P + p_abs] <= y_final_o;
-    end
+      end
     endtask
+    
 
 
   // -----------------------------
