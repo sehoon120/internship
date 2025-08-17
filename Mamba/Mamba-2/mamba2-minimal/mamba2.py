@@ -18,7 +18,7 @@ import json
 from dataclasses import dataclass
 from typing import Iterable, NamedTuple, TypeAlias, cast
 
-import torch
+import torch, time
 import torch.nn.functional as F
 from einops import rearrange, repeat
 from torch import LongTensor, Tensor, nn
@@ -141,13 +141,19 @@ class Mamba2LMHeadModel(nn.Module):
             h = [None for _ in range(self.args.n_layer)]
 
         x = self.backbone.embedding(input_ids)
+        SSM_time = 0
+        MAMBA_time = 0
         for i, layer in enumerate(self.backbone.layers):
-            y, h[i] = layer.mixer(layer.norm(x), h[i])
+            t1_m = time.perf_counter()
+            y, h[i], ssm_runtime = layer.mixer(layer.norm(x), h[i])
             x = y + x
+            SSM_time += ssm_runtime
+            t2_m = time.perf_counter()
+            MAMBA_time += (t2_m - t1_m)
 
         x = self.backbone.norm_f(x)
         logits = self.lm_head(x)
-        return logits[:, :seqlen], cast(list[InferenceCache], h)
+        return logits[:, :seqlen], cast(list[InferenceCache], h), SSM_time, MAMBA_time
 
     def generate(
         self,
@@ -206,6 +212,8 @@ class Mamba2(nn.Module):
         super().__init__()
         self.args = args
         self.device = device
+        self._last_ssm_ms = 0.0
+        self._last_mamba_ms = 0.0
 
         # Order: (z, x, B, C, dt)
         d_in_proj = 2 * args.d_inner + 2 * args.d_state + args.nheads
@@ -257,14 +265,15 @@ class Mamba2(nn.Module):
         conv_state = F.pad(
             rearrange(xBC, "b l d -> b d l"), (self.args.d_conv - u.shape[1], 0)
         )
-
-        xBC = silu(
-            self.conv1d(xBC.transpose(1, 2)).transpose(1, 2)[:, : u.shape[1], :]
-        )  # (batch, seqlen, d_inner + 2 * d_state))
+        
+        xBC = self.conv1d(xBC.transpose(1, 2)).transpose(1, 2)[:, : u.shape[1], :]
+        t1 = time.perf_counter()
+        xBC = silu(xBC)  # (batch, seqlen, d_inner + 2 * d_state))
         x, B, C = torch.split(
             xBC, [self.args.d_inner, self.args.d_state, self.args.d_state], dim=-1
         )
         x = rearrange(x, "b l (h p) -> b l h p", p=self.args.headdim)
+        # ====================  SSM Block Started  ====================
         y, ssm_state = ssd(
             x * dt.unsqueeze(-1),
             A * dt,
@@ -273,13 +282,17 @@ class Mamba2(nn.Module):
             self.args.chunk_size,
             device=self.device,
         )
+        # ====================  SSM Block Finished  ====================
         y = y + x * self.D.unsqueeze(-1)
         y = rearrange(y, "b l h p -> b l (h p)")
-        y = self.norm(y, z)
+        y = y * F.silu(z)
+        t2 = time.perf_counter()
+        y = self.norm(y)
         y = self.out_proj(y)
 
         h = InferenceCache(conv_state, ssm_state)
-        return y, h
+        ssm_runtime = t2-t1
+        return y, h, ssm_runtime
 
     def step(self, u: Tensor, h: InferenceCache) -> tuple[Tensor, InferenceCache]:
         """Take a single inference step for the current input and hidden state
@@ -323,9 +336,11 @@ class Mamba2(nn.Module):
         xBC = torch.sum(
             h.conv_state * rearrange(self.conv1d.weight, "d 1 w -> d w"), dim=-1
         )
+        
         # print('h.conv_state', h.conv_state.shape)
         # print('xBC2: ', xBC.shape)
         xBC += self.conv1d.bias
+        t1 = time.perf_counter()
         xBC = silu(xBC)
 
         x, B, C = torch.split(
@@ -347,10 +362,12 @@ class Mamba2(nn.Module):
         y = torch.einsum("bhpn, bn -> bhp", h.ssm_state, C)
         y = y + rearrange(self.D, "h -> h 1") * x
         y = rearrange(y, "b h p -> b (h p)")
-        y = self.norm(y, z)
+        y = y * silu(z)
+        t2 = time.perf_counter()
+        y = self.norm(y)
         y = self.out_proj(y)
         # print(y.shape)
-        return y.unsqueeze(1), h
+        return y.unsqueeze(1), h, t2-t1
 
 
 def segsum(x: Tensor, device: Device = None) -> Tensor:
