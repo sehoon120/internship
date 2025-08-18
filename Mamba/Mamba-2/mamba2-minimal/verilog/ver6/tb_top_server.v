@@ -1,34 +1,21 @@
 `timescale 1ns / 1ps
 
-// 전체 데이터(B=1,H=24,P=64,N=128)를 H_tile×P_tile 블로킹 순서로 모두 순회하여
-// (h,p)마다 N=128을 16씩(=8타일) 스트리밍 → SSMBLOCK_TOP → y_final 수집 TB
-// 고친점: y_final_valid_o가 나올 때마다 (h,p) 인덱스를 FIFO에서 꺼내 정확한 위치에 저장
-module tb_ssmblock_fullscan;
-  // -----------------------------
-  // Parameters
-  // -----------------------------
-  localparam integer B       = 1;
-  localparam integer H       = 24;
-  localparam integer P       = 64;
-  localparam integer N       = 128;
-  localparam integer H_tile  = 1;
-  localparam integer P_tile  = 1;
-  localparam integer DW      = 16;
-  localparam integer N_TILE  = 16;
-  localparam integer TILES   = N / N_TILE;  // 8
+// SSMBLOCK_TOP 스트리밍 TB (Sticky-valid, II=1)
+//  - (h,p)마다 8타일(=128/16) 연속 전송
+//  - y_final_valid_o 시점에 FIFO로 (h,p) 인덱스 매칭 저장
+module testbench_ssmblock_top_stream;
 
-  // 유효성 체크
-  initial begin
-    if (H % H_tile != 0) begin
-      $display("ERROR: H(%0d) %% H_tile(%0d) != 0", H, H_tile); $finish;
-    end
-    if (P % P_tile != 0) begin
-      $display("ERROR: P(%0d) %% P_tile(%0d) != 0", P, P_tile); $finish;
-    end
-    if (N % N_TILE != 0) begin
-      $display("ERROR: N(%0d) %% N_TILE(%0d) != 0", N, N_TILE); $finish;
-    end
-  end
+  // -----------------------------
+  // 문제 크기 (필요에 맞게 조정: N_TOTAL=128 고정 가정)
+  // -----------------------------
+  localparam integer B        = 1;
+  localparam integer H        = 24;       // 예: 16
+  localparam integer P        = 64;        // 예: 4
+  localparam integer N_TOTAL  = 128;      // 탑 내부 합트리 128-lane 가정
+  localparam integer N_TILE   = 16;       // 포트 폭 (lane)
+  localparam integer TILES    = N_TOTAL / N_TILE; // 8
+
+  localparam integer DW       = 16;
 
   // -----------------------------
   // DUT I/O
@@ -36,13 +23,10 @@ module tb_ssmblock_fullscan;
   reg                      clk;
   reg                      rstn;
 
-  reg                      tile_valid_i;
+  reg                      tile_valid_i;           // sticky-high
   wire                     tile_ready_o;
 
-  reg  [DW-1:0]            dt_i;
-  reg  [DW-1:0]            dA_i;
-  reg  [DW-1:0]            x_i;
-  reg  [DW-1:0]            D_i;
+  reg  [DW-1:0]            dt_i, dA_i, x_i, D_i;
 
   reg  [N_TILE*DW-1:0]     B_tile_i;
   reg  [N_TILE*DW-1:0]     C_tile_i;
@@ -52,29 +36,36 @@ module tb_ssmblock_fullscan;
   wire                     y_final_valid_o;
 
   // -----------------------------
-  // Memories
+  // Memories (입력 데이터)
   // -----------------------------
-  reg [DW-1:0] dt_mem   [0:B*H-1];         // dt[h]
-  reg [DW-1:0] dA_mem   [0:B*H-1];         // dA[h]
-  reg [DW-1:0] D_mem    [0:H-1];           // D[h]
-  reg [DW-1:0] x_mem    [0:B*H*P-1];       // x[h*P + p]
-  reg [DW-1:0] B_mem    [0:B*N-1];         // B[n]
-  reg [DW-1:0] C_mem    [0:B*N-1];         // C[n]
-  reg [DW-1:0] h_mem    [0:B*H*P*N-1];     // h_prev[((h*P)+p)*N + n]
+  reg [DW-1:0] dt_mem   [0:B*H-1];                // dt[h]
+  reg [DW-1:0] dA_mem   [0:B*H-1];                // dA[h]
+  reg [DW-1:0] D_mem    [0:H-1];                  // D[h]
+  reg [DW-1:0] x_mem    [0:B*H*P-1];              // x[h*P + p]
+  reg [DW-1:0] B_mem    [0:B*N_TOTAL-1];          // B[n]
+  reg [DW-1:0] C_mem    [0:B*N_TOTAL-1];          // C[n]
+  reg [DW-1:0] h_mem    [0:B*H*P*N_TOTAL-1];      // h_prev[((h*P)+p)*N + n]
 
-  // 결과 버퍼 (H*P 개의 스칼라)
-  reg [DW-1:0] y_out_mem [0:H*P-1];
+  // 결과 버퍼 (H*P 개의 스칼라) + 플랫
+  reg [DW-1:0]            y_out_mem [0:H*P-1];
+  reg [B*H*P*DW-1:0]      y_flat_out;
 
-  integer h_blk, p_blk, h_rel, p_rel, h_abs, p_abs;
-  integer t, j, base, fout;
+  integer fout, i, j;
 
   // -----------------------------
   // DUT
   // -----------------------------
   SSMBLOCK_TOP #(
-      .DW(DW), .N_TILE(N_TILE), .N_TOTAL(N),
-      .LAT_DX_M(6), .LAT_DBX_M(6), .LAT_DAH_M(6),
-      .LAT_ADD_A(11), .LAT_HC_M(6)
+      .DW(DW),
+      .H_TILE(1),
+      .P_TILE(1),
+      .N_TILE(N_TILE),
+      .N_TOTAL(N_TOTAL),
+      .LAT_DX_M (6),
+      .LAT_DBX_M(6),
+      .LAT_DAH_M(6),
+      .LAT_ADD_A(11),
+      .LAT_HC_M (6)
   ) dut (
       .clk(clk),
       .rstn(rstn),
@@ -102,154 +93,187 @@ module tb_ssmblock_fullscan;
   always #5 clk = ~clk;
 
   // -----------------------------
-  // (h,p) 결과 매칭용 인덱스 FIFO
-  //   - 타일 8장을 모두 보낸 직후 (h*P+p) 를 push
-  //   - y_final_valid_o가 뜨면 pop하여 y_out_mem[pop]에 저장
+  // 결과 인덱스 매칭용 FIFO
   // -----------------------------
-  integer idx_fifo [0:H*P-1];
-  integer head, tail, fifo_count;
-  integer pop_idx;
+//  localparam integer QDEPTH = H*P + 64;
+  localparam integer QDEPTH = (H*P) + 2048;
+  localparam integer QW     = $clog2(QDEPTH);
+  
 
-  // FIFO 초기화
-  task fifo_reset;
-    integer k;
-    begin
-      head = 0; tail = 0; fifo_count = 0;
-      for (k = 0; k < H*P; k = k + 1) idx_fifo[k] = 0;
-    end
-  endtask
+  reg [31:0]   idx_q   [0:QDEPTH-1];
+  reg [QW-1:0] q_head, q_tail;
+  reg [31:0]   q_count;
 
-  task fifo_push(input integer val);
-    begin
-      idx_fifo[tail] = val;
-      tail = tail + 1;
-      fifo_count = fifo_count + 1;
-    end
-  endtask
+  // enqueue 1클럭 펄스
+  reg          enq_req;
+  reg [31:0]   enq_idx;
 
-  task fifo_pop(output integer val);
-    begin
-      val = idx_fifo[head];
-      head = head + 1;
-      fifo_count = fifo_count - 1;
-    end
-  endtask
-
-  // 출력 수집기
+  // 큐 처리 + 결과 기록기
+  integer deq_idx;
   always @(posedge clk or negedge rstn) begin
     if (!rstn) begin
-      // 초기화
+      q_head <= 0; q_tail <= 0; q_count <= 0;
     end else begin
+      // Enqueue
+      if (enq_req) begin
+        if (q_count == QDEPTH) begin
+          $display("[TB][%0t] ERROR: idx queue overflow", $time); $finish;
+        end
+        idx_q[q_tail] <= enq_idx;
+        q_tail        <= (q_tail == QDEPTH-1) ? 0 : (q_tail + 1'b1);
+        q_count       <= q_count + 1;
+      end
+      // Dequeue on y_valid → y_out_mem에 저장
       if (y_final_valid_o) begin
-        if (fifo_count == 0) begin
-          $display("[%0t] WARN: y_final_valid_o with empty FIFO!", $time);
+        if (q_count == 0) begin
+          $display("[TB][%0t] ERROR: idx queue underflow", $time); $finish;
         end else begin
-          fifo_pop(pop_idx);
-          y_out_mem[pop_idx] <= y_final_o;
-          // 디버그 로그 (필요시 주석)
-          // $display("[%0t] y_out_mem[%0d] = 0x%04h", $time, pop_idx, y_final_o);
+          
+          deq_idx  = idx_q[q_head];
+          q_head   <= (q_head == QDEPTH-1) ? 0 : (q_head + 1'b1);
+          q_count  <= q_count - 1;
+          y_out_mem[deq_idx] <= y_final_o;
         end
       end
     end
   end
 
   // -----------------------------
-  // Helpers
+  // Payload packer
   // -----------------------------
-  // 타일 payload 패킹
   task pack_tile_payload(input integer h_a, input integer p_a, input integer n_base);
     begin
+      // B, C
       for (j = 0; j < N_TILE; j = j + 1) begin
-        B_tile_i     [DW*j +: DW] = B_mem[n_base + j];
-        C_tile_i     [DW*j +: DW] = C_mem[n_base + j];
-        hprev_tile_i [DW*j +: DW] = h_mem[((h_a*P) + p_a)*N + (n_base + j)];
+        B_tile_i[DW*j +: DW] = B_mem[n_base + j];
+        C_tile_i[DW*j +: DW] = C_mem[n_base + j];
       end
-    end
-  endtask
-
-  // 단일 (h_abs, p_abs) 그룹 처리: 스칼라 세팅 → 8타일 전송(II=1로 시도, 백프레셔 대응) → 인덱스 FIFO push
-  task process_one_hp(input integer h_a, input integer p_a);
-    integer t_local, base_local;
-    begin
-      // 스칼라 고정
-      dt_i <= dt_mem[h_a];
-      dA_i <= dA_mem[h_a];
-      D_i  <= D_mem[h_a];
-      x_i  <= x_mem[h_a*P + p_a];
-
-      // 8개 타일 송신
-      for (t_local = 0; t_local < TILES; t_local = t_local + 1) begin
-        base_local = t_local * N_TILE;
-
-        // payload 준비
-        pack_tile_payload(h_a, p_a, base_local);
-
-        // ready 관찰: ready가 1인 싸이클에 valid를 1로 1싸이클만 펄스
-        @(posedge clk);
-        while (tile_ready_o == 1'b0) @(posedge clk);
-
-        tile_valid_i <= 1'b1;
-        @(posedge clk);
-        tile_valid_i <= 1'b0;
+      // h_prev
+      for (j = 0; j < N_TILE; j = j + 1) begin
+        hprev_tile_i[DW*j +: DW] = h_mem[((h_a*P) + p_a)*N_TOTAL + (n_base + j)];
       end
-
-      // 해당 (h,p)의 결과가 나중에 올라오므로, 인덱스를 FIFO에 적재
-      fifo_push(h_a*P + p_a);
     end
   endtask
 
   // -----------------------------
-  // Reset / Load / Full Scan
+  // Sticky-valid 스트리밍 엔진
+  //   - 전체 스캔 동안 tile_valid_i=1 유지 (끝에서만 0)
+  //   - ready=1 싸이클에서만 타일 전환/카운트
+  //   - 8번째 타일 수락 시 (h,p) 인덱스 enqueue
+  // -----------------------------
+  integer cur_h, cur_p;        // 현재 (h,p)
+  integer n_sent;              // 현재 (h,p)에서 전송된 타일 수: 0..TILES-1
+  integer groups_done;         // 완료된 (h,p) 개수
+  integer next_h, next_p;
+  integer idx_now;
+
+  task automatic set_scalars(input integer h_a, input integer p_a);
+  begin
+    dt_i <= dt_mem[h_a];
+    dA_i <= dA_mem[h_a];
+    D_i  <= D_mem[h_a];
+    x_i  <= x_mem[h_a*P + p_a];
+  end
+  endtask
+
+  task automatic next_hp(input integer h_a, input integer p_a,
+                         output integer h_b, output integer p_b);
+  begin
+    if (p_a == P-1) begin h_b = h_a + 1; p_b = 0; end
+    else             begin h_b = h_a;     p_b = p_a + 1; end
+  end
+  endtask
+
+  // -----------------------------
+  // Reset / Load / Stream all
   // -----------------------------
   initial begin
+    // 초기화
     rstn = 1'b0;
     tile_valid_i = 1'b0;
-    dt_i = 0; dA_i = 0; D_i = 0; x_i = 0;
-    B_tile_i = 0; C_tile_i = 0; hprev_tile_i = 0;
-    fifo_reset();
+    dt_i=0; dA_i=0; D_i=0; x_i=0;
+    B_tile_i=0; C_tile_i=0; hprev_tile_i=0;
+    q_head=0; q_tail=0; q_count=0; enq_req=1'b0; enq_idx=0;
 
-    // 파일 경로는 환경에 맞게 수정
-    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dt.hex",        dt_mem);
-    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dA.hex",        dA_mem);
-    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_D.hex",         D_mem);
-    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_x.hex",         x_mem);
-    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_B.hex",         B_mem);
-    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_C.hex",         C_mem);
-    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_ssm_state.hex", h_mem);
+    // 파일 경로 (Windows 예시: 네 경로에 맞게 조정)
+    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dt.hex",         dt_mem);
+    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dA.hex",         dA_mem);
+    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_D.hex",          D_mem);
+    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_x.hex",          x_mem);
+    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_B.hex",          B_mem);   // 길이 128 필요
+    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_C.hex",          C_mem);   // 길이 128 필요
+    $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_ssm_state.hex",  h_mem);   // H*P*128 길이 필요
 
-    // Reset release
-    #100 rstn = 1'b1;
-    @(posedge clk); @(posedge clk);
+    // 결과 버퍼 클리어
+    for (i = 0; i < H*P; i = i + 1) y_out_mem[i] = 0;
 
-    $display("==== Full scan start: H=%0d, P=%0d, N=%0d (H_tile=%0d, P_tile=%0d, N_TILE=%0d) ====",
-             H, P, N, H_tile, P_tile, N_TILE);
+    // 리셋 해제
+    repeat (10) @(posedge clk);
+    rstn = 1'b1;
+    repeat (2) @(posedge clk);
 
-    // 블로킹 순회: (h_blk, p_blk) 타일 블록 → 내부에서 (h_rel, p_rel) 순회
-    for (h_blk = 0; h_blk < H; h_blk = h_blk + H_tile) begin
-      for (p_blk = 0; p_blk < P; p_blk = p_blk + P_tile) begin
-        for (h_rel = 0; h_rel < H_tile; h_rel = h_rel + 1) begin
-          for (p_rel = 0; p_rel = p_rel + 1) begin : LP_REL
-            h_abs = h_blk + h_rel;
-            p_abs = p_blk + p_rel;
-            process_one_hp(h_abs, p_abs);
+    $display("==== Stream start: H=%0d, P=%0d, N_TOTAL=%0d, N_TILE=%0d, TILES=%0d ====",
+             H, P, N_TOTAL, N_TILE, TILES);
+
+    // 스트리밍 상태 초기화
+    cur_h = 0; cur_p = 0; n_sent = 0; groups_done = 0;
+
+    // 첫 (h,p) 스칼라 & 첫 타일 준비
+    set_scalars(cur_h, cur_p);
+    pack_tile_payload(cur_h, cur_p, 0);
+
+    // ★ valid를 전체 스트림 동안 유지 (sticky)
+    tile_valid_i <= 1'b1;
+
+    // 전체 (h,p) 처리
+    while (groups_done < H*P) begin
+      @(posedge clk);
+      if (tile_ready_o) begin
+        if (n_sent == TILES-1) begin
+          // 이번 싸이클에 8번째 타일이 수락됨 → (h,p) 완료
+          idx_now <= cur_h*P + cur_p;
+          enq_idx <= idx_now; enq_req <= 1'b1;  // 결과 인덱스 enqueue (1클럭)
+
+          // 다음 (h,p) 결정
+          groups_done = groups_done + 1;
+          if (groups_done == H*P) begin
+            // 전체 종료 → 다음 싸이클에 valid 내림
+            tile_valid_i <= 1'b0;
+          end else begin
+            next_hp(cur_h, cur_p, next_h, next_p);
+            cur_h = next_h; cur_p = next_p;
+
+            // 다음 (h,p) 첫 타일 준비 (버블 없이 이어감)
+            set_scalars(cur_h, cur_p);
+            pack_tile_payload(cur_h, cur_p, 0);
+            n_sent = 0;
           end
+        end else begin
+          // 중간 타일 → 다음 타일 프리페치
+          n_sent = n_sent + 1;
+          pack_tile_payload(cur_h, cur_p, n_sent*N_TILE);
         end
       end
+
+      // enqueue 펄스 다운 (정확히 1클럭)
+      if (enq_req) enq_req <= 1'b0;
     end
 
-    // 남아있는 결과 드레인 (모든 y_final_valid_o 수신 대기)
-    $display("[%0t] Draining %0d pending results...", $time, fifo_count);
-    while (fifo_count > 0) @(posedge clk);
+    // 남은 결과 드레인
+    $display("[%0t] Draining %0d pending results...", $time, q_count);
+    while (q_count > 0) @(posedge clk);
 
-    // 결과 저장
-    fout = $fopen("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_y_out_full.hex", "w");
-    for (integer idx = 0; idx < H*P; idx = idx + 1)
-      $fdisplay(fout, "%04h", y_out_mem[idx]);
+    // 플랫화 & 저장
+    for (i = 0; i < H*P; i = i + 1)
+      y_flat_out[DW*i +: DW] = y_out_mem[i];
+
+    fout = $fopen("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_y_out.hex", "w");
+    for (i = 0; i < B*H*P; i = i + 1)
+      $fdisplay(fout, "%04h", y_flat_out[DW*i +: DW]);
     $fclose(fout);
 
-    $display("✅ Full scan completed. Results written.");
-
-    #50 $finish;
+    $display("✅ Done. Output saved to 0_y_out.hex");
+    #20 $finish;
   end
 
 endmodule
