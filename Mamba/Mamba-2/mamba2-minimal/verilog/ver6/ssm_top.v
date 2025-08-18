@@ -14,7 +14,7 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_DX_M  = 6,   // dx: dt*x (mul)
     parameter integer LAT_DBX_M = 6,   // dBx: dx*B (mul)
     parameter integer LAT_DAH_M = 6,   // dAh: dA*hprev (mul)
-    parameter integer LAT_ADD_A = 11,  // h_next: add
+    parameter integer LAT_ADD_A = 11,  // h_next: dAh+dBx
     parameter integer LAT_HC_M  = 6    // hC: h_next*C (mul)
 )(
     input  wire                   clk,
@@ -63,13 +63,30 @@ module SSMBLOCK_TOP #(
     // ============================================================
     wire [N_TILE*DW-1:0] dBx_w;
     wire                 v_dBx;
+    localparam integer B_W = N_TILE*DW;
+    integer bi;
+    reg [B_W-1:0] B_tile_buffer [0:LAT_DX_M];
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            for (bi = 0; bi <= LAT_DX_M; bi = bi + 1) begin
+                B_tile_buffer[bi] <= {B_W{1'b0}};
+            end
+        end else begin
+            // B 입력 시프트
+            B_tile_buffer[0] <= B_tile_i;
+            for (bi = 1; bi <= LAT_DX_M; bi = bi + 1) begin
+                B_tile_buffer[bi] <= B_tile_buffer[bi-1];
+            end
+        end
+    end
+    wire [B_W-1:0] B_tile_aligned = B_tile_buffer[LAT_DX_M];
 
     dBx #(.DW(DW), .N_TILE(N_TILE), .MUL_LAT(LAT_DBX_M)) u_dBx (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_dx),
         .dx_i    (dx_w),
-        .Bmat_i  (B_tile_i),  // B_mat가 LAT_M 만큼 딜레이된 값이 들어가야함 - 6사이클
+        .Bmat_i  (B_tile_aligned),  // B_mat가 LAT_M 만큼 딜레이된 값이 들어가야함 - 6사이클
         .dBx_o   (dBx_w),
         .valid_o (v_dBx)
     );
@@ -125,13 +142,30 @@ module SSMBLOCK_TOP #(
     // ============================================================
     wire [N_TILE*DW-1:0] hC_tile_o;
     wire                 v_hC;
+    localparam integer C_W = N_TILE*DW;
+    integer ci;
+    reg [C_W-1:0] C_tile_buffer [0:LAT_DX_M+LAT_DBX_M+LAT_ADD_A];
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            for (ci = 0; ci <= LAT_DX_M+LAT_DBX_M+LAT_ADD_A; ci = ci + 1) begin
+                C_tile_buffer[ci] <= {C_W{1'b0}};
+            end
+        end else begin
+            // B 입력 시프트
+            C_tile_buffer[0] <= C_tile_i;
+            for (ci = 1; ci <= LAT_DX_M+LAT_DBX_M+LAT_ADD_A; ci = ci + 1) begin
+                C_tile_buffer[ci] <= C_tile_buffer[ci-1];
+            end
+        end
+    end
+    wire [C_W-1:0] C_tile_aligned = C_tile_buffer[LAT_DX_M+LAT_DBX_M+LAT_ADD_A];
 
     hC #(.DW(DW), .N_TILE(N_TILE), .MUL_LAT(LAT_HC_M)) u_hC (
         .clk      (clk),
         .rstn     (rstn),
         .valid_i  (v_hnext),
         .hnext_i  (hnext_w),
-        .C_i      (C_tile_i),  // C도 여기까지만큼 딜레이 시켜서 넣어야함 - 23사이클
+        .C_i      (C_tile_aligned),  // C도 여기까지만큼 딜레이 시켜서 넣어야함 - 23사이클
         .hC_o     (hC_tile_o),
         .valid_o  (v_hC)
     );

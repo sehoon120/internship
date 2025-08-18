@@ -2,7 +2,7 @@
 
 // 전체 데이터(B=1,H=24,P=64,N=128)를 H_tile×P_tile 블로킹 순서로 모두 순회하여
 // (h,p)마다 N=128을 16씩(=8타일) 스트리밍 → SSMBLOCK_TOP → y_final 수집 TB
-// 고친점: y_final_valid_o가 나올 때마다 (h,p) 인덱스를 FIFO에서 꺼내 정확한 위치에 저장
+// 고쳐야할것: 결과 인덱스에 맞춰서 저장하기. 지금은 그 과정이 없음
 module tb_ssmblock_fullscan;
   // -----------------------------
   // Parameters
@@ -13,8 +13,8 @@ module tb_ssmblock_fullscan;
   localparam integer N       = 128;
   localparam integer H_tile  = 1;
   localparam integer P_tile  = 1;
-  localparam integer DW      = 16;
   localparam integer N_TILE  = 16;
+  localparam integer DW      = 16;
   localparam integer TILES   = N / N_TILE;  // 8
 
   // 유효성 체크
@@ -102,101 +102,56 @@ module tb_ssmblock_fullscan;
   always #5 clk = ~clk;
 
   // -----------------------------
-  // (h,p) 결과 매칭용 인덱스 FIFO
-  //   - 타일 8장을 모두 보낸 직후 (h*P+p) 를 push
-  //   - y_final_valid_o가 뜨면 pop하여 y_out_mem[pop]에 저장
-  // -----------------------------
-  integer idx_fifo [0:H*P-1];
-  integer head, tail, fifo_count;
-  integer pop_idx;
-
-  // FIFO 초기화
-  task fifo_reset;
-    integer k;
-    begin
-      head = 0; tail = 0; fifo_count = 0;
-      for (k = 0; k < H*P; k = k + 1) idx_fifo[k] = 0;
-    end
-  endtask
-
-  task fifo_push(input integer val);
-    begin
-      idx_fifo[tail] = val;
-      tail = tail + 1;
-      fifo_count = fifo_count + 1;
-    end
-  endtask
-
-  task fifo_pop(output integer val);
-    begin
-      val = idx_fifo[head];
-      head = head + 1;
-      fifo_count = fifo_count - 1;
-    end
-  endtask
-
-  // 출력 수집기
-  always @(posedge clk or negedge rstn) begin
-    if (!rstn) begin
-      // 초기화
-    end else begin
-      if (y_final_valid_o) begin
-        if (fifo_count == 0) begin
-          $display("[%0t] WARN: y_final_valid_o with empty FIFO!", $time);
-        end else begin
-          fifo_pop(pop_idx);
-          y_out_mem[pop_idx] <= y_final_o;
-          // 디버그 로그 (필요시 주석)
-          // $display("[%0t] y_out_mem[%0d] = 0x%04h", $time, pop_idx, y_final_o);
-        end
-      end
-    end
-  end
-
-  // -----------------------------
   // Helpers
   // -----------------------------
-  // 타일 payload 패킹
-  task pack_tile_payload(input integer h_a, input integer p_a, input integer n_base);
+  // 타일 한 장(N_TILE)을 버스로 패킹해서 1사이클 펄스로 전송
+  task send_one_tile(input integer n_base);
     begin
       for (j = 0; j < N_TILE; j = j + 1) begin
         B_tile_i     [DW*j +: DW] = B_mem[n_base + j];
         C_tile_i     [DW*j +: DW] = C_mem[n_base + j];
-        hprev_tile_i [DW*j +: DW] = h_mem[((h_a*P) + p_a)*N + (n_base + j)];
+        hprev_tile_i [DW*j +: DW] = h_mem[((h_abs*P) + p_abs)*N + (n_base + j)];
       end
+      // 핸드셰이크
+      @(posedge clk);
+      while (tile_ready_o == 1'b0) @(posedge clk);
+      tile_valid_i <= 1'b1;
+      @(posedge clk);
+      tile_valid_i <= 1'b0;
     end
   endtask
 
-  // 단일 (h_abs, p_abs) 그룹 처리: 스칼라 세팅 → 8타일 전송(II=1로 시도, 백프레셔 대응) → 인덱스 FIFO push
-  task process_one_hp(input integer h_a, input integer p_a);
-    integer t_local, base_local;
-    begin
-      // 스칼라 고정
-      dt_i <= dt_mem[h_a];
-      dA_i <= dA_mem[h_a];
-      D_i  <= D_mem[h_a];
-      x_i  <= x_mem[h_a*P + p_a];
-
-      // 8개 타일 송신
-      for (t_local = 0; t_local < TILES; t_local = t_local + 1) begin
-        base_local = t_local * N_TILE;
-
-        // payload 준비
-        pack_tile_payload(h_a, p_a, base_local);
-
-        // ready 관찰: ready가 1인 싸이클에 valid를 1로 1싸이클만 펄스
-        @(posedge clk);
-        while (tile_ready_o == 1'b0) @(posedge clk);
-
+  // (h_abs, p_abs) 그룹 처리: 스칼라 세팅 → 8타일 연속 전송 → y_final 수신
+    task process_one_hp(input integer h_a, input integer p_a);
+      integer t, j, base;
+      begin
+        // 스칼라 세팅 (바뀌자마자 첫 타일과 함께 사용됨)
+        dt_i <= dt_mem[h_a];
+        dA_i <= dA_mem[h_a];
+        D_i  <= D_mem[h_a];
+        x_i  <= x_mem[h_a*P + p_a];
+    
+        // === 8사이클 연속 주입 (II=1) ===
         tile_valid_i <= 1'b1;
-        @(posedge clk);
+        for (t = 0; t < (N/N_TILE); t = t + 1) begin
+          base = t * N_TILE;
+    
+          // 필요시 백프레셔: while (!tile_ready_o) @(posedge clk);
+    
+          // 이번 타일 payload 패킹
+          for (j = 0; j < N_TILE; j = j + 1) begin
+            B_tile_i     [DW*j +: DW] = B_mem[base + j];
+            C_tile_i     [DW*j +: DW] = C_mem[base + j];
+            hprev_tile_i [DW*j +: DW] = h_mem[((h_a*P) + p_a)*N + (base + j)];
+          end
+    
+          @(posedge clk); // 다음 타일로 즉시 진행 (valid 유지)
+        end
         tile_valid_i <= 1'b0;
       end
+    endtask
+    
 
-      // 해당 (h,p)의 결과가 나중에 올라오므로, 인덱스를 FIFO에 적재
-      fifo_push(h_a*P + p_a);
-    end
-  endtask
 
   // -----------------------------
   // Reset / Load / Full Scan
@@ -206,7 +161,6 @@ module tb_ssmblock_fullscan;
     tile_valid_i = 1'b0;
     dt_i = 0; dA_i = 0; D_i = 0; x_i = 0;
     B_tile_i = 0; C_tile_i = 0; hprev_tile_i = 0;
-    fifo_reset();
 
     // 파일 경로는 환경에 맞게 수정
     $readmemh("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_dt.hex",        dt_mem);
@@ -228,7 +182,7 @@ module tb_ssmblock_fullscan;
     for (h_blk = 0; h_blk < H; h_blk = h_blk + H_tile) begin
       for (p_blk = 0; p_blk < P; p_blk = p_blk + P_tile) begin
         for (h_rel = 0; h_rel < H_tile; h_rel = h_rel + 1) begin
-          for (p_rel = 0; p_rel = p_rel + 1) begin : LP_REL
+          for (p_rel = 0; p_rel < P_tile; p_rel = p_rel + 1) begin
             h_abs = h_blk + h_rel;
             p_abs = p_blk + p_rel;
             process_one_hp(h_abs, p_abs);
@@ -237,16 +191,11 @@ module tb_ssmblock_fullscan;
       end
     end
 
-    // 남아있는 결과 드레인 (모든 y_final_valid_o 수신 대기)
-    $display("[%0t] Draining %0d pending results...", $time, fifo_count);
-    while (fifo_count > 0) @(posedge clk);
-
     // 결과 저장
     fout = $fopen("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_y_out_full.hex", "w");
     for (integer idx = 0; idx < H*P; idx = idx + 1)
       $fdisplay(fout, "%04h", y_out_mem[idx]);
     $fclose(fout);
-
     $display("✅ Full scan completed. Results written.");
 
     #50 $finish;
