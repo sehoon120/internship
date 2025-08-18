@@ -182,13 +182,13 @@ module SSMBLOCK_TOP #(
     wire                 accept_tile = v_hC;
 
     // xD = x*D (한 그룹의 첫 타일에서 한 번 계산 후 보관)
-    reg  [DW-1:0] xD_hold;
-    reg           xD_hold_v;
+    // reg  [DW-1:0] xD_hold;
+    // reg           xD_hold_v;
     wire [DW-1:0] xD_w;
     wire          v_xD_w;
 
     // 필요하면 여길 네가 쓰는 xD 래퍼로 교체해도 됨
-    xD u_mul_xD (
+    xD u_mul_xD (  // x, D input들도 딜레이해서 사용해야함
         .clk       (clk),
         .rstn      (rstn), 
         .valid_i  (accept_tile && (tile_ptr==3'd0)),
@@ -198,13 +198,32 @@ module SSMBLOCK_TOP #(
         .valid_o (v_xD_w)
     );
 
+    integer xDi;
+    localparam integer SHIFT_xD = LAT_DBX_M+LAT_ADD_A+LAT_HC_M+77;
+    reg [DW-1:0] xD_tile_buffer [0:SHIFT_xD];
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            for (xDi = 0; xDi <= SHIFT_xD; xDi = xDi + 1) begin
+                xD_tile_buffer[xDi] <= {DW{1'b0}};
+            end
+        end else begin
+            // B 입력 시프트
+            xD_tile_buffer[0] <= xD_w;
+            for (xDi = 1; xDi <= SHIFT_xD; xDi = xDi + 1) begin
+                xD_tile_buffer[xDi] <= xD_tile_buffer[xDi-1];
+            end
+        end
+    end
+    wire [DW-1:0] xD_tile_aligned = xD_tile_buffer[SHIFT_xD];
+
+
     integer ti;
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
             tile_ptr  <= 3'd0;
             grp_emit  <= 1'b0;
-            xD_hold   <= {DW{1'b0}};
-            xD_hold_v <= 1'b0;
+            // xD_hold   <= {DW{1'b0}};
+            // xD_hold_v <= 1'b0;
             for (ti=0; ti<TILES_PER_GROUP; ti=ti+1) hC_buf[ti] <= {N_TILE*DW{1'b0}};
         end else begin
             grp_emit <= 1'b0;
@@ -214,10 +233,10 @@ module SSMBLOCK_TOP #(
                 hC_buf[tile_ptr] <= hC_tile_o;
 
                 // xD 보관 (첫 타일에서 계산 완료되면 래치)
-                if (v_xD_w) begin
-                    xD_hold   <= xD_w;
-                    xD_hold_v <= 1'b1;
-                end
+                // if (v_xD_w) begin
+                    // xD_hold   <= xD_w;
+                    // xD_hold_v <= 1'b1;
+                // end
 
                 // 타일 포인터 증가 및 그룹 완료
                 if (tile_ptr == TILES_PER_GROUP-1) begin
@@ -262,9 +281,9 @@ module SSMBLOCK_TOP #(
     y_out u_add_yfinal (
         .clk       (clk),
         .rstn      (rstn),
-        .valid_i  (y_tmp_v & xD_hold_v),
+        .valid_i  (y_tmp_v),
         .ytmp_i         (y_tmp_w),
-        .xD_i         (xD_hold),
+        .xD_i         (xD_tile_aligned),
         .y_o    (y_final_w),
         .valid_o (v_y_final_w)
     );
