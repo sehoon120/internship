@@ -31,7 +31,13 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
 
     
 
-    wire valid_l1, [63:0] valid_l2, [31:0] valid_l3, [15:0] valid_l4, [7:0] valid_l5, [3:0] valid_l6, [1:0] valid_l7;
+    wire valid_l1;
+    wire [63:0] valid_l2;
+    wire [31:0] valid_l3;
+    wire [15:0] valid_l4;
+    wire [7:0] valid_l5;
+    wire [3:0] valid_l6;
+    wire [1:0] valid_l7;
 
     assign valid_l1 = valid_in;  // 128일시 교체
     // assign valid_l3 = valid_in;

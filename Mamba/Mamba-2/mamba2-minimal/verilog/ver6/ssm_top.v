@@ -11,7 +11,7 @@ module SSMBLOCK_TOP #(
     parameter integer DW        = 16,
     parameter integer H_TILE    = 1,
     parameter integer P_TILE    = 1,
-    parameter integer N_TILE    = 16,
+    parameter integer N_TILE    = 4,
     parameter integer N_TOTAL   = 128,
     // Latency params (IP 설정에 맞춰 조정)
     parameter integer LAT_DX_M  = 6,   // dx: dt*x (mul)

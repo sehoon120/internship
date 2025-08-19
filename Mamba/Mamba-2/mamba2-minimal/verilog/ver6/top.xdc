@@ -1,2 +1,3 @@
 # constraints.xdc
-create_clock -period 5.000 [get_ports clk]
+create_clock -period 3.840 [get_ports clk]
+# 5.000
