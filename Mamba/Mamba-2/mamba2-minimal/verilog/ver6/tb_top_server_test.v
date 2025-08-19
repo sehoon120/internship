@@ -14,7 +14,7 @@ module tb_ssmblock_fullscan;
   localparam integer H_tile  = 1;
   localparam integer P_tile  = 1;
   localparam integer DW      = 16;
-  localparam integer N_TILE  = 16;
+  localparam integer N_TILE  = 128;
   localparam integer TILES   = N / N_TILE;  // 8
 
   // 유효성 체크
@@ -242,6 +242,7 @@ module tb_ssmblock_fullscan;
     // 남아있는 결과 드레인 (모든 y_final_valid_o 수신 대기)
     $display("[%0t] Draining %0d pending results...", $time, fifo_count);
     while (fifo_count > 0) @(posedge clk);
+    #100;
 
     // 결과 저장
     fout = $fopen("/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_y_out_full.hex", "w");
