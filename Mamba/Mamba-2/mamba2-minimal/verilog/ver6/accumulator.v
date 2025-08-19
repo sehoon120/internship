@@ -31,7 +31,7 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
 
     
 
-    wire valid_l1, valid_l2, valid_l3, valid_l4, valid_l5, valid_l6, valid_l7;
+    wire valid_l1, [63:0] valid_l2, [31:0] valid_l3, [15:0] valid_l4, [7:0] valid_l5, [3:0] valid_l6, [1:0] valid_l7;
 
     assign valid_l1 = valid_in;  // 128일시 교체
     // assign valid_l3 = valid_in;
@@ -46,7 +46,7 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
                 .b(in_level0[2*i+1]),
                 .valid_in(valid_l1),
                 .result(level1[i]),
-                .valid_out(valid_l2)
+                .valid_out(valid_l2[i])
             );
         end
     endgenerate
@@ -58,9 +58,9 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
                 .clk(clk),
                 .a(level1[2*i]),
                 .b(level1[2*i+1]),
-                .valid_in(valid_l2),
+                .valid_in(valid_l2[0]),
                 .result(level2[i]),
-                .valid_out(valid_l3)
+                .valid_out(valid_l3[i])
             );
         end
     endgenerate
@@ -72,9 +72,9 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
                 .clk(clk),
                 .a(level2[2*i]),
                 .b(level2[2*i+1]),
-                .valid_in(valid_l3),
+                .valid_in(valid_l3[0]),
                 .result(level3[i]),
-                .valid_out(valid_l4)
+                .valid_out(valid_l4[i])
             );
         end
     endgenerate
@@ -86,9 +86,9 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
                 .clk(clk),
                 .a(level3[2*i]),
                 .b(level3[2*i+1]),
-                .valid_in(valid_l4),
+                .valid_in(valid_l4[0]),
                 .result(level4[i]),
-                .valid_out(valid_l5)
+                .valid_out(valid_l5[i])
             );
         end
     endgenerate
@@ -100,9 +100,9 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
                 .clk(clk),
                 .a(level4[2*i]),
                 .b(level4[2*i+1]),
-                .valid_in(valid_l5),
+                .valid_in(valid_l5[0]),
                 .result(level5[i]),
-                .valid_out(valid_l6)
+                .valid_out(valid_l6[i])
             );
         end
     endgenerate
@@ -114,9 +114,9 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
                 .clk(clk),
                 .a(level5[2*i]),
                 .b(level5[2*i+1]),
-                .valid_in(valid_l6),
+                .valid_in(valid_l6[0]),
                 .result(level6[i]),
-                .valid_out(valid_l7)
+                .valid_out(valid_l7[i])
             );
         end
     endgenerate
@@ -126,7 +126,7 @@ module fp16_adder_tree_128 #(parameter DW=16, N=128)(    // N에 따라 교체
         .clk(clk),
         .a(level6[0]),
         .b(level6[1]),
-        .valid_in(valid_l7),
+        .valid_in(valid_l7[0]),
         .result(level7),
         .valid_out(valid_out)
     );
