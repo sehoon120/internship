@@ -73,17 +73,17 @@ h = [InferenceCache.alloc(
 # print("ssm_state:", h.ssm_state.shape)    # (1, 24, 64, 128)
 
 # 입력 프롬프트
-# prompt = """
-# who are  you ? who are  you ? who are  you ? who are  you ? who are  you ? who are  you ?who are  you ? who are  you ? who are  you ?
-# """
+prompt = """
+who are  you ? who are  you ? who are  you ? who are  you ? who are  you ? who are  you ?who are  you ? who are  you ? who are  you ?
+"""
 # prompt = "My cat wrote all this CUDA code for a new language model and"
-prompt = """Let's go through this step-by-step:
-1. You start with 15 muffins.
-2. You eat 2 muffins, leaving you with 13 muffins.
-3. You give 5 muffins to your neighbor, leaving you with 8 muffins.
-4. Your partner buys 6 more muffins, bringing the total number of muffins to 14.
-5. Your partner eats 2 muffins, leaving you with 12 muffins.
-So how many are left?"""
+# prompt = """Let's go through this step-by-step:
+# 1. You start with 15 muffins.
+# 2. You eat 2 muffins, leaving you with 13 muffins.
+# 3. You give 5 muffins to your neighbor, leaving you with 8 muffins.
+# 4. Your partner buys 6 more muffins, bringing the total number of muffins to 14.
+# 5. Your partner eats 2 muffins, leaving you with 12 muffins.
+# So how many are left?"""
 # input_ids = make_synthetic_prompt_tokens(L_prompt=1024, vocab_size=model.args.vocab_size, chunk_size=model.args.chunk_size, seed=42).unsqueeze(0)
 input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)  # (1, L)
 prefix, f_token = input_ids[:, :-1], input_ids[:, -1:]  # prefix: "The future of"  f_token: "AI"
@@ -113,7 +113,7 @@ average_list = []
 average_list_m = []
 generated = [t.item() for t in input_ids[0]]  # 결과 누적 list
 with torch.no_grad():
-    for token_num in range(64): # 512
+    for token_num in range(10): # 512
         
         ssm_time = []
         mamba_time = []
