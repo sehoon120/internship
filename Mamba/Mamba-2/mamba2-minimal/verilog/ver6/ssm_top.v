@@ -11,7 +11,7 @@ module SSMBLOCK_TOP #(
     parameter integer DW        = 16,
     parameter integer H_TILE    = 1,
     parameter integer P_TILE    = 1,
-    parameter integer N_TILE    = 4,
+    parameter integer N_TILE    = 128,
     parameter integer N_TOTAL   = 128,
     // Latency params (IP 설정에 맞춰 조정)
     parameter integer LAT_DX_M  = 6,   // dx: dt*x (mul)
@@ -115,11 +115,30 @@ module SSMBLOCK_TOP #(
     wire [N_TILE*DW-1:0] dAh_dly_w;
     wire                 v_dAh_dly;
 
-    pipe_bus #(.W(N_TILE*DW), .D((DLY_DAH_ALIGN>0)?DLY_DAH_ALIGN:0)) u_dly_dAh_bus (
-        .clk   (clk), .rstn(rstn),
-        .din   (dAh_raw_w), .vin(v_dAh_raw),
-        .dout  (dAh_dly_w), .vout(v_dAh_dly)
-    );
+//    pipe_bus #(.W(N_TILE*DW), .D((DLY_DAH_ALIGN>0)?DLY_DAH_ALIGN:0)) u_dly_dAh_bus (
+//        .clk   (clk), .rstn(rstn),
+//        .din   (dAh_raw_w), .vin(v_dAh_raw),
+//        .dout  (dAh_dly_w), .vout(v_dAh_dly)
+//    );
+
+    // 대체 (D>0일 때만 BRAM 사용)
+    localparam integer DLY = (DLY_DAH_ALIGN>0)? DLY_DAH_ALIGN : 0;
+    generate
+    if (DLY == 0) begin
+        pipe_bus #(.W(N_TILE*DW), .D(0)) u_dly_dAh_bus (
+            .clk(clk), .rstn(rstn),
+            .din(dAh_raw_w), .vin(v_dAh_raw),
+            .dout(dAh_dly_w), .vout(v_dAh_dly)
+        );
+    end else begin
+        pipe_bus_bram #(.W(N_TILE*DW), .D(DLY)) u_dly_dAh_bus (
+            .clk(clk), .rstn(rstn),
+            .din(dAh_raw_w), .vin(v_dAh_raw),
+            .dout(dAh_dly_w), .vout(v_dAh_dly)
+        );
+    end
+    endgenerate
+
 
     assign dAh_w = (DLY_DAH_ALIGN>0) ? dAh_dly_w : dAh_raw_w;
     assign v_dAh = (DLY_DAH_ALIGN>0) ? v_dAh_dly : v_dAh_raw;
@@ -338,3 +357,81 @@ module pipe_bus #(
         end
     endgenerate
 endmodule
+
+// ------------------------------------------------------------ 
+// Data+valid pipeline with BRAM (fixed D-cycle delay, wall-clock)
+//   - Stores W-bit samples in a circular buffer
+//   - Uses delayed write address as read address
+//   - Vivado will map to BRAM when depth/width is large
+// ------------------------------------------------------------
+module pipe_bus_bram #(
+    parameter integer W = 256,   // data width
+    parameter integer D = 6      // desired fixed delay cycles (>=1), non power-of-2 OK
+)(
+    input  wire         clk,
+    input  wire         rstn,
+    input  wire [W-1:0] din,
+    input  wire         vin,
+    output wire [W-1:0] dout,
+    output wire         vout
+);
+    generate if (D == 0) begin
+        assign dout = din;
+        assign vout = vin;
+    end else begin
+        // 포인터는 정확히 0..D-1로 래핑
+        localparam integer ADDR_W = $clog2(D);
+        reg [ADDR_W-1:0] wr_addr;
+
+        always @(posedge clk or negedge rstn) begin
+            if (!rstn) wr_addr <= {ADDR_W{1'b0}};
+            else if (wr_addr == D-1) wr_addr <= {ADDR_W{1'b0}};
+            else                     wr_addr <= wr_addr + 1'b1;
+        end
+
+        // 정확히 D 싸이클 딜레이 → read 주소는 wr_addr - (D-1) (mod D)
+        wire [ADDR_W-1:0] rd_addr_minus = wr_addr - (D-1);
+        wire               underflow    = (wr_addr < (D-1));
+        wire [ADDR_W-1:0] rd_addr       = underflow ? (wr_addr + D - (D-1)) : rd_addr_minus;
+        // = underflow ? (wr_addr + 1) : (wr_addr - (D-1))
+
+        // valid 파이프: D 단계 (BRAM read 1-cycle은 주소 오프셋에서 이미 보정)
+        reg [D-1:0] vpipe;
+        always @(posedge clk or negedge rstn) begin
+            if (!rstn) vpipe <= {D{1'b0}};
+            else       vpipe <= {vpipe[D-2:0], vin};
+        end
+
+        // 워밍업 마스크: 초기 D 싸이클 vout=0
+        reg [$clog2(D+1)-1:0] warmup_cnt;
+        reg warmed;
+        always @(posedge clk or negedge rstn) begin
+            if (!rstn) begin
+                warmup_cnt <= 0; warmed <= 1'b0;
+            end else if (!warmed) begin
+                warmup_cnt <= warmup_cnt + 1'b1;
+                if (warmup_cnt == D-1) warmed <= 1'b1;
+            end
+        end
+
+        // BRAM (true dual-port inferred)
+        (* ram_style = "block" *) reg [W-1:0] mem [0:D-1];
+
+        // write
+        always @(posedge clk) begin
+            mem[wr_addr] <= din;
+        end
+
+        // registered read (1-cycle)
+        reg [W-1:0] dout_r;
+        always @(posedge clk) begin
+            dout_r <= mem[rd_addr];
+        end
+
+        assign dout = dout_r;
+        assign vout = warmed ? vpipe[D-1] : 1'b0;
+    end endgenerate
+endmodule
+
+
+

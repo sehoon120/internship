@@ -14,7 +14,7 @@ module tb_ssmblock_fullscan;
   localparam integer H_tile  = 1;
   localparam integer P_tile  = 1;
   localparam integer DW      = 16;
-  localparam integer N_TILE  = 8;
+  localparam integer N_TILE  = 128;
   localparam integer TILES   = N / N_TILE;  // 8
 
   // 유효성 체크

@@ -1,0 +1,156 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Tue Aug 19 10:40:58 2025
+# Process ID: 3628377
+# Current directory: /home/intern-2501/internship
+# Command line: vivado
+# Log file: /home/intern-2501/internship/vivado.log
+# Journal file: /home/intern-2501/internship/vivado.jou
+# Running On        :broccoli
+# Platform          :RedHatEnterprise
+# Operating System  :Red Hat Enterprise Linux release 8.10 (Ootpa)
+# Processor Detail  :Intel(R) Xeon(R) Gold 6242R CPU @ 3.10GHz
+# CPU Frequency     :3800.003 MHz
+# CPU Physical cores:40
+# CPU Logical cores :80
+# Host memory       :539818 MB
+# Swap memory       :4294 MB
+# Total Virtual     :544113 MB
+# Available Virtual :470431 MB
+#-----------------------------------------------------------
+start_gui
+open_project /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg
+source tb_ssmblock_fullscan.tcl
+relaunch_sim
+run all
+relaunch_sim
+run all
+relaunch_sim
+run all
+relaunch_sim
+run all
+file mkdir /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/constrs_1
+add_files -fileset constrs_1 -norecurse /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/top.xdc
+reset_run floating_point_0_synth_1
+reset_run floating_point_1_synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+set_property board_part xilinx.com:ac701:part0:1.4 [current_project]
+reset_property board_connections [get_projects Mamba_SSM_Block_ver6]
+reset_run floating_point_0_synth_1
+reset_run floating_point_1_synth_1
+reset_run impl_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+export_ip_user_files -of_objects  [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_0/floating_point_0.xci] -no_script -reset -force -quiet
+remove_files  -fileset floating_point_0 /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_0/floating_point_0.xci
+create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name floating_point_0
+set_property -dict [list \
+  CONFIG.A_Precision_Type {Half} \
+  CONFIG.Add_Sub_Value {Add} \
+  CONFIG.C_A_Exponent_Width {5} \
+  CONFIG.C_A_Fraction_Width {11} \
+  CONFIG.C_Accum_Input_Msb {15} \
+  CONFIG.C_Accum_Lsb {-24} \
+  CONFIG.C_Accum_Msb {32} \
+  CONFIG.C_Latency {11} \
+  CONFIG.C_Mult_Usage {Full_Usage} \
+  CONFIG.C_Rate {1} \
+  CONFIG.C_Result_Exponent_Width {5} \
+  CONFIG.C_Result_Fraction_Width {11} \
+  CONFIG.Flow_Control {NonBlocking} \
+  CONFIG.Has_RESULT_TREADY {false} \
+  CONFIG.Result_Precision_Type {Half} \
+] [get_ips floating_point_0]
+generate_target {instantiation_template} [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_0_1/floating_point_0.xci]
+update_compile_order -fileset sources_1
+generate_target all [get_files  /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_0_1/floating_point_0.xci]
+catch { config_ip_cache -export [get_ips -all floating_point_0] }
+export_ip_user_files -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_0_1/floating_point_0.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_0_1/floating_point_0.xci]
+launch_runs floating_point_0_synth_1 -jobs 79
+wait_on_run floating_point_0_synth_1
+export_simulation -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_0_1/floating_point_0.xci] -directory /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.ip_user_files/sim_scripts -ip_user_files_dir /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.ip_user_files -ipstatic_source_dir /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/modelsim} {questa=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/questa} {xcelium=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/xcelium} {vcs=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/vcs} {riviera=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+export_ip_user_files -of_objects  [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_1/floating_point_1.xci] -no_script -reset -force -quiet
+remove_files  -fileset floating_point_1 /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_1/floating_point_1.xci
+create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name floating_point_1
+set_property -dict [list \
+  CONFIG.A_Precision_Type {Half} \
+  CONFIG.C_A_Exponent_Width {5} \
+  CONFIG.C_A_Fraction_Width {11} \
+  CONFIG.C_Accum_Input_Msb {15} \
+  CONFIG.C_Accum_Lsb {-24} \
+  CONFIG.C_Accum_Msb {32} \
+  CONFIG.C_Latency {6} \
+  CONFIG.C_Mult_Usage {Full_Usage} \
+  CONFIG.C_Rate {1} \
+  CONFIG.C_Result_Exponent_Width {5} \
+  CONFIG.C_Result_Fraction_Width {11} \
+  CONFIG.Flow_Control {NonBlocking} \
+  CONFIG.Has_RESULT_TREADY {false} \
+  CONFIG.Operation_Type {Multiply} \
+  CONFIG.Result_Precision_Type {Half} \
+] [get_ips floating_point_1]
+generate_target {instantiation_template} [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_1_1/floating_point_1.xci]
+update_compile_order -fileset sources_1
+generate_target all [get_files  /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_1_1/floating_point_1.xci]
+catch { config_ip_cache -export [get_ips -all floating_point_1] }
+export_ip_user_files -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_1_1/floating_point_1.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_1_1/floating_point_1.xci]
+launch_runs floating_point_1_synth_1 -jobs 79
+wait_on_run floating_point_1_synth_1
+export_simulation -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/sources_1/ip/floating_point_1_1/floating_point_1.xci] -directory /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.ip_user_files/sim_scripts -ip_user_files_dir /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.ip_user_files -ipstatic_source_dir /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/modelsim} {questa=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/questa} {xcelium=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/xcelium} {vcs=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/vcs} {riviera=/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+open_runs synth_1; open_run synth_1 -name netlist_1;
+open_runs synth_1;
+open_run synth_1 -name netlist_1;
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+close_design
+close_sim
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+report_ip_status -name ipstat
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+open_run impl_1
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+refresh_design
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg
+source tb_ssmblock_fullscan.tcl
+run all
+relaunch_sim
+run all
+relaunch_sim
+run all
+relaunch_sim
+run all
+close_sim

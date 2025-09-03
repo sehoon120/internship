@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Thu Aug  7 14:29:09 2025
-# Process ID: 1888443
+# Start of session at: Wed Sep  3 15:15:10 2025
+# Process ID: 1293389
 # Current directory: /home/intern-2501/internship
 # Command line: vivado
 # Log file: /home/intern-2501/internship/vivado.log
@@ -13,13 +13,13 @@
 # Platform          :RedHatEnterprise
 # Operating System  :Red Hat Enterprise Linux release 8.10 (Ootpa)
 # Processor Detail  :Intel(R) Xeon(R) Gold 6242R CPU @ 3.10GHz
-# CPU Frequency     :3822.013 MHz
+# CPU Frequency     :3800.002 MHz
 # CPU Physical cores:40
 # CPU Logical cores :80
 # Host memory       :539818 MB
 # Swap memory       :4294 MB
 # Total Virtual     :544113 MB
-# Available Virtual :496025 MB
+# Available Virtual :505914 MB
 #-----------------------------------------------------------
 start_gui
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
@@ -31,68 +31,83 @@ WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 avai
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
-open_project /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.xpr
+open_project /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.xpr
 Scanning sources...
 Finished scanning sources
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/TOOLS/Xilinx/Vivado/2024.1/data/ip'.
 update_compile_order -fileset sources_1
-set_property is_enabled false [get_files  /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/dAh.v]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
 launch_simulation
 Command: launch_simulation 
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [SIM-utils-72] Using boost library from '/TOOLS/Xilinx/Vivado/2024.1/tps/boost_1_72_0'
 INFO: [USF-XSim-7] Finding pre-compiled libraries...
-INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-INFO: [SIM-utils-54] Inspecting design source files for 'testbench_fp16_wrapper' in fileset 'sim_1'...
+INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_ssmblock_fullscan' in fileset 'sim_1'...
 INFO: [USF-XSim-97] Finding global include files...
 INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
 INFO: [USF-XSim-2] XSim::Compile design
-INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module floating_point_1
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module floating_point_0
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module packing
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module pipelined_hC
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/xD.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/xD.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module xD
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/y_out.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module y_res
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module testbench_fp16_wrapper
-xvhdl --incr --relax -prj testbench_fp16_wrapper_vhdl.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/y_out.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module y_out
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_ssmblock_fullscan
+xvhdl --incr --relax -prj tb_ssmblock_fullscan_vhdl.prj
 Waiting for jobs to finish...
 No pending jobs, compilation finished.
 INFO: [USF-XSim-69] 'compile' step finished in '3' seconds
 INFO: [USF-XSim-3] XSim::Elaborate design
-INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log
 Vivado Simulator v2024.1
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log 
+Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3705] select index 192 into 'h_prev' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:60]
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -207,8 +222,12 @@ Compiling module unisims_ver.LUT1
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_0
+Compiling module xil_defaultlib.floating_point_1
 Compiling module xil_defaultlib.fp16_mult_wrapper
+Compiling module xil_defaultlib.dx
+Compiling module xil_defaultlib.dBx(N_TILE=128)
+Compiling module xil_defaultlib.dAh(N_TILE=128)
+Compiling module xil_defaultlib.pipe_bus_bram(W=2048,D=6)
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=2,fast_in...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
@@ -220,7 +239,7 @@ Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\x
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=48,length=0)\]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=0)\]
-Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a75t...]
+Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a200...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=14,length=0)\]
 Compiling architecture synth of entity floating_point_v7_1_18.align_add_dsp48e1_hp [\align_add_dsp48e1_hp(c_xdevicef...]
@@ -274,30 +293,31 @@ Compiling architecture rtl of entity floating_point_v7_1_18.flt_add [\flt_add(c_
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_1
+Compiling module xil_defaultlib.floating_point_0
 Compiling module xil_defaultlib.fp16_add_wrapper
-WARNING: [VRFC 10-3705] select index 192 into 'h_prev' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:60]
-Compiling module xil_defaultlib.pipelined_hC(H=12,P=16,N=128)
+Compiling module xil_defaultlib.h_next(N_TILE=128)
+Compiling module xil_defaultlib.hC(N_TILE=128)
+Compiling module xil_defaultlib.xD
 Compiling module xil_defaultlib.fp16_adder_tree_128_default
-Compiling module xil_defaultlib.accumulator(H=12,P=16)
-Compiling module xil_defaultlib.xD(H=12,P=16)
-Compiling module xil_defaultlib.y_res(H=12,P=16)
-Compiling module xil_defaultlib.ssm_block_fp16_top(H=12,P=16,N=1...
-Compiling module xil_defaultlib.packing(H=24,P=64,N=128,H_tile=1...
-Compiling module xil_defaultlib.testbench_fp16_wrapper
+Compiling module xil_defaultlib.y_out
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
+Compiling module xil_defaultlib.SSMBLOCK_TOP(N_TILE=128)
+Compiling module xil_defaultlib.tb_ssmblock_fullscan
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot testbench_fp16_wrapper_behav
-execute_script: Time (s): cpu = 00:04:37 ; elapsed = 00:01:42 . Memory (MB): peak = 8612.812 ; gain = 0.000 ; free physical = 267639 ; free virtual = 472131
-INFO: [USF-XSim-69] 'elaborate' step finished in '102' seconds
+Built simulation snapshot tb_ssmblock_fullscan_behav
+execute_script: Time (s): cpu = 00:03:15 ; elapsed = 00:01:07 . Memory (MB): peak = 8674.355 ; gain = 0.000 ; free physical = 310131 ; free virtual = 481472
+INFO: [USF-XSim-69] 'elaborate' step finished in '67' seconds
 INFO: [USF-XSim-4] XSim::Simulate design
-INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [USF-XSim-98] *** Running xsim
-   with args "testbench_fp16_wrapper_behav -key {Behavioral:sim_1:Functional:testbench_fp16_wrapper} -tclbatch {testbench_fp16_wrapper.tcl} -view {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg} -log {simulate.log}"
+   with args "tb_ssmblock_fullscan_behav -key {Behavioral:sim_1:Functional:tb_ssmblock_fullscan} -tclbatch {tb_ssmblock_fullscan.tcl} -view {/home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg} -log {simulate.log}"
 INFO: [USF-XSim-8] Loading simulator feature
 Time resolution is 1 ps
-open_wave_config /home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg
-WARNING: Simulation object /testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh_done was not found in the design.
-source testbench_fp16_wrapper.tcl
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg
+WARNING: Simulation object /tb_ssmblock_fullscan/dut/xD_hold was not found in the design.
+WARNING: Simulation object /tb_ssmblock_fullscan/dut/xD_hold_v was not found in the design.
+source tb_ssmblock_fullscan.tcl
 # set curr_wave [current_wave_config]
 # if { [string length $curr_wave] == 0 } {
 #   if { [llength [get_objects]] > 0} {
@@ -307,89 +327,136 @@ source testbench_fp16_wrapper.tcl
 #      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
 #   }
 # }
-# run 10000ns
-==== FP16 SSM Block Full Wrapper Testbench ====
-run: Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 8992.164 ; gain = 296.871 ; free physical = 267242 ; free virtual = 471738
-xsim: Time (s): cpu = 00:00:10 ; elapsed = 00:00:15 . Memory (MB): peak = 8992.164 ; gain = 379.352 ; free physical = 267242 ; free virtual = 471737
-INFO: [USF-XSim-96] XSim completed. Design snapshot 'testbench_fp16_wrapper_behav' loaded.
-INFO: [USF-XSim-97] XSim simulation ran for 10000ns
-launch_simulation: Time (s): cpu = 00:04:51 ; elapsed = 00:02:01 . Memory (MB): peak = 8992.164 ; gain = 379.352 ; free physical = 267242 ; free virtual = 471737
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/h_prev_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+# run 1000ns
+==== Full scan start: H=24, P=64, N=128 (H_tile=1, P_tile=1, N_TILE=128) ====
+run: Time (s): cpu = 00:00:04 ; elapsed = 00:00:10 . Memory (MB): peak = 9424.660 ; gain = 704.977 ; free physical = 309353 ; free virtual = 480688
+xsim: Time (s): cpu = 00:00:07 ; elapsed = 00:00:12 . Memory (MB): peak = 9424.660 ; gain = 750.305 ; free physical = 309353 ; free virtual = 480688
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_ssmblock_fullscan_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:03:26 ; elapsed = 00:01:22 . Memory (MB): peak = 9424.660 ; gain = 750.305 ; free physical = 309353 ; free virtual = 480688
 run all
-run: Time (s): cpu = 00:00:04 ; elapsed = 00:00:21 . Memory (MB): peak = 9067.406 ; gain = 0.000 ; free physical = 267129 ; free virtual = 471607
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
+run: Time (s): cpu = 00:00:05 ; elapsed = 00:00:17 . Memory (MB): peak = 9424.660 ; gain = 0.000 ; free physical = 309318 ; free virtual = 480654
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
 relaunch_sim
-INFO: xsimkernel Simulation Memory Usage: 339036 KB (Peak: 379744 KB), Simulation CPU Usage: 27500 ms
+INFO: xsimkernel Simulation Memory Usage: 537572 KB (Peak: 596908 KB), Simulation CPU Usage: 27130 ms
 Command: launch_simulation -step compile -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [SIM-utils-72] Using boost library from '/TOOLS/Xilinx/Vivado/2024.1/tps/boost_1_72_0'
 INFO: [USF-XSim-7] Finding pre-compiled libraries...
-INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-INFO: [SIM-utils-54] Inspecting design source files for 'testbench_fp16_wrapper' in fileset 'sim_1'...
+INFO: [USF-XSim-11] File '/TOOLS/Xilinx/Vivado/2024.1/data/xsim/xsim.ini' copied to run dir:'/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_ssmblock_fullscan' in fileset 'sim_1'...
 INFO: [USF-XSim-97] Finding global include files...
 INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
 INFO: [USF-XSim-2] XSim::Compile design
-INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module floating_point_1
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module floating_point_0
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module packing
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module pipelined_hC
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/xD.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+ERROR: [VRFC 10-4982] syntax error near ''' [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:407]
+WARNING: [VRFC 10-2096] empty statement in sequential block [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:407]
+ERROR: [VRFC 10-8530] module 'pipe_bus_bram' is ignored due to previous errors [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:367]
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim/xvlog.log'
+ERROR: [USF-XSim-62] 'compile' step failed with error(s). Please check the Tcl console output or '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim/xvlog.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+relaunch_sim
+Command: launch_simulation -step compile -simset sim_1 -mode behavioral
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/xD.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module xD
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/y_out.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module y_res
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module testbench_fp16_wrapper
-xvhdl --incr --relax -prj testbench_fp16_wrapper_vhdl.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/y_out.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module y_out
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_ssmblock_fullscan
+xvhdl --incr --relax -prj tb_ssmblock_fullscan_vhdl.prj
 Waiting for jobs to finish...
 No pending jobs, compilation finished.
 INFO: [USF-XSim-69] 'compile' step finished in '3' seconds
 Command: launch_simulation -step elaborate -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [USF-XSim-3] XSim::Elaborate design
-INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log
 Vivado Simulator v2024.1
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log 
+Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3705] select index 192 into 'h_prev' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:60]
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -504,8 +571,12 @@ Compiling module unisims_ver.LUT1
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_0
+Compiling module xil_defaultlib.floating_point_1
 Compiling module xil_defaultlib.fp16_mult_wrapper
+Compiling module xil_defaultlib.dx
+Compiling module xil_defaultlib.dBx(N_TILE=128)
+Compiling module xil_defaultlib.dAh(N_TILE=128)
+Compiling module xil_defaultlib.pipe_bus_bram(W=2048,D=6)
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=2,fast_in...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
@@ -517,7 +588,7 @@ Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\x
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=48,length=0)\]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=0)\]
-Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a75t...]
+Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a200...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=14,length=0)\]
 Compiling architecture synth of entity floating_point_v7_1_18.align_add_dsp48e1_hp [\align_add_dsp48e1_hp(c_xdevicef...]
@@ -571,92 +642,144 @@ Compiling architecture rtl of entity floating_point_v7_1_18.flt_add [\flt_add(c_
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_1
+Compiling module xil_defaultlib.floating_point_0
 Compiling module xil_defaultlib.fp16_add_wrapper
-WARNING: [VRFC 10-3705] select index 192 into 'h_prev' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:60]
-Compiling module xil_defaultlib.pipelined_hC(H=12,P=16,N=128)
+Compiling module xil_defaultlib.h_next(N_TILE=128)
+Compiling module xil_defaultlib.hC(N_TILE=128)
+Compiling module xil_defaultlib.xD
 Compiling module xil_defaultlib.fp16_adder_tree_128_default
-Compiling module xil_defaultlib.accumulator(H=12,P=16)
-Compiling module xil_defaultlib.xD(H=12,P=16)
-Compiling module xil_defaultlib.y_res(H=12,P=16)
-Compiling module xil_defaultlib.ssm_block_fp16_top(H=12,P=16,N=1...
-Compiling module xil_defaultlib.packing(H=24,P=64,N=128,H_tile=1...
-Compiling module xil_defaultlib.testbench_fp16_wrapper
+Compiling module xil_defaultlib.y_out
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
+Compiling module xil_defaultlib.SSMBLOCK_TOP(N_TILE=128)
+Compiling module xil_defaultlib.tb_ssmblock_fullscan
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot testbench_fp16_wrapper_behav
-execute_script: Time (s): cpu = 00:04:34 ; elapsed = 00:01:42 . Memory (MB): peak = 9101.422 ; gain = 0.000 ; free physical = 267361 ; free virtual = 471777
-INFO: [USF-XSim-69] 'elaborate' step finished in '101' seconds
-launch_simulation: Time (s): cpu = 00:04:34 ; elapsed = 00:01:42 . Memory (MB): peak = 9101.422 ; gain = 0.000 ; free physical = 267361 ; free virtual = 471777
+Built simulation snapshot tb_ssmblock_fullscan_behav
+execute_script: Time (s): cpu = 00:03:13 ; elapsed = 00:01:07 . Memory (MB): peak = 9544.465 ; gain = 0.000 ; free physical = 309627 ; free virtual = 480905
+INFO: [USF-XSim-69] 'elaborate' step finished in '67' seconds
+launch_simulation: Time (s): cpu = 00:03:13 ; elapsed = 00:01:07 . Memory (MB): peak = 9544.465 ; gain = 0.000 ; free physical = 309627 ; free virtual = 480905
 Time resolution is 1 ps
-==== FP16 SSM Block Full Wrapper Testbench ====
-run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:09 . Memory (MB): peak = 9101.422 ; gain = 0.000 ; free physical = 267149 ; free virtual = 471572
-relaunch_xsim_kernel: Time (s): cpu = 00:00:03 ; elapsed = 00:00:11 . Memory (MB): peak = 9101.422 ; gain = 0.000 ; free physical = 267149 ; free virtual = 471572
-relaunch_sim: Time (s): cpu = 00:05:08 ; elapsed = 00:01:57 . Memory (MB): peak = 9101.422 ; gain = 0.000 ; free physical = 267149 ; free virtual = 471572
-run all
-run: Time (s): cpu = 00:00:06 ; elapsed = 00:00:34 . Memory (MB): peak = 9101.422 ; gain = 0.000 ; free physical = 267126 ; free virtual = 471551
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/h_prev_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC_flat" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/dAh" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
-WARNING: [Wavedata 42-489] Can't add object "/testbench_fp16_wrapper/dut/u_tile/u_pipelined_hC/hC" to the wave window because it has 393216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+==== Full scan start: H=24, P=64, N=128 (H_tile=1, P_tile=1, N_TILE=128) ====
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:11 . Memory (MB): peak = 9545.434 ; gain = 0.000 ; free physical = 309191 ; free virtual = 480467
+relaunch_xsim_kernel: Time (s): cpu = 00:00:03 ; elapsed = 00:00:12 . Memory (MB): peak = 9545.434 ; gain = 0.969 ; free physical = 309191 ; free virtual = 480467
+relaunch_sim: Time (s): cpu = 00:03:19 ; elapsed = 00:01:23 . Memory (MB): peak = 9545.434 ; gain = 0.969 ; free physical = 309191 ; free virtual = 480467
 relaunch_sim
-INFO: xsimkernel Simulation Memory Usage: 339036 KB (Peak: 379744 KB), Simulation CPU Usage: 40990 ms
+INFO: xsimkernel Simulation Memory Usage: 538184 KB (Peak: 596908 KB), Simulation CPU Usage: 11630 ms
 Command: launch_simulation -step compile -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [USF-XSim-2] XSim::Compile design
-INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module floating_point_1
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module floating_point_0
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module packing
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module pipelined_hC
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/xD.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+ERROR: [VRFC 10-4982] syntax error near '[' [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:393]
+ERROR: [VRFC 10-4982] syntax error near ''' [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:403]
+ERROR: [VRFC 10-4982] syntax error near ''' [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:407]
+WARNING: [VRFC 10-2096] empty statement in sequential block [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:407]
+ERROR: [VRFC 10-8530] module 'pipe_bus_bram' is ignored due to previous errors [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:367]
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim/xvlog.log'
+ERROR: [USF-XSim-62] 'compile' step failed with error(s). Please check the Tcl console output or '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim/xvlog.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+relaunch_sim
+Command: launch_simulation -step compile -simset sim_1 -mode behavioral
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/xD.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module xD
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/y_out.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module y_res
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module testbench_fp16_wrapper
-xvhdl --incr --relax -prj testbench_fp16_wrapper_vhdl.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/y_out.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module y_out
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_ssmblock_fullscan
+xvhdl --incr --relax -prj tb_ssmblock_fullscan_vhdl.prj
 Waiting for jobs to finish...
 No pending jobs, compilation finished.
 INFO: [USF-XSim-69] 'compile' step finished in '3' seconds
 Command: launch_simulation -step elaborate -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [USF-XSim-3] XSim::Elaborate design
-INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log
 Vivado Simulator v2024.1
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log 
+Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3705] select index 192 into 'h_prev' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:60]
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -771,8 +894,12 @@ Compiling module unisims_ver.LUT1
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_0
+Compiling module xil_defaultlib.floating_point_1
 Compiling module xil_defaultlib.fp16_mult_wrapper
+Compiling module xil_defaultlib.dx
+Compiling module xil_defaultlib.dBx(N_TILE=128)
+Compiling module xil_defaultlib.dAh(N_TILE=128)
+Compiling module xil_defaultlib.pipe_bus_bram(W=2048,D=6)
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=2,fast_in...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
@@ -784,7 +911,7 @@ Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\x
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=48,length=0)\]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=0)\]
-Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a75t...]
+Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a200...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=14,length=0)\]
 Compiling architecture synth of entity floating_point_v7_1_18.align_add_dsp48e1_hp [\align_add_dsp48e1_hp(c_xdevicef...]
@@ -838,101 +965,142 @@ Compiling architecture rtl of entity floating_point_v7_1_18.flt_add [\flt_add(c_
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_1
+Compiling module xil_defaultlib.floating_point_0
 Compiling module xil_defaultlib.fp16_add_wrapper
-WARNING: [VRFC 10-3705] select index 192 into 'h_prev' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:60]
-Compiling module xil_defaultlib.pipelined_hC(H=12,P=16,N=128)
+Compiling module xil_defaultlib.h_next(N_TILE=128)
+Compiling module xil_defaultlib.hC(N_TILE=128)
+Compiling module xil_defaultlib.xD
 Compiling module xil_defaultlib.fp16_adder_tree_128_default
-Compiling module xil_defaultlib.accumulator(H=12,P=16)
-Compiling module xil_defaultlib.xD(H=12,P=16)
-Compiling module xil_defaultlib.y_res(H=12,P=16)
-Compiling module xil_defaultlib.ssm_block_fp16_top(H=12,P=16,N=1...
-Compiling module xil_defaultlib.packing(H=24,P=64,N=128,H_tile=1...
-Compiling module xil_defaultlib.testbench_fp16_wrapper
+Compiling module xil_defaultlib.y_out
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
+Compiling module xil_defaultlib.SSMBLOCK_TOP(N_TILE=128)
+Compiling module xil_defaultlib.tb_ssmblock_fullscan
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot testbench_fp16_wrapper_behav
-execute_script: Time (s): cpu = 00:04:43 ; elapsed = 00:01:43 . Memory (MB): peak = 9121.422 ; gain = 0.000 ; free physical = 267345 ; free virtual = 471658
-INFO: [USF-XSim-69] 'elaborate' step finished in '103' seconds
-launch_simulation: Time (s): cpu = 00:04:43 ; elapsed = 00:01:43 . Memory (MB): peak = 9121.422 ; gain = 0.000 ; free physical = 267345 ; free virtual = 471658
+Built simulation snapshot tb_ssmblock_fullscan_behav
+execute_script: Time (s): cpu = 00:03:14 ; elapsed = 00:01:08 . Memory (MB): peak = 9602.543 ; gain = 0.000 ; free physical = 309620 ; free virtual = 480861
+INFO: [USF-XSim-69] 'elaborate' step finished in '68' seconds
+launch_simulation: Time (s): cpu = 00:03:14 ; elapsed = 00:01:08 . Memory (MB): peak = 9602.543 ; gain = 0.000 ; free physical = 309620 ; free virtual = 480861
 Time resolution is 1 ps
-==== FP16 SSM Block Full Wrapper Testbench ====
-run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:09 . Memory (MB): peak = 9121.422 ; gain = 0.000 ; free physical = 267215 ; free virtual = 471525
-relaunch_xsim_kernel: Time (s): cpu = 00:00:03 ; elapsed = 00:00:10 . Memory (MB): peak = 9121.422 ; gain = 0.000 ; free physical = 267215 ; free virtual = 471526
-relaunch_sim: Time (s): cpu = 00:05:30 ; elapsed = 00:01:57 . Memory (MB): peak = 9121.422 ; gain = 0.000 ; free physical = 267215 ; free virtual = 471526
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-run all
-run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:10 . Memory (MB): peak = 9169.438 ; gain = 0.000 ; free physical = 267188 ; free virtual = 471464
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
+==== Full scan start: H=24, P=64, N=128 (H_tile=1, P_tile=1, N_TILE=128) ====
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:11 . Memory (MB): peak = 9621.488 ; gain = 18.945 ; free physical = 309184 ; free virtual = 480429
+relaunch_xsim_kernel: Time (s): cpu = 00:00:03 ; elapsed = 00:00:12 . Memory (MB): peak = 9621.488 ; gain = 18.945 ; free physical = 309184 ; free virtual = 480429
+relaunch_sim: Time (s): cpu = 00:03:20 ; elapsed = 00:01:23 . Memory (MB): peak = 9621.488 ; gain = 18.945 ; free physical = 309184 ; free virtual = 480429
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
 relaunch_sim
-INFO: xsimkernel Simulation Memory Usage: 339036 KB (Peak: 379744 KB), Simulation CPU Usage: 18060 ms
+INFO: xsimkernel Simulation Memory Usage: 538184 KB (Peak: 596908 KB), Simulation CPU Usage: 11420 ms
 Command: launch_simulation -step compile -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [USF-XSim-2] XSim::Compile design
-INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module floating_point_1
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module floating_point_0
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module packing
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module pipelined_hC
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/xD.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+ERROR: [VRFC 10-4982] syntax error near ''' [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:410]
+WARNING: [VRFC 10-2096] empty statement in sequential block [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:410]
+ERROR: [VRFC 10-8530] module 'pipe_bus_bram' is ignored due to previous errors [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:367]
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim/xvlog.log'
+ERROR: [USF-XSim-62] 'compile' step failed with error(s). Please check the Tcl console output or '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim/xvlog.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+ERROR: [Common 17-69] Command failed: ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+relaunch_sim
+Command: launch_simulation -step compile -simset sim_1 -mode behavioral
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/xD.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module xD
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/y_out.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module y_res
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module testbench_fp16_wrapper
-xvhdl --incr --relax -prj testbench_fp16_wrapper_vhdl.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/y_out.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module y_out
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_ssmblock_fullscan
+xvhdl --incr --relax -prj tb_ssmblock_fullscan_vhdl.prj
 Waiting for jobs to finish...
 No pending jobs, compilation finished.
 INFO: [USF-XSim-69] 'compile' step finished in '3' seconds
 Command: launch_simulation -step elaborate -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [USF-XSim-3] XSim::Elaborate design
-INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log
 Vivado Simulator v2024.1
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log 
+Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -1047,8 +1215,12 @@ Compiling module unisims_ver.LUT1
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_0
+Compiling module xil_defaultlib.floating_point_1
 Compiling module xil_defaultlib.fp16_mult_wrapper
+Compiling module xil_defaultlib.dx
+Compiling module xil_defaultlib.dBx(N_TILE=128)
+Compiling module xil_defaultlib.dAh(N_TILE=128)
+Compiling module xil_defaultlib.pipe_bus_bram(W=2048)
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=2,fast_in...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
@@ -1060,7 +1232,7 @@ Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\x
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=48,length=0)\]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=0)\]
-Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a75t...]
+Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a200...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=14,length=0)\]
 Compiling architecture synth of entity floating_point_v7_1_18.align_add_dsp48e1_hp [\align_add_dsp48e1_hp(c_xdevicef...]
@@ -1114,106 +1286,162 @@ Compiling architecture rtl of entity floating_point_v7_1_18.flt_add [\flt_add(c_
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_1
+Compiling module xil_defaultlib.floating_point_0
 Compiling module xil_defaultlib.fp16_add_wrapper
-Compiling module xil_defaultlib.pipelined_hC(H=12,P=16,N=128)
+Compiling module xil_defaultlib.h_next(N_TILE=128)
+Compiling module xil_defaultlib.hC(N_TILE=128)
+Compiling module xil_defaultlib.xD
 Compiling module xil_defaultlib.fp16_adder_tree_128_default
-Compiling module xil_defaultlib.accumulator(H=12,P=16)
-Compiling module xil_defaultlib.xD(H=12,P=16)
-Compiling module xil_defaultlib.y_res(H=12,P=16)
-Compiling module xil_defaultlib.ssm_block_fp16_top(H=12,P=16,N=1...
-Compiling module xil_defaultlib.packing(H=24,P=64,N=128,H_tile=1...
-Compiling module xil_defaultlib.testbench_fp16_wrapper
+Compiling module xil_defaultlib.y_out
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
+Compiling module xil_defaultlib.SSMBLOCK_TOP(N_TILE=128)
+Compiling module xil_defaultlib.tb_ssmblock_fullscan
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot testbench_fp16_wrapper_behav
-execute_script: Time (s): cpu = 00:04:56 ; elapsed = 00:01:49 . Memory (MB): peak = 9204.633 ; gain = 0.000 ; free physical = 267476 ; free virtual = 471525
-INFO: [USF-XSim-69] 'elaborate' step finished in '109' seconds
-launch_simulation: Time (s): cpu = 00:04:56 ; elapsed = 00:01:49 . Memory (MB): peak = 9204.633 ; gain = 0.000 ; free physical = 267476 ; free virtual = 471525
+Built simulation snapshot tb_ssmblock_fullscan_behav
+execute_script: Time (s): cpu = 00:03:13 ; elapsed = 00:01:09 . Memory (MB): peak = 9660.555 ; gain = 0.000 ; free physical = 309510 ; free virtual = 480728
+INFO: [USF-XSim-69] 'elaborate' step finished in '69' seconds
+launch_simulation: Time (s): cpu = 00:03:13 ; elapsed = 00:01:09 . Memory (MB): peak = 9660.555 ; gain = 0.000 ; free physical = 309510 ; free virtual = 480728
 Time resolution is 1 ps
-==== FP16 SSM Block Full Wrapper Testbench ====
-run: Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 9204.633 ; gain = 0.000 ; free physical = 267270 ; free virtual = 471327
-relaunch_xsim_kernel: Time (s): cpu = 00:00:05 ; elapsed = 00:00:13 . Memory (MB): peak = 9204.633 ; gain = 0.000 ; free physical = 267270 ; free virtual = 471327
-relaunch_sim: Time (s): cpu = 00:05:23 ; elapsed = 00:02:05 . Memory (MB): peak = 9204.633 ; gain = 0.000 ; free physical = 267270 ; free virtual = 471327
+==== Full scan start: H=24, P=64, N=128 (H_tile=1, P_tile=1, N_TILE=128) ====
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:11 . Memory (MB): peak = 9660.555 ; gain = 0.000 ; free physical = 309086 ; free virtual = 480307
+relaunch_xsim_kernel: Time (s): cpu = 00:00:02 ; elapsed = 00:00:12 . Memory (MB): peak = 9660.555 ; gain = 0.000 ; free physical = 309086 ; free virtual = 480307
+relaunch_sim: Time (s): cpu = 00:03:18 ; elapsed = 00:01:24 . Memory (MB): peak = 9660.555 ; gain = 0.000 ; free physical = 309086 ; free virtual = 480307
 run all
-✅ Wrapper done. Writing result...
-✅ Output saved. Simulation completed.
-$finish called at time : 150135 ns : File "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" Line 95
-run: Time (s): cpu = 00:00:59 ; elapsed = 00:02:44 . Memory (MB): peak = 9794.613 ; gain = 589.980 ; free physical = 266753 ; free virtual = 470851
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
+[15475000] Draining 119 pending results...
+[16665000] WARN: y_final_valid_o with empty FIFO!
+[16675000] WARN: y_final_valid_o with empty FIFO!
+[16685000] WARN: y_final_valid_o with empty FIFO!
+[16695000] WARN: y_final_valid_o with empty FIFO!
+[16705000] WARN: y_final_valid_o with empty FIFO!
+[16715000] WARN: y_final_valid_o with empty FIFO!
+[16725000] WARN: y_final_valid_o with empty FIFO!
+[16735000] WARN: y_final_valid_o with empty FIFO!
+[16745000] WARN: y_final_valid_o with empty FIFO!
+✅ Full scan completed. Results written.
+[16755000] WARN: y_final_valid_o with empty FIFO!
+[16765000] WARN: y_final_valid_o with empty FIFO!
+[16775000] WARN: y_final_valid_o with empty FIFO!
+[16785000] WARN: y_final_valid_o with empty FIFO!
+[16795000] WARN: y_final_valid_o with empty FIFO!
+$finish called at time : 16805 ns : File "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v" Line 255
+run: Time (s): cpu = 00:00:33 ; elapsed = 00:03:16 . Memory (MB): peak = 9670.562 ; gain = 10.008 ; free physical = 309041 ; free virtual = 480252
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/utils_1/imports/synth_1/SSMBLOCK_TOP.dcp with file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/SSMBLOCK_TOP.dcp
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+launch_runs synth_1 -jobs 79
+[Wed Sep  3 15:57:12 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/utils_1/imports/synth_1/SSMBLOCK_TOP.dcp with file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/SSMBLOCK_TOP.dcp
+launch_runs synth_1 -jobs 79
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+[Wed Sep  3 16:03:02 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/utils_1/imports/synth_1/SSMBLOCK_TOP.dcp with file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/SSMBLOCK_TOP.dcp
+launch_runs synth_1 -jobs 79
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+[Wed Sep  3 16:05:50 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/utils_1/imports/synth_1/SSMBLOCK_TOP.dcp with file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/SSMBLOCK_TOP.dcp
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+launch_runs synth_1 -jobs 79
+[Wed Sep  3 16:08:34 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
 relaunch_sim
-INFO: xsimkernel Simulation Memory Usage: 340744 KB (Peak: 381452 KB), Simulation CPU Usage: 173720 ms
+INFO: xsimkernel Simulation Memory Usage: 538184 KB (Peak: 596908 KB), Simulation CPU Usage: 205940 ms
 Command: launch_simulation -step compile -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [USF-XSim-2] XSim::Compile design
-INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xvlog --incr --relax -prj testbench_fp16_wrapper_vlog.prj
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_1/sim/floating_point_1.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module floating_point_1
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.gen/sources_1/ip/floating_point_0/sim/floating_point_0.v" into library xil_defaultlib
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_ssmblock_fullscan_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_0_1/sim/floating_point_0.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module floating_point_0
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/accumulator.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module accumulator
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.gen/sources_1/ip/floating_point_1_1/sim/floating_point_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module floating_point_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/accumulator.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_adder_tree_128
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_add_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dAh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dAh
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dBx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dBx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/dx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_add_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_add_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/fp16_mult_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/fp16_mult_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fp16_mult_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/packing.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module packing
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module pipelined_hC
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ssm_block_fp16_top
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/xD.v" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/hC.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hC
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/h_next.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module h_next
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SSMBLOCK_TOP
+INFO: [VRFC 10-311] analyzing module pipe_bus
+INFO: [VRFC 10-311] analyzing module pipe_bus_bram
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/xD.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module xD
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/y_out.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module y_res
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module testbench_fp16_wrapper
-xvhdl --incr --relax -prj testbench_fp16_wrapper_vhdl.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/y_out.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module y_out
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_ssmblock_fullscan
+xvhdl --incr --relax -prj tb_ssmblock_fullscan_vhdl.prj
 Waiting for jobs to finish...
 No pending jobs, compilation finished.
 INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
 Command: launch_simulation -step elaborate -simset sim_1 -mode behavioral
-INFO: [Vivado 12-12493] Simulation top is 'testbench_fp16_wrapper'
+INFO: [Vivado 12-12493] Simulation top is 'tb_ssmblock_fullscan'
 INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
-INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
 INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
 INFO: [SIM-utils-51] Simulation object is 'sim_1'
 INFO: [USF-XSim-3] XSim::Elaborate design
-INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.sim/sim_1/behav/xsim'
-xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log
 Vivado Simulator v2024.1
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_fp16_wrapper_behav xil_defaultlib.testbench_fp16_wrapper xil_defaultlib.glbl -log elaborate.log 
+Running: /TOOLS/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L xbip_utils_v3_0_13 -L axi_utils_v2_0_9 -L xbip_pipe_v3_0_9 -L xbip_dsp48_wrapper_v3_0_6 -L xbip_dsp48_addsub_v3_0_9 -L xbip_dsp48_multadd_v3_0_9 -L xbip_bram18k_v3_0_9 -L mult_gen_v12_0_21 -L floating_point_v7_1_18 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_ssmblock_fullscan_behav xil_defaultlib.tb_ssmblock_fullscan xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -1328,8 +1556,12 @@ Compiling module unisims_ver.LUT1
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_0
+Compiling module xil_defaultlib.floating_point_1
 Compiling module xil_defaultlib.fp16_mult_wrapper
+Compiling module xil_defaultlib.dx
+Compiling module xil_defaultlib.dBx(N_TILE=128)
+Compiling module xil_defaultlib.dAh(N_TILE=128)
+Compiling module xil_defaultlib.pipe_bus_bram(W=2048)
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=2,fast_in...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
@@ -1341,7 +1573,7 @@ Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\x
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=48,length=0)\]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=11,length=0)\]
-Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a75t...]
+Compiling architecture rtl of entity floating_point_v7_1_18.dsp48e1_wrapper [\dsp48e1_wrapper(c_part="xc7a200...]
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_has_ce=1...]
 Compiling architecture rtl of entity floating_point_v7_1_18.delay [\delay(width=14,length=0)\]
 Compiling architecture synth of entity floating_point_v7_1_18.align_add_dsp48e1_hp [\align_add_dsp48e1_hp(c_xdevicef...]
@@ -1395,71 +1627,44 @@ Compiling architecture rtl of entity floating_point_v7_1_18.flt_add [\flt_add(c_
 Compiling architecture synth of entity xbip_pipe_v3_0_9.xbip_pipe_v3_0_9_viv [\xbip_pipe_v3_0_9_viv(c_latency=...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18_viv [\floating_point_v7_1_18_viv(c_xd...]
 Compiling architecture xilinx of entity floating_point_v7_1_18.floating_point_v7_1_18 [\floating_point_v7_1_18(c_xdevic...]
-Compiling module xil_defaultlib.floating_point_1
+Compiling module xil_defaultlib.floating_point_0
 Compiling module xil_defaultlib.fp16_add_wrapper
-Compiling module xil_defaultlib.pipelined_hC(H=12,P=16,N=128)
+Compiling module xil_defaultlib.h_next(N_TILE=128)
+Compiling module xil_defaultlib.hC(N_TILE=128)
+Compiling module xil_defaultlib.xD
 Compiling module xil_defaultlib.fp16_adder_tree_128_default
-Compiling module xil_defaultlib.accumulator(H=12,P=16)
-Compiling module xil_defaultlib.xD(H=12,P=16)
-Compiling module xil_defaultlib.y_res(H=12,P=16)
-Compiling module xil_defaultlib.ssm_block_fp16_top(H=12,P=16,N=1...
-Compiling module xil_defaultlib.packing(H=24,P=64,N=128,H_tile=1...
-Compiling module xil_defaultlib.testbench_fp16_wrapper
+Compiling module xil_defaultlib.y_out
+WARNING: [VRFC 10-3705] select index 7 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:274]
+WARNING: [VRFC 10-3705] select index 3 into 'hC_buf' is out of bounds [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:275]
+Compiling module xil_defaultlib.SSMBLOCK_TOP(N_TILE=128)
+Compiling module xil_defaultlib.tb_ssmblock_fullscan
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot testbench_fp16_wrapper_behav
-execute_script: Time (s): cpu = 00:04:54 ; elapsed = 00:01:49 . Memory (MB): peak = 9928.395 ; gain = 0.000 ; free physical = 267208 ; free virtual = 470966
-INFO: [USF-XSim-69] 'elaborate' step finished in '108' seconds
-launch_simulation: Time (s): cpu = 00:04:54 ; elapsed = 00:01:49 . Memory (MB): peak = 9928.395 ; gain = 0.000 ; free physical = 267208 ; free virtual = 470966
-Time resolution is 1 ps
-==== FP16 SSM Block Full Wrapper Testbench ====
-run: Time (s): cpu = 00:00:03 ; elapsed = 00:00:11 . Memory (MB): peak = 9928.395 ; gain = 0.000 ; free physical = 267043 ; free virtual = 470773
-relaunch_xsim_kernel: Time (s): cpu = 00:00:05 ; elapsed = 00:00:13 . Memory (MB): peak = 9928.395 ; gain = 0.000 ; free physical = 267043 ; free virtual = 470773
-relaunch_sim: Time (s): cpu = 00:07:57 ; elapsed = 00:02:05 . Memory (MB): peak = 9928.395 ; gain = 0.000 ; free physical = 267043 ; free virtual = 470773
-run all
-✅ Wrapper done. Writing result...
-✅ Output saved. Simulation completed.
-$finish called at time : 149815 ns : File "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v" Line 95
-run: Time (s): cpu = 00:00:33 ; elapsed = 00:02:42 . Memory (MB): peak = 9928.395 ; gain = 0.000 ; free physical = 266876 ; free virtual = 470715
+Built simulation snapshot tb_ssmblock_fullscan_behav
+execute_script: Time (s): cpu = 00:03:15 ; elapsed = 00:01:10 . Memory (MB): peak = 9783.598 ; gain = 0.000 ; free physical = 309460 ; free virtual = 480607
+INFO: [Common 17-344] 'execute_script' was cancelled
+INFO: [Vivado 12-5357] 'elaborate' step aborted
+launch_simulation: Time (s): cpu = 00:03:16 ; elapsed = 00:01:10 . Memory (MB): peak = 9783.598 ; gain = 0.000 ; free physical = 309460 ; free virtual = 480607
+INFO: [Common 17-344] 'launch_simulation' was cancelled
+INFO: [Common 17-344] 'relaunch_sim' was cancelled
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/utils_1/imports/synth_1/SSMBLOCK_TOP.dcp with file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/SSMBLOCK_TOP.dcp
 launch_runs synth_1 -jobs 79
-WARNING: [Vivado 12-7122] Auto Incremental Compile:: No reference checkpoint was found in run synth_1. Auto-incremental flow will not be run, the standard flow will be run instead.
-[Thu Aug  7 16:15:29 2025] Launched synth_1...
-Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver4/Mamba_SSM_Block_ver4.runs/synth_1/runme.log
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver4/testbench_fp16_wrapper_behav.wcfg}
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/tb_packing_server.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/pipelined_hC.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver4/top.v:]
+[Wed Sep  3 16:12:48 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.srcs/utils_1/imports/synth_1/SSMBLOCK_TOP.dcp with file /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/SSMBLOCK_TOP.dcp
+launch_runs synth_1 -jobs 79
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server_test.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/ssm_top.v:]
+[Wed Sep  3 16:15:07 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.runs/synth_1/runme.log
 close_sim
-INFO: xsimkernel Simulation Memory Usage: 340416 KB (Peak: 381128 KB), Simulation CPU Usage: 172060 ms
 INFO: [Simtcl 6-16] Simulation closed
 exit
-INFO: [Common 17-206] Exiting Vivado at Thu Aug  7 17:25:32 2025...
+INFO: [Common 17-206] Exiting Vivado at Wed Sep  3 16:36:30 2025...
