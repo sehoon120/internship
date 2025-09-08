@@ -73,17 +73,17 @@ h = [InferenceCache.alloc(
 # print("ssm_state:", h.ssm_state.shape)    # (1, 24, 64, 128)
 
 # 입력 프롬프트
-prompt = """
-who are  you ? who are  you ? who are  you ? who are  you ? who are  you ? who are  you ?who are  you ? who are  you ? who are  you ?
-"""
+# prompt = """
+# who are  you ? who are  you ? who are  you ? who are  you ? who are  you ? who are  you ?who are  you ? who are  you ? who are  you ?
+# """  # 시간 측정 기준
 # prompt = "My cat wrote all this CUDA code for a new language model and"
-# prompt = """Let's go through this step-by-step:
-# 1. You start with 15 muffins.
-# 2. You eat 2 muffins, leaving you with 13 muffins.
-# 3. You give 5 muffins to your neighbor, leaving you with 8 muffins.
-# 4. Your partner buys 6 more muffins, bringing the total number of muffins to 14.
-# 5. Your partner eats 2 muffins, leaving you with 12 muffins.
-# So how many are left?"""
+prompt = """Let's go through this step-by-step:
+1. You start with 15 muffins.
+2. You eat 2 muffins, leaving you with 13 muffins.
+3. You give 5 muffins to your neighbor, leaving you with 8 muffins.
+4. Your partner buys 6 more muffins, bringing the total number of muffins to 14.
+5. Your partner eats 2 muffins, leaving you with 12 muffins.
+So how many are left?"""
 # input_ids = make_synthetic_prompt_tokens(L_prompt=1024, vocab_size=model.args.vocab_size, chunk_size=model.args.chunk_size, seed=42).unsqueeze(0)
 input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)  # (1, L)
 prefix, f_token = input_ids[:, :-1], input_ids[:, -1:]  # prefix: "The future of"  f_token: "AI"
@@ -105,7 +105,7 @@ for i in range(n_chunked, prefix.shape[1]):
     SSM_time_0 += SSM_time
     MAMBA_time_0 += MAMBA_time
 
-print('SSM runtime: ', SSM_time_0, '\nMAMBA runtime: ', MAMBA_time_0)
+# print('SSM runtime: ', SSM_time_0, '\nMAMBA runtime: ', MAMBA_time_0)
 
 # tokens = input_ids[0].tolist()  # ex: [502, 321, 764]
 
@@ -113,7 +113,7 @@ average_list = []
 average_list_m = []
 generated = [t.item() for t in input_ids[0]]  # 결과 누적 list
 with torch.no_grad():
-    for token_num in range(10): # 512
+    for token_num in range(100): # 512
         
         ssm_time = []
         mamba_time = []
@@ -151,11 +151,15 @@ with torch.no_grad():
             x, B, C = torch.split(xBC, [config.d_inner, config.d_state, config.d_state], dim=-1)
 
             A = -torch.exp(model.backbone['layers'][i]['mixer'].A_log)  # (nheads,)
-
+# ====================  Full SSM Block Started  ====================
             # SSM step
+            # if token_num == 0: # i == 0: and 
+            #     print(dt + model.backbone['layers'][i]['mixer'].dt_bias)
             dt = F.softplus(dt + model.backbone['layers'][i]['mixer'].dt_bias)  # (batch, nheads)
+            # delta = dt + model.backbone['layers'][i]['mixer'].dt_bias
+            # dt = torch.where(delta <= 0, torch.exp(delta), delta + torch.exp(-delta))
             dA = torch.exp(dt * A)  # (batch, nheads)
-            x = rearrange(x, "b (h p) -> b h p", p=config.headdim)  # "b l (h p) -> b l h p"
+            x = rearrange(x, "b (h p) -> b h p", p=config.headdim)
 # ====================  SSM Block Started  ====================
 # input: dA, dt, x, B, C, D, h[i].ssm_state  -  FP16
 # output: y  -  FP16
@@ -189,7 +193,8 @@ with torch.no_grad():
             
 
             dBx = torch.einsum("bh, bn, bhp -> bhpn", dt, B, x)
-
+            # if i == 0 and token_num == 0:
+            #     print(dBx.shape)
             h[i].ssm_state.copy_(h[i].ssm_state * rearrange(dA, "b h -> b h 1 1") + dBx)
 
             y = torch.einsum("bhpn, bn -> bhp", h[i].ssm_state, C)
@@ -236,6 +241,6 @@ with torch.no_grad():
         generated.append(next_token.item())
         f_token = next_token.unsqueeze(0)
 # print(len(average_list), ',  ', len(average_list_m))
-# print(tokenizer.decode(generated, skip_special_tokens=True))
-print(f'\nSSM time:   {sum(average_list)}\n')
-print(f'\nMamba time: {sum(average_list_m)}\n')
+print(tokenizer.decode(generated, skip_special_tokens=True))
+# print(f'\nSSM time:   {sum(average_list)}\n')
+# print(f'\nMamba time: {sum(average_list_m)}\n')

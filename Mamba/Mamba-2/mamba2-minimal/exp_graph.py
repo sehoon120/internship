@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import os
+import math
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
 
@@ -8,6 +10,44 @@ from FXP_simulator import FXP16Simulator, FXP32Simulator, FXP8Simulator
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+
+def exp_fast8(x: torch.Tensor) -> torch.Tensor:
+    """
+    8-segment PWL 근사로 e^x 계산.
+    e^x = 2^(x*log2(e)) = 2^(k+f) = 2^k * 2^f
+    2^f는 f∈[0,1)에서 8구간(pwl) 1차 근사.
+    """
+    # 상수/준비
+    log2e = 1.4426950408889634  # 1/ln(2)
+    device, dtype = x.device, x.dtype
+
+    # t = x*log2(e) = k + f
+    t = x * torch.tensor(log2e, dtype=dtype, device=device)
+    k = torch.floor(t)                          # 정수부 (float)
+    f = t - k                                   # 소수부 ∈ [0,1)
+
+    # 8 구간 인덱스와 좌측 경계 f0
+    seg = torch.clamp((f * 8).to(torch.int64), 0, 7)
+    f0  = seg.to(dtype) / 8.0
+
+    # 구간 끝점 값: y0=2^(f0), y1=2^(f0+1/8)
+    # (테이블 사전계산)
+    with torch.no_grad():
+        boundaries = torch.arange(9, device=device, dtype=dtype) / 8.0  # 0,1/8,...,1
+        pow2_table = torch.pow(torch.tensor(2.0, dtype=dtype, device=device), boundaries)
+    y0 = pow2_table[seg]              # 2^(seg/8)
+    y1 = pow2_table[seg + 1]          # 2^((seg+1)/8)
+
+    # 선형 근사: 2^f ≈ y0 + slope*(f - f0)
+    # slope = (y1 - y0) / (1/8) = 8*(y1 - y0)
+    slope = 8.0 * (y1 - y0)
+    two_pow_f = y0 + slope * (f - f0)
+
+    # 최종: 2^k * 2^f  (ldexp: mantissa * 2^exponent)
+    # k는 float이므로 정수로 변환
+    k_int = k.to(torch.int32)
+    y = torch.ldexp(two_pow_f, k_int)
+    return y
 
 class FastBiasedExp(nn.Module):
     def __init__(self):
@@ -151,34 +191,52 @@ class ApproxExp_FXP32in16out14(nn.Module):
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
-    fxp8 = FXP8Simulator(frac_bits = 4)
-    fxp16 = FXP16Simulator(frac_bits = 14)
-    fxp16_13 = FXP16Simulator(frac_bits = 13)
-    fxp32 = FXP32Simulator(frac_bits = 16)
+    # fxp8 = FXP8Simulator(frac_bits = 4)
+    # fxp16 = FXP16Simulator(frac_bits = 14)
+    # fxp16_13 = FXP16Simulator(frac_bits = 13)
+    # fxp32 = FXP32Simulator(frac_bits = 16)
     
-    x = torch.linspace(-10, 3, 500)
-    x_q = fxp8.quantize(x)
-    x_dq = fxp8.dequantize(x_q)
+    x = torch.linspace(-10, 7, 500)
+    # x_q = fxp8.quantize(x)
+    # x_dq = fxp8.dequantize(x_q)
     # print(x_dq)
 
+    '''
+    # ==================== exp ====================
     y_true = torch.exp(x)
-    # y_approx = FastBiasedExp()(x_dq)
-    x_q_16_13 = fxp16_13.quantize(x)
-    y_approx1 = ApproxExp16_FXP(in_frac=13, out_frac=16)
-    y_32_16 = y_approx1(x_q_16_13)
-    y1 = fxp32.dequantize(y_32_16)
+    # --- 기본 근사 ---
+    y_approx = exp_fast8(x)
+    # ==================================================
+    '''
 
-    x_q_32_16 = fxp32.quantize(x)
-    print(x_q_32_16)
-    y_approx2 = ApproxExp_FXP32in16out14(in_frac=16, out_frac=14)  
-    y_16_14 = y_approx2(x_q_32_16)
-    y2 = fxp16.dequantize(y_16_14)
+    # '''
+    # ==================== Softplus ====================
+    y_true = F.softplus(x)
+    # --- 대칭 근사 ---
+    # y_approx = torch.where(x <= 0, torch.exp(x), x + torch.exp(-x))
+    # --- 기본 근사 --- 
+    ln2 = math.log(2)
+    y_approx = torch.where(x == 0, ln2, x / (1 - exp_fast8(-x/ln2)))
+    # ==================================================
+    # '''
+
+    # y_approx = FastBiasedExp()(x_dq)
+    # x_q_16_13 = fxp16_13.quantize(x)
+    # y_approx1 = ApproxExp16_FXP(in_frac=13, out_frac=16)
+    # y_32_16 = y_approx1(x_q_16_13)
+    # y1 = fxp32.dequantize(y_32_16)
+
+    # x_q_32_16 = fxp32.quantize(x)
+    # print(x_q_32_16)
+    # y_approx2 = ApproxExp_FXP32in16out14(in_frac=16, out_frac=14)  
+    # y_16_14 = y_approx2(x_q_32_16)
+    # y2 = fxp16.dequantize(y_16_14)
 
 
 
 
     plt.plot(x.numpy(), y_true.numpy(), label="True exp(x)", linewidth=2)
-    plt.plot(x.numpy(), y2.detach().numpy(), label="FBEA Approx", linestyle="--")
+    plt.plot(x.numpy(), y_approx.numpy(), label="FBEA Approx", linestyle="--")
     plt.axvline(x=-7, color='gray', linestyle=':', linewidth=0.8)
     plt.axvline(x=0, color='gray', linestyle=':', linewidth=0.8)
     plt.title("Fast Biased Exponential Approximation (clipped to [-7, 0])")
