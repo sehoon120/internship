@@ -209,6 +209,21 @@ if __name__ == '__main__':
     # ==================================================
     '''
 
+    # import numpy as np
+    # import struct
+
+    # def f2h(x):  # float32 -> float16 hex (IEEE-754)
+    #     return struct.unpack('<H', np.float16(x).tobytes())[0]
+
+    # y0 = [2**(i/8.0) for i in range(8)]
+    # y1 = [2**((i+1)/8.0) for i in range(8)]
+    # slope = [8.0*(y1[i]-y0[i]) for i in range(8)]
+
+    # print("// --- paste into pwl8_rom ---")
+    # for i in range(8):
+    #     print(f"3'd{i}: begin y0_o <= 16'h{f2h(y0[i]):04X}; slope_o <= 16'h{f2h(slope[i]):04X}; end")
+
+
     # '''
     # ==================== Softplus ====================
     y_true = F.softplus(x)
