@@ -5,9 +5,8 @@
 // y_exp  = exp(x)
 //
 // Notes:
-// - All arithmetic is FP16. Replace *_fp16_* with your FP16 IP cores.
 // - Pipeline latencies are parameterized; set to match your IP configs.
-// - Output valid_o is aligned to the softplus path latency for both modes.
+// - exp가 더 먼저 나옴: mode가 0일때
 //------------------------------------------------------------------------------
 
 module softplus_or_exp16 #(
