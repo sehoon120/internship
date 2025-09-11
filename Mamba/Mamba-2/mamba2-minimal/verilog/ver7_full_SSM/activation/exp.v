@@ -12,8 +12,8 @@
 
 module exp16_base2_pwl8 #(
     parameter integer DW       = 16,
-    parameter integer LAT_MUL  = 6,   // your FP16 mul latency
-    parameter integer LAT_ADD  = 11,  // your FP16 add latency
+    parameter integer LAT_MUL  = 1,   // your FP16 mul latency
+    parameter integer LAT_ADD  = 1,  // your FP16 add latency
     parameter integer K_MIN    = -16, // supported integer power range
     parameter integer K_MAX    =  16
 )(
@@ -60,6 +60,19 @@ module exp16_base2_pwl8 #(
         .seg_o(seg_idx), .valid_o(v_seg)
     );
 
+    reg [DW-1:0]       f_w1, f_w2;
+//    reg                v_seg1, v_seg2;
+    
+    always @(posedge clk or negedge rstn) begin
+        if(!rstn) begin
+            f_w1 <= {DW{1'b0}};
+            f_w2 <= {DW{1'b0}};
+        end else begin
+            f_w1 <= f_w;
+            f_w2 <= f_w1;
+        end
+    end
+
     // 4) ROM: y0(seg)=2^(seg/8), slope(seg) = 8*(y1 - y0)
     wire [DW-1:0] y0_seg, slope_seg; wire v_rom;
     pwl8_rom #(.DW(DW)) u_rom (
@@ -67,6 +80,28 @@ module exp16_base2_pwl8 #(
         .valid_i(v_seg), .seg_i(seg_idx),
         .y0_o(y0_seg), .slope_o(slope_seg), .valid_o(v_rom)
     );
+    
+    reg [DW-1:0]       slope_seg1, slope_seg2, slope_seg3;
+    reg [DW-1:0]       y0_seg1, y0_seg2, y0_seg3, y0_seg4;
+    always @(posedge clk or negedge rstn) begin
+        if(!rstn) begin
+            slope_seg1 <= {DW{1'b0}};
+            slope_seg2 <= {DW{1'b0}};
+            slope_seg3 <= {DW{1'b0}};
+            y0_seg1 <= {DW{1'b0}};
+            y0_seg2 <= {DW{1'b0}};
+            y0_seg3 <= {DW{1'b0}};
+            y0_seg4 <= {DW{1'b0}};
+        end else begin
+            slope_seg1 <= slope_seg;
+            slope_seg2 <= slope_seg1;
+            slope_seg3 <= slope_seg2;
+            y0_seg1 <= y0_seg;
+            y0_seg2 <= y0_seg1;
+            y0_seg3 <= y0_seg2;
+            y0_seg4 <= y0_seg3;
+        end
+    end
 
     // 5) df = f - f0(seg), with f0 = seg/8
     wire [DW-1:0] f0_seg; wire v_f0;
@@ -76,32 +111,55 @@ module exp16_base2_pwl8 #(
         .f0_o(f0_seg), .valid_o(v_f0)
     );
 
-    // align: f, y0, slope, f0 to same cycle
-    wire [DW-1:0] f_a, y0_a, slope_a, f0_a; wire v_a;
-    align4 #(.DW(DW)) u_align4 (
-        .clk(clk), .rstn(rstn),
-        .a_i(f_w),     .va_i(v_tf),
-        .b_i(y0_seg),  .vb_i(v_rom),
-        .c_i(slope_seg), .vc_i(v_rom),
-        .d_i(f0_seg),  .vd_i(v_f0),
-        .a_o(f_a), .b_o(y0_a), .c_o(slope_a), .d_o(f0_a),
-        .v_o(v_a)
-    );
+    // 5) df = f - f0  (align 단계 추가: adder에 넣기 전에 한 번 더 래치)
+    reg [DW-1:0] f_w2_s, f0_s;
+    reg          v_s;
+    
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            f_w2_s <= {DW{1'b0}};
+            f0_s   <= {DW{1'b0}};
+            v_s    <= 1'b0;
+        end else begin
+            v_s    <= v_f0;          // f0_seg가 유효해질 때만 동시 캡처
+            if (v_f0) begin
+                f_w2_s <= f_w2;      // 이미 2단 지연된 f
+                f0_s   <= f0_seg;    // ROM 출력
+            end
+        end
+    end
 
     // 6) two_pow_f ≈ y0 + slope*(f - f0)
     wire [DW-1:0] df_w; wire v_df;
     fp16_add u_sub_f0 (
         .clk(clk), .rstn(rstn),
-        .valid_i(v_a),
-        .a_i(f_a), .b_i({~f0_a[DW-1], f0_a[DW-2:0]}),
+        .valid_i(v_s),
+        .a_i(f_w2_s), .b_i(f0_s),
         .sum_o(df_w), .valid_o(v_df)
     );
+    
+    // 출력도 레지스터에 잡기(글리치가 밖으로 안 나가게)
+    reg [DW-1:0] df_w_r;
+    reg          v_df_r;
+    
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            df_w_r <= {DW{1'b0}};
+            v_df_r <= 1'b0;
+        end else begin
+            v_df_r <= v_df;
+            if (v_df) begin
+                df_w_r <= df_w;
+            end
+            // v_df_raw==0이면 유지 → 파형 흔들림 없음
+        end
+    end
 
     wire [DW-1:0] slope_df; wire v_sdf;
     fp16_mul u_mul_slope (
         .clk(clk), .rstn(rstn),
-        .valid_i(v_df),
-        .a_i(slope_a), .b_i(df_w),
+        .valid_i(v_df_r),
+        .a_i(slope_seg3), .b_i(df_w_r),
         .p_o(slope_df), .valid_o(v_sdf)
     );
 
@@ -109,7 +167,7 @@ module exp16_base2_pwl8 #(
     fp16_add u_add_y0 (
         .clk(clk), .rstn(rstn),
         .valid_i(v_sdf),
-        .a_i(y0_a), .b_i(slope_df),
+        .a_i(y0_seg4), .b_i(slope_df),
         .sum_o(two_pow_f), .valid_o(v_2f)
     );
 
@@ -121,20 +179,39 @@ module exp16_base2_pwl8 #(
         .two_pow_k_o(two_pow_k), .valid_o(v_2k)
     );
 
-    // align two_pow_f and two_pow_k
-    wire [DW-1:0] two_pow_f_a, two_pow_k_a; wire v_mul;
-    align2 #(.DW(DW)) u_align_last (
-        .clk(clk), .rstn(rstn),
-        .a_i(two_pow_f), .va_i(v_2f),
-        .b_i(two_pow_k), .vb_i(v_2k),
-        .a_o(two_pow_f_a), .b_o(two_pow_k_a),
-        .v_o(v_mul)
-    );
+//    // align two_pow_f and two_pow_k
+//    wire [DW-1:0] two_pow_f_a, two_pow_k_a; wire v_mul;
+//    align2 #(.DW(DW)) u_align_last (
+//        .clk(clk), .rstn(rstn),
+//        .a_i(two_pow_f), .va_i(v_2f),
+//        .b_i(two_pow_k), .vb_i(v_2k),
+//        .a_o(two_pow_f_a), .b_o(two_pow_k_a),
+//        .v_o(v_mul)
+//    );
+
+    reg [DW-1:0]       two_pow_k1, two_pow_k2, two_pow_k3, two_pow_k4, two_pow_k5, two_pow_k6;
+    always @(posedge clk or negedge rstn) begin
+        if(!rstn) begin
+            two_pow_k1 <= {DW{1'b0}};
+            two_pow_k2 <= {DW{1'b0}};
+            two_pow_k3 <= {DW{1'b0}};
+            two_pow_k4 <= {DW{1'b0}};
+            two_pow_k5 <= {DW{1'b0}};
+            two_pow_k6 <= {DW{1'b0}};
+        end else begin
+            two_pow_k1 <= two_pow_k;
+            two_pow_k2 <= two_pow_k1;
+            two_pow_k3 <= two_pow_k2;
+            two_pow_k4 <= two_pow_k3;
+            two_pow_k5 <= two_pow_k4;
+            two_pow_k6 <= two_pow_k5;
+        end
+    end
 
     fp16_mul u_mul_final (
         .clk(clk), .rstn(rstn),
-        .valid_i(v_mul),
-        .a_i(two_pow_f_a), .b_i(two_pow_k_a),
+        .valid_i(v_2f),
+        .a_i(two_pow_f), .b_i(two_pow_k6),
         .p_o(y_o), .valid_o(valid_o)
     );
 endmodule

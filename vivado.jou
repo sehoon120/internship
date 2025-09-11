@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Wed Sep  3 16:38:31 2025
-# Process ID: 1341308
+# Start of session at: Thu Sep 11 10:59:22 2025
+# Process ID: 2089060
 # Current directory: /home/intern-2501/internship
 # Command line: vivado
 # Log file: /home/intern-2501/internship/vivado.log
@@ -13,14 +13,60 @@
 # Platform          :RedHatEnterprise
 # Operating System  :Red Hat Enterprise Linux release 8.10 (Ootpa)
 # Processor Detail  :Intel(R) Xeon(R) Gold 6242R CPU @ 3.10GHz
-# CPU Frequency     :3833.034 MHz
+# CPU Frequency     :3840.620 MHz
 # CPU Physical cores:40
 # CPU Logical cores :80
 # Host memory       :539818 MB
 # Swap memory       :4294 MB
 # Total Virtual     :544113 MB
-# Available Virtual :505865 MB
+# Available Virtual :506687 MB
 #-----------------------------------------------------------
 start_gui
-open_project /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.xpr
+open_project /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.xpr
 update_compile_order -fileset sources_1
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg
+source tb_softplus_or_exp16_pure.tcl
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+relaunch_sim
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+relaunch_sim
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+update_compile_order -fileset sources_1
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+relaunch_sim

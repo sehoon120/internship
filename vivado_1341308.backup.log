@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Wed Aug 20 10:22:18 2025
-# Process ID: 4063004
+# Start of session at: Wed Sep  3 16:38:31 2025
+# Process ID: 1341308
 # Current directory: /home/intern-2501/internship
 # Command line: vivado
 # Log file: /home/intern-2501/internship/vivado.log
@@ -13,15 +13,16 @@
 # Platform          :RedHatEnterprise
 # Operating System  :Red Hat Enterprise Linux release 8.10 (Ootpa)
 # Processor Detail  :Intel(R) Xeon(R) Gold 6242R CPU @ 3.10GHz
-# CPU Frequency     :3848.080 MHz
+# CPU Frequency     :3833.034 MHz
 # CPU Physical cores:40
 # CPU Logical cores :80
 # Host memory       :539818 MB
 # Swap memory       :4294 MB
 # Total Virtual     :544113 MB
-# Available Virtual :508053 MB
+# Available Virtual :505865 MB
 #-----------------------------------------------------------
 start_gui
+open_project /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.xpr
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
@@ -31,44 +32,13 @@ WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 avai
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
 WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
-open_project /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.xpr
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver6/tb_top_server.v'.
 Scanning sources...
 Finished scanning sources
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/TOOLS/Xilinx/Vivado/2024.1/data/ip'.
+open_project: Time (s): cpu = 00:00:16 ; elapsed = 00:00:08 . Memory (MB): peak = 8577.430 ; gain = 469.414 ; free physical = 310261 ; free virtual = 481333
 update_compile_order -fileset sources_1
-open_run impl_1
-INFO: [Device 21-403] Loading part xc7a200tfbg676-2
-INFO: [Device 21-9227] Part: xc7a200tfbg676-2 does not have CEAM library.
-Netlist sorting complete. Time (s): cpu = 00:00:00.39 ; elapsed = 00:00:00.39 . Memory (MB): peak = 8888.754 ; gain = 0.000 ; free physical = 320353 ; free virtual = 483039
-INFO: [Netlist 29-17] Analyzing 1966 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
-INFO: [Project 1-479] Netlist was created with Vivado 2024.1
-INFO: [Project 1-570] Preparing netlist for logic optimization
-Read ShapeDB Complete: Time (s): cpu = 00:00:00.11 ; elapsed = 00:00:00.11 . Memory (MB): peak = 9014.637 ; gain = 9.258 ; free physical = 320233 ; free virtual = 482920
-INFO: [Timing 38-478] Restoring timing data from binary archive.
-INFO: [Timing 38-479] Binary timing data restore complete.
-INFO: [Project 1-856] Restoring constraints from binary archive.
-INFO: [Project 1-853] Binary constraint restore complete.
-INFO: [Designutils 20-5722] Start Reading Physical Databases.
-Reading placement.
-Read Netlist Cache: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 9676.531 ; gain = 0.000 ; free physical = 319630 ; free virtual = 482316
-Reading placer database...
-Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9676.531 ; gain = 0.000 ; free physical = 319630 ; free virtual = 482316
-Read PlaceDB: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 9691.516 ; gain = 14.984 ; free physical = 319625 ; free virtual = 482312
-Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9691.516 ; gain = 0.000 ; free physical = 319625 ; free virtual = 482312
-Reading routing.
-Read RouteStorage: Time (s): cpu = 00:00:00.41 ; elapsed = 00:00:00.18 . Memory (MB): peak = 9712.016 ; gain = 20.500 ; free physical = 319605 ; free virtual = 482292
-Read Physdb Files: Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 9712.016 ; gain = 35.484 ; free physical = 319605 ; free virtual = 482292
-Restored from archive | CPU: 1.600000 secs | Memory: 46.060181 MB |
-Finished XDEF File Restore: Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 9712.016 ; gain = 35.484 ; free physical = 319605 ; free virtual = 482292
-Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 9712.016 ; gain = 0.000 ; free physical = 319605 ; free virtual = 482292
-INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 352 instances were transformed.
-  LUT6_2 => LUT6_2 (LUT5, LUT6): 336 instances
-  SRLC32E => SRL16E: 16 instances
-
-open_run: Time (s): cpu = 00:00:34 ; elapsed = 00:00:21 . Memory (MB): peak = 10703.605 ; gain = 2177.273 ; free physical = 319226 ; free virtual = 481918
 exit
-ERROR: [Vivado 12-106] *** Exception: java.lang.NullPointerException: Cannot invoke "ui.views.bI.bhn()" because "<parameter1>" is null (See /home/intern-2501/internship/vivado_pid4063004.debug)
+INFO: [Common 17-206] Exiting Vivado at Wed Sep  3 16:39:12 2025...

@@ -9,14 +9,14 @@
 // - exp가 더 먼저 나옴: mode가 0일때
 //------------------------------------------------------------------------------
 
-module softplus_or_exp16 #(
+module softplus_or_exp16 #(  // Delay = 16
     parameter integer DW       = 16,
     // Latencies for your FP16 IPs (set these to your actual IP configs)
-    parameter integer LAT_MUL  = 6,    // FP16 mul latency
-    parameter integer LAT_ADD  = 11,   // FP16 add/sub latency
-    parameter integer LAT_DIV  = 14,   // FP16 div latency
+    parameter integer LAT_MUL  = 1,    // FP16 mul latency
+    parameter integer LAT_ADD  = 1,   // FP16 add/sub latency
+    parameter integer LAT_DIV  = 1,   // FP16 div latency
     // Latency from exp.valid_i to exp.valid_o for your exp16_base2_pwl8
-    parameter integer LAT_EXP  = 20,   // <-- set to actual exp module latency
+    parameter integer LAT_EXP  = 12,   // <-- set to actual exp module latency
     // FP16 constants (IEEE-754 half precision bit patterns)
     parameter [DW-1:0] FP16_ONE     = 16'h3C00, // 1.0
     parameter [DW-1:0] FP16_LN2     = 16'h398C, // ln(2) ≈ 0.693147
@@ -114,6 +114,8 @@ module softplus_or_exp16 #(
     // --------------------------
 
     // denom = 1 - exp_y
+    wire [DW-1:0] m_exp_y = {~exp_y[DW-1], exp_y[DW-2:0]};
+    
     wire [DW-1:0] one_minus_exp;
     wire          one_minus_exp_v;
 
@@ -121,9 +123,16 @@ module softplus_or_exp16 #(
         .clk(clk), .rstn(rstn),
         .valid_i(exp_v_o),
         .a_i(FP16_ONE),
-        .b_i({~exp_y[DW-1], exp_y[DW-2:0]}),
+        .b_i(m_exp_y),
         .sum_o(one_minus_exp),
         .valid_o(one_minus_exp_v)
+    );
+    
+    wire [DW-1:0] one_minus_exp_d;
+    shift_reg #(.DW(DW), .DEPTH(1)) u_align_minus_exp_y (
+        .clk(clk), .rstn(rstn),
+        .din({one_minus_exp}),
+        .dout({one_minus_exp_d})
     );
     
     // y_soft = x / (1 - exp_y)
@@ -132,7 +141,7 @@ module softplus_or_exp16 #(
     wire          v_d_for_div;
     wire          mode_d_for_div;
 
-    shift_reg #(.DW(DW+2), .DEPTH(LAT_ADD)) u_align_x_mode_for_div (
+    shift_reg #(.DW(DW+2), .DEPTH(LAT_ADD+1)) u_align_x_mode_for_div (
         .clk(clk), .rstn(rstn),
         .din({x_d_expo, mode_d_expo, exp_v_o}),
         .dout({x_d_for_div, mode_d_for_div, v_d_for_div})
@@ -143,9 +152,9 @@ module softplus_or_exp16 #(
 
     div_fp16 #(.DW(DW), .LAT(LAT_DIV)) u_div_softplus (
         .clk(clk), .rstn(rstn),
-        .valid_i(one_minus_exp_v),
+        .valid_i(v_d_for_div),
         .a_i(x_d_for_div),
-        .b_i(one_minus_exp),
+        .b_i(one_minus_exp_d),
         .y_o(y_soft_div),
         .valid_o(y_soft_div_v)
     );

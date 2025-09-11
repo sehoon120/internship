@@ -9,13 +9,13 @@ module seg8_indexer #(
     output reg           valid_o
 );
     // 간단 비교로 1/8, 2/8, ... 경계 찾기
-    localparam [DW-1:0] H_1_8 = 16'h2E00; // ≈0.125 (approx)
-    localparam [DW-1:0] H_2_8 = 16'h3200; // ≈0.25
-    localparam [DW-1:0] H_3_8 = 16'h3400; // ≈0.375
+    localparam [DW-1:0] H_1_8 = 16'h3000; // ≈0.125 (approx)
+    localparam [DW-1:0] H_2_8 = 16'h3400; // ≈0.25
+    localparam [DW-1:0] H_3_8 = 16'h3600; // ≈0.375
     localparam [DW-1:0] H_4_8 = 16'h3800; // 0.5
-    localparam [DW-1:0] H_5_8 = 16'h3980; // ≈0.625
-    localparam [DW-1:0] H_6_8 = 16'h3A80; // ≈0.75
-    localparam [DW-1:0] H_7_8 = 16'h3B40; // ≈0.875
+    localparam [DW-1:0] H_5_8 = 16'h3900; // ≈0.625
+    localparam [DW-1:0] H_6_8 = 16'h3A00; // ≈0.75
+    localparam [DW-1:0] H_7_8 = 16'h3B00; // ≈0.875
 
     function [0:0] le(input [DW-1:0] a, input [DW-1:0] b);
         // FP16 a<=b (부호/지수/가수 비교 간단 구현; 정확 비교기는 별도 모듈 권장)

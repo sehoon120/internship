@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Thu Aug 21 15:36:46 2025
-# Process ID: 152791
+# Start of session at: Wed Sep  3 16:38:31 2025
+# Process ID: 1341308
 # Current directory: /home/intern-2501/internship
 # Command line: vivado
 # Log file: /home/intern-2501/internship/vivado.log
@@ -13,28 +13,14 @@
 # Platform          :RedHatEnterprise
 # Operating System  :Red Hat Enterprise Linux release 8.10 (Ootpa)
 # Processor Detail  :Intel(R) Xeon(R) Gold 6242R CPU @ 3.10GHz
-# CPU Frequency     :3812.035 MHz
+# CPU Frequency     :3833.034 MHz
 # CPU Physical cores:40
 # CPU Logical cores :80
 # Host memory       :539818 MB
 # Swap memory       :4294 MB
 # Total Virtual     :544113 MB
-# Available Virtual :503922 MB
+# Available Virtual :505865 MB
 #-----------------------------------------------------------
 start_gui
 open_project /home/intern-2501/Mamba_SSM_Block_ver6/Mamba_SSM_Block_ver6.xpr
 update_compile_order -fileset sources_1
-launch_simulation
-open_wave_config /home/intern-2501/Mamba_SSM_Block_ver6/tb_ssmblock_fullscan_behav.wcfg
-source tb_ssmblock_fullscan.tcl
-run all
-reset_run synth_1
-launch_runs impl_1 -jobs 79
-wait_on_run impl_1
-open_run impl_1
-reset_run synth_1
-launch_runs impl_1 -jobs 79
-wait_on_run impl_1
-close_design
-open_run impl_1
-close_sim
