@@ -16,7 +16,7 @@ module softplus_or_exp16 #(  // Delay = 16
     parameter integer LAT_ADD  = 1,   // FP16 add/sub latency
     parameter integer LAT_DIV  = 1,   // FP16 div latency
     // Latency from exp.valid_i to exp.valid_o for your exp16_base2_pwl8
-    parameter integer LAT_EXP  = 12,   // <-- set to actual exp module latency
+    parameter integer LAT_EXP  = 6 + LAT_MUL * 3 + LAT_ADD * 3,   // <-- set to actual exp module latency
     // FP16 constants (IEEE-754 half precision bit patterns)
     parameter [DW-1:0] FP16_ONE     = 16'h3C00, // 1.0
     parameter [DW-1:0] FP16_LN2     = 16'h398C, // ln(2) ≈ 0.693147
@@ -165,7 +165,7 @@ module softplus_or_exp16 #(  // Delay = 16
     // 총 지연 = StageA(LAT_MUL) + LAT_EXP + LAT_ADD + LAT_DIV
     //       = LAT_MUL + LAT_EXP + POST_SOFT_LAT
     // --------------------------
-    localparam integer POST_SOFT_LAT = (LAT_ADD + LAT_DIV);
+    localparam integer POST_SOFT_LAT = (LAT_ADD + LAT_DIV + 1);
     localparam integer TOT_LAT = LAT_MUL + LAT_EXP + POST_SOFT_LAT;
 
     wire x_is_zero_in  = (x_i[DW-2:0] == { (DW-1){1'b0} }); // exp==0 && frac==0 → ±0
@@ -179,16 +179,16 @@ module softplus_or_exp16 #(  // Delay = 16
 
     wire mode_softplus_o_delay;
 
-    shift_reg #(.DW(1), .DEPTH(TOT_LAT)) u_mode_delay (
+    shift_reg #(.DW(1), .DEPTH(LAT_DIV)) u_mode_delay (
         .clk(clk), .rstn(rstn),
-        .din(mode_softplus_i),
+        .din(mode_d_for_div),
         .dout(mode_softplus_o_delay)
     );
 
     assign mode_softplus_o = mode_softplus_o_delay;
 
     assign y_o_S     = x_zero_at_out ? FP16_LN2 : y_soft_div;
-    assign valid_o_S = y_soft_div_v & mode_d_for_div;
+    assign valid_o_S = y_soft_div_v & mode_softplus_o_delay;
 
 endmodule
 

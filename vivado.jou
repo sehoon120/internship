@@ -70,3 +70,4 @@ relaunch_sim
 save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
 relaunch_sim
 relaunch_sim
+close_sim

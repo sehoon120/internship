@@ -2,7 +2,8 @@
 module base2_k_picker #(
     parameter integer DW    = 16,
     parameter integer K_MIN = -16,
-    parameter integer K_MAX =  16
+    parameter integer K_MAX =  16,
+    parameter integer LAT_ADD =  1
 )(
     input  wire          clk,
     input  wire          rstn,
@@ -98,8 +99,8 @@ module base2_k_picker #(
     // ---------------- Stage-1 (t+1) ----------------
     reg           v1;
     reg  [DW-1:0] t_d1;
-    reg  signed [7:0] k_d1;
-    reg  [DW-1:0] kfp_d1;
+//    reg  signed [7:0] k_d1;
+//    reg  [DW-1:0] kfp_d1;
     reg  [DW-1:0] nkfp_d1;   // -k (FP16)
 
     wire [DW-1:0] kfp_c     = int_to_fp16(k_floor_c);
@@ -109,17 +110,35 @@ module base2_k_picker #(
         if (!rstn) begin
             v1      <= 1'b0;
             t_d1    <= {DW{1'b0}};
-            k_d1    <= 8'sd0;
-            kfp_d1  <= {DW{1'b0}};
+//            k_d1    <= 8'sd0;
+//            kfp_d1  <= {DW{1'b0}};
             nkfp_d1 <= {DW{1'b0}};
         end else begin
             v1      <= valid_i;
             t_d1    <= t_i;
-            k_d1    <= k_floor_c[7:0];
-            kfp_d1  <= kfp_c;
+//            k_d1    <= k_floor_c[7:0];
+//            kfp_d1  <= kfp_c;
             nkfp_d1 <= nkfp_c;
         end
     end
+
+//    wire [DW-1:0]       two_pow_k_align;
+//    wire  signed [7:0] k_align;
+    wire  signed [7:0] k_d_align;
+//    wire  [DW-1:0] kfp_align;
+    wire  [DW-1:0] kfp_d_align;
+    
+    shift_reg #(.DW(8), .DEPTH(LAT_ADD)) u_align_k (
+        .clk(clk), .rstn(rstn),
+        .din(k_floor_c[7:0]),
+        .dout(k_d_align)
+    );
+    
+    shift_reg #(.DW(DW), .DEPTH(LAT_ADD)) u_align_kfp (
+        .clk(clk), .rstn(rstn),
+        .din(kfp_c),
+        .dout(kfp_d_align)
+    );
 
     // ---------------- Adder (1-cycle) ----------------
     wire [DW-1:0] sum_w;
@@ -144,8 +163,8 @@ module base2_k_picker #(
             k_fp16_o  <= {DW{1'b0}};
         end else if (add_v) begin
             f_r       <= sum_w;
-            k_o       <= k_d1;      // v1 시점의 k → adder 결과와 정렬(t+2)
-            k_fp16_o  <= kfp_d1;
+            k_o       <= k_d_align;      // v1 시점의 k → adder 결과와 정렬(t+2)
+            k_fp16_o  <= kfp_d_align;
         end
         // add_v==0이면 유지 → 글리치/플리커 없음
     end

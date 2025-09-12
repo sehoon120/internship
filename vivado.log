@@ -6858,3 +6858,7 @@ WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-f
 WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/exp.v:]
 WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
 WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Sep 11 17:25:17 2025...

@@ -44,7 +44,7 @@ module exp16_base2_pwl8 #(
     wire [DW-1:0]     k_as_fp16; // FP16 representation of integer k
     wire [DW-1:0]     f_w;   // t - k
     wire              v_tf;
-    base2_k_picker #(.DW(DW), .K_MIN(K_MIN), .K_MAX(K_MAX)) u_kpick (
+    base2_k_picker #(.DW(DW), .K_MIN(K_MIN), .K_MAX(K_MAX), .LAT_ADD(LAT_ADD)) u_kpick (
         .clk(clk), .rstn(rstn),
         .valid_i(v_t),
         .t_i(t_w),
@@ -81,27 +81,43 @@ module exp16_base2_pwl8 #(
         .y0_o(y0_seg), .slope_o(slope_seg), .valid_o(v_rom)
     );
     
-    reg [DW-1:0]       slope_seg1, slope_seg2, slope_seg3;
-    reg [DW-1:0]       y0_seg1, y0_seg2, y0_seg3, y0_seg4;
-    always @(posedge clk or negedge rstn) begin
-        if(!rstn) begin
-            slope_seg1 <= {DW{1'b0}};
-            slope_seg2 <= {DW{1'b0}};
-            slope_seg3 <= {DW{1'b0}};
-            y0_seg1 <= {DW{1'b0}};
-            y0_seg2 <= {DW{1'b0}};
-            y0_seg3 <= {DW{1'b0}};
-            y0_seg4 <= {DW{1'b0}};
-        end else begin
-            slope_seg1 <= slope_seg;
-            slope_seg2 <= slope_seg1;
-            slope_seg3 <= slope_seg2;
-            y0_seg1 <= y0_seg;
-            y0_seg2 <= y0_seg1;
-            y0_seg3 <= y0_seg2;
-            y0_seg4 <= y0_seg3;
-        end
-    end
+//    reg [DW-1:0]       slope_seg1, slope_seg2, slope_seg3;
+//    reg [DW-1:0]       y0_seg1, y0_seg2, y0_seg3, y0_seg4;
+//    always @(posedge clk or negedge rstn) begin
+//        if(!rstn) begin
+//            slope_seg1 <= {DW{1'b0}};
+//            slope_seg2 <= {DW{1'b0}};
+//            slope_seg3 <= {DW{1'b0}};
+//            y0_seg1 <= {DW{1'b0}};
+//            y0_seg2 <= {DW{1'b0}};
+//            y0_seg3 <= {DW{1'b0}};
+//            y0_seg4 <= {DW{1'b0}};
+//        end else begin
+//            slope_seg1 <= slope_seg;
+//            slope_seg2 <= slope_seg1;
+//            slope_seg3 <= slope_seg2;
+//            y0_seg1 <= y0_seg;
+//            y0_seg2 <= y0_seg1;
+//            y0_seg3 <= y0_seg2;
+//            y0_seg4 <= y0_seg3;
+//        end
+//    end
+    
+    wire  [DW-1:0] slope_d_align;
+    shift_reg #(.DW(DW), .DEPTH(2 + LAT_ADD)) u_align_slope (
+        .clk(clk), .rstn(rstn),
+        .din(slope_seg),
+        .dout(slope_d_align)
+    );
+    
+    wire  [DW-1:0] y_seg_d_align;
+    
+    shift_reg #(.DW(DW), .DEPTH(2 + LAT_ADD + LAT_MUL)) u_align_y0_seg (
+        .clk(clk), .rstn(rstn),
+        .din(y0_seg),
+        .dout(y_seg_d_align)
+    );
+    
 
     // 5) df = f - f0(seg), with f0 = seg/8
     wire [DW-1:0] f0_seg; wire v_f0;
@@ -159,7 +175,7 @@ module exp16_base2_pwl8 #(
     fp16_mul u_mul_slope (
         .clk(clk), .rstn(rstn),
         .valid_i(v_df_r),
-        .a_i(slope_seg3), .b_i(df_w_r),
+        .a_i(slope_d_align), .b_i(df_w_r),
         .p_o(slope_df), .valid_o(v_sdf)
     );
 
@@ -167,7 +183,7 @@ module exp16_base2_pwl8 #(
     fp16_add u_add_y0 (
         .clk(clk), .rstn(rstn),
         .valid_i(v_sdf),
-        .a_i(y0_seg4), .b_i(slope_df),
+        .a_i(y_seg_d_align), .b_i(slope_df),
         .sum_o(two_pow_f), .valid_o(v_2f)
     );
 
@@ -189,29 +205,37 @@ module exp16_base2_pwl8 #(
 //        .v_o(v_mul)
 //    );
 
-    reg [DW-1:0]       two_pow_k1, two_pow_k2, two_pow_k3, two_pow_k4, two_pow_k5, two_pow_k6;
-    always @(posedge clk or negedge rstn) begin
-        if(!rstn) begin
-            two_pow_k1 <= {DW{1'b0}};
-            two_pow_k2 <= {DW{1'b0}};
-            two_pow_k3 <= {DW{1'b0}};
-            two_pow_k4 <= {DW{1'b0}};
-            two_pow_k5 <= {DW{1'b0}};
-            two_pow_k6 <= {DW{1'b0}};
-        end else begin
-            two_pow_k1 <= two_pow_k;
-            two_pow_k2 <= two_pow_k1;
-            two_pow_k3 <= two_pow_k2;
-            two_pow_k4 <= two_pow_k3;
-            two_pow_k5 <= two_pow_k4;
-            two_pow_k6 <= two_pow_k5;
-        end
-    end
+//    reg [DW-1:0]       two_pow_k1, two_pow_k2, two_pow_k3, two_pow_k4, two_pow_k5, two_pow_k6;
+//    always @(posedge clk or negedge rstn) begin
+//        if(!rstn) begin
+//            two_pow_k1 <= {DW{1'b0}};
+//            two_pow_k2 <= {DW{1'b0}};
+//            two_pow_k3 <= {DW{1'b0}};
+//            two_pow_k4 <= {DW{1'b0}};
+//            two_pow_k5 <= {DW{1'b0}};
+//            two_pow_k6 <= {DW{1'b0}};
+//        end else begin
+//            two_pow_k1 <= two_pow_k;
+//            two_pow_k2 <= two_pow_k1;
+//            two_pow_k3 <= two_pow_k2;
+//            two_pow_k4 <= two_pow_k3;
+//            two_pow_k5 <= two_pow_k4;
+//            two_pow_k6 <= two_pow_k5;
+//        end
+//    end
+    
+    wire [DW-1:0]       two_pow_k_align;
+    
+    shift_reg #(.DW(DW+2), .DEPTH(3 + LAT_MUL + LAT_ADD + LAT_ADD)) u_align_tow_pow_k (
+        .clk(clk), .rstn(rstn),
+        .din(two_pow_k),
+        .dout(two_pow_k_align)
+    );
 
     fp16_mul u_mul_final (
         .clk(clk), .rstn(rstn),
         .valid_i(v_2f),
-        .a_i(two_pow_f), .b_i(two_pow_k6),
+        .a_i(two_pow_f), .b_i(two_pow_k_align),
         .p_o(y_o), .valid_o(valid_o)
     );
 endmodule

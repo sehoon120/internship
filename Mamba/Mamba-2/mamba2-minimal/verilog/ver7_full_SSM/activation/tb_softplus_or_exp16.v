@@ -6,10 +6,10 @@ module tb_softplus_or_exp16_pure;
   // Parameters (DUT 파라미터와 동일하게)
   // -----------------------------
   localparam integer DW       = 16;
-  localparam integer LAT_MUL  = 1;
-  localparam integer LAT_ADD  = 1;
-  localparam integer LAT_DIV  = 1;
-  localparam integer LAT_EXP  = 12;
+  localparam integer LAT_MUL  = 2;
+  localparam integer LAT_ADD  = 2;
+  localparam integer LAT_DIV  = 2;
+  localparam integer LAT_EXP  = 6 + LAT_MUL * 3 + LAT_ADD * 3;
 
   localparam [DW-1:0] FP16_ONE     = 16'h3C00; // 1.0
   localparam [DW-1:0] FP16_LN2     = 16'h398C; // ln(2) ≈ 0.693147
