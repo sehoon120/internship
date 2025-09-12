@@ -151,15 +151,35 @@ with torch.no_grad():
             x, B, C = torch.split(xBC, [config.d_inner, config.d_state, config.d_state], dim=-1)
 
             A = -torch.exp(model.backbone['layers'][i]['mixer'].A_log)  # (nheads,)
+            x = rearrange(x, "b (h p) -> b h p", p=config.headdim)
 # ====================  Full SSM Block Started  ====================
             # SSM step
             # if token_num == 0: # i == 0: and 
             #     print(dt + model.backbone['layers'][i]['mixer'].dt_bias)
-            dt = F.softplus(dt + model.backbone['layers'][i]['mixer'].dt_bias)  # (batch, nheads)
+
+            dt = dt.to(dtype=torch.float16)
+            dt_bias_w = model.backbone['layers'][i]['mixer'].dt_bias.to(dtype=torch.float16)
+            A = A.to(dtype=torch.float16)
+            x = x.to(dtype=torch.float16)
+            B = B.to(dtype=torch.float16)
+            C = C.to(dtype=torch.float16)
+            D = model.backbone['layers'][i]['mixer'].D.to(dtype=torch.float16)
+            h[i] = h[i]._replace(ssm_state=h[i].ssm_state.to(dtype=torch.float16))
+            if i == 0 and token_num == 0:
+                save_tensor_fp16_hex(dt,  os.path.join(save_dir, f"{i}_dt_full_SSM.hex"))
+                save_tensor_fp16_hex(dt_bias_w,  os.path.join(save_dir, f"{i}_dt_bias_full_SSM.hex"))
+                save_tensor_fp16_hex(x,   os.path.join(save_dir, f"{i}_x_full_SSM.hex"))
+                save_tensor_fp16_hex(A,   os.path.join(save_dir, f"{i}_A_full_SSM.hex"))
+                save_tensor_fp16_hex(B,   os.path.join(save_dir, f"{i}_B_full_SSM.hex"))
+                save_tensor_fp16_hex(C,   os.path.join(save_dir, f"{i}_C_full_SSM.hex"))
+                save_tensor_fp16_hex(D,   os.path.join(save_dir, f"{i}_D_full_SSM.hex"))
+                save_tensor_fp16_hex(h[i].ssm_state, os.path.join(save_dir, f"{i}_ssm_state_full_SSM.hex"))
+
+            dt = F.softplus(dt + dt_bias_w)  # model.backbone['layers'][i]['mixer'].dt_bias)  # (batch, nheads)
             # delta = dt + model.backbone['layers'][i]['mixer'].dt_bias
             # dt = torch.where(delta <= 0, torch.exp(delta), delta + torch.exp(-delta))
             dA = torch.exp(dt * A)  # (batch, nheads)
-            x = rearrange(x, "b (h p) -> b h p", p=config.headdim)
+            
 # ====================  SSM Block Started  ====================
 # input: dA, dt, x, B, C, D, h[i].ssm_state  -  FP16
 # output: y  -  FP16
@@ -170,7 +190,7 @@ with torch.no_grad():
             # B = B.to(dtype=torch.float16)
             # C = C.to(dtype=torch.float16)
             
-            D = model.backbone['layers'][i]['mixer'].D.to(dtype=torch.float16)
+            # D = model.backbone['layers'][i]['mixer'].D # .to(dtype=torch.float16)
             # h[i] = h[i]._replace(ssm_state=h[i].ssm_state.to(dtype=torch.float16))
 
             # Save datas into .hex
@@ -204,8 +224,8 @@ with torch.no_grad():
             # print("dtype of dA:", dA.dtype)
             # print("dtype of dBx:", dBx.dtype)
             y = rearrange(y, "b h p -> b (h p)")
-            # if i == 0 and token_num == 0:
-            #     save_tensor_fp32_hex(y,   os.path.join(save_dir, f"{i}_y_fp32.hex"))
+            if i == 0 and token_num == 0:
+                save_tensor_fp16_hex(y,   os.path.join(save_dir, f"{i}_y_out_python_full_SSM.hex"))
 
             
             # print("SSM time: ", ssm_time)
