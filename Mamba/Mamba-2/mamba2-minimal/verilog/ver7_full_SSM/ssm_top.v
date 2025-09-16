@@ -22,6 +22,7 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_DBX_M   = 6,    // (옵션) dBx 별도 mul latency
     parameter integer LAT_DAH_M   = 6,    // (옵션) dAh 별도 mul latency
     parameter integer LAT_ADD_A   = 11,   // add latency (delta, h_next 등)
+    parameter integer LAT_ACCU    = 11*4,
     parameter integer LAT_HC_M    = 6,    // hC mul latency
     parameter integer LAT_MUL     = 6,
     parameter integer LAT_ADD     = 11,
@@ -222,7 +223,7 @@ module SSMBLOCK_TOP #(
     wire                               v_dBx_w;
     wire [N_TILE*DW-1:0] B_tile_i_d;
 
-    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M)) u_B_w_delay (
+    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + 1)) u_B_w_delay (
         .clk(clk), .rstn(rstn),
         .din(B_tile_i),
         .dout(B_tile_i_d)
@@ -243,13 +244,20 @@ module SSMBLOCK_TOP #(
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] dAh_w;
     wire                               v_dAh_w;
+    wire [H_TILE*P_TILE*N_TILE*DW-1:0] hprev_tile_i_d;
 
+    shift_reg #(.DW(H_TILE*P_TILE*N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + 2)) u_hprev_delay (
+        .clk(clk), .rstn(rstn),
+        .din(hprev_tile_i),
+        .dout(hprev_tile_i_d)
+    );
+    
     dAh_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .M_LAT(LAT_DAH_M)) u_dAh (
         .clk       (clk),
         .rstn      (rstn),
         .valid_i   (v_dA_w),
         .dA_i      (dA_w),          // (h)
-        .hprev_i   (hprev_tile_i),  // (h*p*n)
+        .hprev_i   (hprev_tile_i_d),  // (h*p*n)
         .dAh_o     (dAh_w),         // (h*p*n)
         .valid_o   (v_dAh_w)
     );
@@ -259,13 +267,21 @@ module SSMBLOCK_TOP #(
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] hnext_w;
     wire                               v_hnext_w;
+    wire [H_TILE*P_TILE*N_TILE*DW-1:0] dBx_w_d;
+    wire                               v_dBx_w_d;
+
+    shift_reg #(.DW(H_TILE*P_TILE*N_TILE*DW+1), .DEPTH((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M))) u_dbx_delay (
+        .clk(clk), .rstn(rstn),
+        .din({dBx_w, v_dBx_w}),
+        .dout({dBx_w_d, v_dBx_w_d})
+    );
 
     hnext_add #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .A_LAT(LAT_ADD_A)) u_hnext (
         .clk     (clk),
         .rstn    (rstn),
-        .valid_i (v_dAh_w & v_dBx_w), // 두 경로 정렬 가정 (필요 시 내부 정렬)
+        .valid_i (v_dAh_w & v_dBx_w_d), // 두 경로 정렬 가정 (필요 시 내부 정렬)
         .dAh_i   (dAh_w),
-        .dBx_i   (dBx_w),
+        .dBx_i   (dBx_w_d),
         .sum_o   (hnext_w),
         .valid_o (v_hnext_w)
     );
@@ -275,13 +291,20 @@ module SSMBLOCK_TOP #(
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] hC_w;
     wire                               v_hC_w;
+    wire [N_TILE*DW-1:0] C_tile_i_d;
 
+    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_ADD_A)) u_C_delay (
+        .clk(clk), .rstn(rstn),
+        .din(C_tile_i),
+        .dout(C_tile_i_d)
+    );
+    
     hC_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .M_LAT(LAT_HC_M)) u_hC (
         .clk       (clk),
         .rstn      (rstn),
         .valid_i   (v_hnext_w),
         .hnext_i   (hnext_w),
-        .C_tile_i  (C_tile_i),
+        .C_tile_i  (C_tile_i_d),
         .hC_o      (hC_w),
         .valid_o   (v_hC_w)
     );

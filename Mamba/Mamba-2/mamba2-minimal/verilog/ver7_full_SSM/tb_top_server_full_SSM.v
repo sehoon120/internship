@@ -2,7 +2,7 @@
 
 // ===== File paths (edit here) =====
 `define PATH_PREFIX "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/"
-`define F_DT        {`PATH_PREFIX, "0_dt_full_full_SSM.hex"}
+`define F_DT        {`PATH_PREFIX, "0_dt_full_SSM.hex"}
 `define F_DTBIAS    {`PATH_PREFIX, "0_dt_bias_full_SSM.hex"}
 `define F_A         {`PATH_PREFIX, "0_A_full_SSM.hex"}
 `define F_X         {`PATH_PREFIX, "0_x_full_SSM.hex"}
@@ -200,11 +200,12 @@ module tb_ssmblock_fullscan;
         pack_tile_payload(h_a, p_a, base_local);
 
         // ready 관찰 → 그 싸이클에 딱 1싸이클 valid 펄스
-        @(posedge clk);
-        while (tile_ready_o == 1'b0) @(posedge clk);
         tile_valid_i <= 1'b1;
         @(posedge clk);
-        tile_valid_i <= 1'b0;
+        while (tile_ready_o == 1'b0) @(posedge clk);
+        
+//        @(posedge clk);
+//        tile_valid_i <= 1'b0;
       end
 
       // 해당 (h,p)의 결과는 나중에 올라오므로, 인덱스를 FIFO에 적재
