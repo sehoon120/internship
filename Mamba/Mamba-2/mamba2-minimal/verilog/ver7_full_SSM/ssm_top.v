@@ -9,6 +9,7 @@
 //  - backpressure는 사용하지 않아 tile_ready_o=1'b1.
 //  - 각 valid는 모듈 latency에 맞춰 내부에서 정렬됨.
 // ----------------------------------------------------------------------------
+`define SIM 
 
 module SSMBLOCK_TOP #(
     parameter integer DW          = 16,
@@ -387,4 +388,137 @@ module SSMBLOCK_TOP #(
     else if (v_y_sum_hp) xD_latched_v <= 1'b0;
     end
 
+
+    // ============================================================================
+    // Debug slice wires for waveform readability (simulation-only)
+    // - Verilog-2001 only (no net arrays outside generate scopes)
+    // - Exposes hierarchical wires per (h), (h,p), (h,p,n)
+    // - View in wave: dut.DBG_<name>.G_H[...].G_P[...].G_N[...].<signal>
+    // ============================================================================
+    `ifdef SIM   // or: `ifndef SYNTHESIS
+    // ---------------------- (h) vectors ----------------------
+    genvar __h0;
+    generate
+      for (__h0 = 0; __h0 < H_TILE; __h0 = __h0 + 1) begin: DBG_h_scalars
+        // delta, softplus(delta), dA_tmp, dA
+        wire [DW-1:0] delta_h      = delta_w     [DW*(__h0+1)-1 -: DW];
+        wire [DW-1:0] delta_sp_h   = delta_sp_w  [DW*(__h0+1)-1 -: DW];
+        wire [DW-1:0] dA_tmp_h     = dA_tmp_w    [DW*(__h0+1)-1 -: DW];
+        wire [DW-1:0] dA_h         = dA_w        [DW*(__h0+1)-1 -: DW];
+    
+        // 입력 스칼라 쪽도 보고 싶다면
+        wire [DW-1:0] dt_h         = dt_i        [DW*(__h0+1)-1 -: DW];
+        wire [DW-1:0] dt_bias_h    = dt_bias_i   [DW*(__h0+1)-1 -: DW];
+        wire [DW-1:0] A_h          = A_i         [DW*(__h0+1)-1 -: DW];
+        wire [DW-1:0] D_h          = D_i         [DW*(__h0+1)-1 -: DW];
+      end
+    endgenerate
+    
+    // ---------------------- (h,p) vectors ----------------------
+    genvar __h1, __p1;
+    generate
+      for (__h1 = 0; __h1 < H_TILE; __h1 = __h1 + 1) begin: DBG_hp_vecs
+        for (__p1 = 0; __p1 < P_TILE; __p1 = __p1 + 1) begin: G_P
+          localparam integer __HP = __h1*P_TILE + __p1;
+    
+          // dx, xD, x, 최종 y 타일/최종 y
+          wire [DW-1:0] dx_hp        = dx_w          [DW*(__HP+1)-1 -: DW];
+          wire [DW-1:0] x_hp         = x_i           [DW*(__HP+1)-1 -: DW];
+          wire [DW-1:0] xD_hp        = xD_w          [DW*(__HP+1)-1 -: DW];
+          wire [DW-1:0] xD_latched_hp= xD_latched_r  [DW*(__HP+1)-1 -: DW];
+    
+          wire [DW-1:0] y_tile_hp    = y_tile_w      [DW*(__HP+1)-1 -: DW];
+          wire [DW-1:0] y_sum_hp_w   = y_sum_hp      [DW*(__HP+1)-1 -: DW]; // 최종 adder 출력
+    
+          // 중간 hC 타일까지 보고 싶으면 아래 4개(H*P*N 슬라이스) 대신 hp 한 슬라이스만:
+          // wire [DW-1:0] hC_hp       = hC_w[DW*((__HP*N_TILE)+0 + 1)-1 -: DW]; // n=0 예시
+        end
+      end
+    endgenerate
+    
+    // ---------------------- (h,p,n) tensors ----------------------
+    // dBx, dAh, hnext, hC : (h,p,n) 전체를 모두 파형에서 계층적으로 볼 수 있음
+    genvar __h2, __p2, __n2;
+    generate
+      for (__h2 = 0; __h2 < H_TILE; __h2 = __h2 + 1) begin: DBG_dBx
+        for (__p2 = 0; __p2 < P_TILE; __p2 = __p2 + 1) begin: G_P
+          for (__n2 = 0; __n2 < N_TILE; __n2 = __n2 + 1) begin: G_N
+            localparam integer __HP_dBx  = __h2*P_TILE + __p2;
+            localparam integer __HPN_dBx = __HP_dBx*N_TILE + __n2;
+            wire [DW-1:0] dBx_hpn = dBx_w[DW*(__HPN_dBx+1)-1 -: DW];
+          end
+        end
+      end
+    endgenerate
+    
+    genvar __h3, __p3, __n3;
+    generate
+      for (__h3 = 0; __h3 < H_TILE; __h3 = __h3 + 1) begin: DBG_dAh
+        for (__p3 = 0; __p3 < P_TILE; __p3 = __p3 + 1) begin: G_P
+          for (__n3 = 0; __n3 < N_TILE; __n3 = __n3 + 1) begin: G_N
+            localparam integer __HP_dAh  = __h3*P_TILE + __p3;
+            localparam integer __HPN_dAh = __HP_dAh*N_TILE + __n3;
+            wire [DW-1:0] dAh_hpn = dAh_w[DW*(__HPN_dAh+1)-1 -: DW];
+          end
+        end
+      end
+    endgenerate
+    
+    genvar __h4, __p4, __n4;
+    generate
+      for (__h4 = 0; __h4 < H_TILE; __h4 = __h4 + 1) begin: DBG_hnext
+        for (__p4 = 0; __p4 < P_TILE; __p4 = __p4 + 1) begin: G_P
+          for (__n4 = 0; __n4 < N_TILE; __n4 = __n4 + 1) begin: G_N
+            localparam integer __HP_hn  = __h4*P_TILE + __p4;
+            localparam integer __HPN_hn = __HP_hn*N_TILE + __n4;
+            wire [DW-1:0] hnext_hpn = hnext_w[DW*(__HPN_hn+1)-1 -: DW];
+          end
+        end
+      end
+    endgenerate
+    
+    genvar __h5, __p5, __n5;
+    generate
+      for (__h5 = 0; __h5 < H_TILE; __h5 = __h5 + 1) begin: DBG_hC
+        for (__p5 = 0; __p5 < P_TILE; __p5 = __p5 + 1) begin: G_P
+          for (__n5 = 0; __n5 < N_TILE; __n5 = __n5 + 1) begin: G_N
+            localparam integer __HP_hC  = __h5*P_TILE + __p5;
+            localparam integer __HPN_hC = __HP_hC*N_TILE + __n5;
+            wire [DW-1:0] hC_hpn = hC_w[DW*(__HPN_hC+1)-1 -: DW];
+          end
+        end
+      end
+    endgenerate
+    
+    // ---------------------- (optional) hC_buf tiles ----------------------
+    // 타일 8장을 모으는 버퍼 내용을 타일/인덱스별로 보고 싶을 때
+    genvar __t0, __n6;
+    generate
+      for (__t0 = 0; __t0 < TILES_PER_GROUP; __t0 = __t0 + 1) begin: DBG_hCbuf
+        for (__n6 = 0; __n6 < N_TILE; __n6 = __n6 + 1) begin: G_N
+          wire [DW-1:0] hCbuf_tile_n = hC_buf[__t0][DW*(__n6+1)-1 -: DW];
+        end
+      end
+    endgenerate
+    
+    // ---------------------- handy valids ----------------------
+    wire DBG_group_start    = group_start;
+    wire DBG_group_last     = group_last;
+    wire DBG_group_start_d  = group_s_d;
+    wire DBG_group_last_d   = group_l_d;
+    wire DBG_v_delta        = v_delta_w;
+    wire DBG_v_delta_sp     = v_delta_sp_w;
+    wire DBG_v_dA_tmp       = v_dA_tmp_w;
+    wire DBG_v_dA           = v_dA_w;
+    wire DBG_v_dx           = v_dx_w;
+    wire DBG_v_dBx          = v_dBx_w;
+    wire DBG_v_dAh          = v_dAh_w;
+    wire DBG_v_hnext        = v_hnext_w;
+    wire DBG_v_hC           = v_hC_w;
+    wire DBG_grp_emit       = grp_emit;
+    wire DBG_v_y_tile       = v_y_tile_w;
+    wire DBG_xD_latched_v   = xD_latched_v;
+    wire DBG_v_y_final      = y_final_valid_o;
+    `endif
+    
 endmodule
