@@ -41,60 +41,60 @@ n_slice = 128  # 128  # 이 축으로는 slice 불가
 
 # 경로 지정
 base_path = "C:/Internship/intermediate_datas"
-dA = load_hex_tensor(f"{base_path}/0_dA.hex", (B_, H_))
-dt = load_hex_tensor(f"{base_path}/0_dt.hex", (B_, H_))
-x = load_hex_tensor(f"{base_path}/0_x.hex", (B_, H_, P_))
-B = load_hex_tensor(f"{base_path}/0_B.hex", (B_, N_))
-C = load_hex_tensor(f"{base_path}/0_C.hex", (B_, N_))
-D = load_hex_tensor(f"{base_path}/0_D.hex", (H_,))
-h_prev = load_hex_tensor(f"{base_path}/0_ssm_state.hex", (B_, H_, P_, N_))
+# dA = load_hex_tensor(f"{base_path}/0_dA.hex", (B_, H_))
+# dt = load_hex_tensor(f"{base_path}/0_dt.hex", (B_, H_))
+# x = load_hex_tensor(f"{base_path}/0_x.hex", (B_, H_, P_))
+# B = load_hex_tensor(f"{base_path}/0_B.hex", (B_, N_))
+# C = load_hex_tensor(f"{base_path}/0_C.hex", (B_, N_))
+# D = load_hex_tensor(f"{base_path}/0_D.hex", (H_,))
+# h_prev = load_hex_tensor(f"{base_path}/0_ssm_state.hex", (B_, H_, P_, N_))
 
-Y = torch.zeros((B_, H_, P_), dtype=torch.float16)
+# Y = torch.zeros((B_, H_, P_), dtype=torch.float16)
 
-for h_idx in range(0, H_, h_slice):
-    for p_idx in range(0, P_, p_slice):
-        for n_idx in range(0, N_, n_slice):
-            dA_tile = dA[:, h_idx:h_idx+h_slice]
-            dt_tile = dt[:, h_idx:h_idx+h_slice]
-            x_tile = x[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice]
-            B_tile = B[:, n_idx:n_idx+n_slice]
-            C_tile = C[:, n_idx:n_idx+n_slice]
-            D_tile = D[h_idx:h_idx+h_slice]
-            h_tile = h_prev[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice, n_idx:n_idx+n_slice]
-            # print_tensor_fp16_hex_inline(h_tile)
-            # tile tensor로 변경해서 연산
-            dx_tile = torch.einsum("bh, bhp -> bhp", dt_tile, x_tile)
-            dxB_tile = torch.einsum("bhp, bn -> bhpn", dx_tile, B_tile)
-            # dBx_tile = torch.einsum("bh, bn, bhp -> bhpn", dt_tile, B_tile, x_tile)
-            # save_tensor_as_hex(dBx_tile, f"{base_path}/0_dBx_python.hex")
-            # print('dx: ')
-            # print_tensor_fp16_hex_inline(dx_tile)
+# for h_idx in range(0, H_, h_slice):
+#     for p_idx in range(0, P_, p_slice):
+#         for n_idx in range(0, N_, n_slice):
+#             dA_tile = dA[:, h_idx:h_idx+h_slice]
+#             dt_tile = dt[:, h_idx:h_idx+h_slice]
+#             x_tile = x[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice]
+#             B_tile = B[:, n_idx:n_idx+n_slice]
+#             C_tile = C[:, n_idx:n_idx+n_slice]
+#             D_tile = D[h_idx:h_idx+h_slice]
+#             h_tile = h_prev[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice, n_idx:n_idx+n_slice]
+#             # print_tensor_fp16_hex_inline(h_tile)
+#             # tile tensor로 변경해서 연산
+#             dx_tile = torch.einsum("bh, bhp -> bhp", dt_tile, x_tile)
+#             dxB_tile = torch.einsum("bhp, bn -> bhpn", dx_tile, B_tile)
+#             # dBx_tile = torch.einsum("bh, bn, bhp -> bhpn", dt_tile, B_tile, x_tile)
+#             # save_tensor_as_hex(dBx_tile, f"{base_path}/0_dBx_python.hex")
+#             # print('dx: ')
+#             # print_tensor_fp16_hex_inline(dx_tile)
             
-            h_new = h_tile * rearrange(dA_tile, "b h -> b h 1 1") + dxB_tile
-            # save_tensor_as_hex(h_new, f"{base_path}/0_h_new_python.hex")
-            # print('h_new: ')
-            # print_tensor_fp16_hex_inline(h_new)
+#             h_new = h_tile * rearrange(dA_tile, "b h -> b h 1 1") + dxB_tile
+#             # save_tensor_as_hex(h_new, f"{base_path}/0_h_new_python.hex")
+#             # print('h_new: ')
+#             # print_tensor_fp16_hex_inline(h_new)
 
-            y = torch.einsum("bhpn, bn -> bhp", h_new, C_tile)
-            # if h_idx == 0 and p_idx == 0:
-                # save_tensor_as_hex(y, f"{base_path}/0_hc_python.hex")
-            # print('y: ')
-            # print_tensor_fp16_hex_inline(y)
+#             y = torch.einsum("bhpn, bn -> bhp", h_new, C_tile)
+#             # if h_idx == 0 and p_idx == 0:
+#                 # save_tensor_as_hex(y, f"{base_path}/0_hc_python.hex")
+#             # print('y: ')
+#             # print_tensor_fp16_hex_inline(y)
 
-            y = y + rearrange(D_tile, "h -> h 1") * x_tile
-            # print_tensor_fp16_hex_inline(y)
+#             y = y + rearrange(D_tile, "h -> h 1") * x_tile
+#             # print_tensor_fp16_hex_inline(y)
             
 
-            Y[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice] += y
+#             Y[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice] += y
 
-Y = rearrange(Y, "b h p -> b (h p)")
+# Y = rearrange(Y, "b h p -> b (h p)")
 
-# 결과 저장
-save_tensor_as_hex(Y, f"{base_path}/0_y_out_python.hex")
-# print("(❁´◡`❁) 연산 완료! 결과 저장 위치:", f"{base_path}/0_y_out_python.hex")
-# # print("y_Python =\n", Y.view(H_, P_))
-# y_out = load_hex_tensor(f"{base_path}/0_y_out.hex", (B_, H_, P_))
-# # print("\ny_Hardware =\n", y_out.view(H_, P_))
+# # 결과 저장
+# save_tensor_as_hex(Y, f"{base_path}/0_y_out_python.hex")
+# # print("(❁´◡`❁) 연산 완료! 결과 저장 위치:", f"{base_path}/0_y_out_python.hex")
+# # # print("y_Python =\n", Y.view(H_, P_))
+# # y_out = load_hex_tensor(f"{base_path}/0_y_out.hex", (B_, H_, P_))
+# # # print("\ny_Hardware =\n", y_out.view(H_, P_))
 
 
 
@@ -131,6 +131,7 @@ def compare_fp16_hex(file1, file2):
         print(f"[{i}] Py={t1[i].item():.6f}, Verilog={t2[i].item():.6f}, AbsErr={val.item():.6f}")
 
 # 사용 예시
-file_py = f"{base_path}/0_y_out_python.hex"
-file_v =  f"{base_path}/0_y_out.hex"
+file_pth = "C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas"
+file_py = f"{file_pth}/0_y_out_python_full_SSM.hex"
+file_v =  f"{file_pth}/0_y_out_full_SSM.hex"
 compare_fp16_hex(file_py, file_v)
