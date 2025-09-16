@@ -31,7 +31,7 @@ module hnext_add #(
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p
         for (n = 0; n < N_TILE; n = n + 1) begin : g_n
-          localparam int IDX_HPN = (h*P_TILE + p)*N_TILE + n;
+          localparam integer IDX_HPN = (h*P_TILE + p)*N_TILE + n;
 
           // 벡터 → 스칼라 슬라이스
           assign dAh_lane[IDX_HPN] = dAh_i[DW*(IDX_HPN+1)-1 -: DW];

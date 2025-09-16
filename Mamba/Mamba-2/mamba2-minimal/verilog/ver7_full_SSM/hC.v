@@ -38,11 +38,11 @@ module hC_mul #(
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p
         for (n = 0; n < N_TILE; n = n + 1) begin : g_n
-          localparam int IDX_HPN = (h*P_TILE + p)*N_TILE + n;
+          localparam integer IDX_HPN = (h*P_TILE + p)*N_TILE + n;
 
           assign hnext_hpn[IDX_HPN] = hnext_i[DW*(IDX_HPN+1)-1 -: DW];
 
-          fp16_mul_wrapper u_mul (
+          fp16_mult_wrapper u_mul (
             .clk       (clk),
             .valid_in  (valid_i),
             .a         (hnext_hpn[IDX_HPN]),

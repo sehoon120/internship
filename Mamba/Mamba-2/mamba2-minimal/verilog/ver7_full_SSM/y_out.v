@@ -48,7 +48,7 @@ module y_out #(
   endgenerate
 
   // 모든 래인이 같은 사이클에 valid_out이 뜬다고 가정 → AND 결합
-  assign valid_o = &vout_lane;
+  assign valid_o = vout_lane[0];  // &vout_lane;
 
 `ifdef SIM
   // (옵션) 래인 valid 동기성 체크

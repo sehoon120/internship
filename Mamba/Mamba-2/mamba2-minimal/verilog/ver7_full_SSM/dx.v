@@ -33,11 +33,11 @@ module dx_mul #(
     // (h,p)별 곱: x(h,p) * h(h)
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p
-        localparam int IDX = h*P_TILE + p;
+        localparam integer  IDX = h*P_TILE + p;
 
         assign x_lane[IDX] = x_i[DW*(IDX+1)-1 -: DW];
 
-        fp16_mul_wrapper u_mul (
+        fp16_mult_wrapper u_mul (
           .clk       (clk),
           .valid_in  (valid_i),
           .a         (x_lane[IDX]),

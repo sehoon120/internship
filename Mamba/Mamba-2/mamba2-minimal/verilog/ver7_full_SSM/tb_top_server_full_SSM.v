@@ -6,7 +6,7 @@
 
 // ===== File paths (edit here) =====
 `define PATH_PREFIX "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/"
-`define F_DT        {`PATH_PREFIX, "0_dt_full_full_SSM.hex"}
+`define F_DT        {`PATH_PREFIX, "0_dt_full_SSM.hex"}
 `define F_DTBIAS    {`PATH_PREFIX, "0_dt_bias_full_SSM.hex"}
 `define F_A         {`PATH_PREFIX, "0_A_full_SSM.hex"}
 `define F_X         {`PATH_PREFIX, "0_x_full_SSM.hex"}
@@ -16,46 +16,43 @@
 `define F_HPREV     {`PATH_PREFIX, "0_ssm_state_full_SSM.hex"}
 `define F_YOUT      {`PATH_PREFIX, "0_y_out_full_SSM.hex"}
 
-module tb_ssmblock_fullscan;
-  // -----------------------------
-  // Parameters
-  // -----------------------------
-  localparam integer B       = 1;
-  localparam integer H       = 24;
-  localparam integer P       = 64;
-  localparam integer N       = 128;
-  localparam integer H_tile  = 1;
-  localparam integer P_tile  = 1;
-  localparam integer DW      = 16;
-  localparam integer N_TILE  = 128;
-  localparam integer TILES   = N / N_TILE;  // 8
+module tb_ssmblock_top;
 
-  // 유효성 체크
-  initial begin
-    if (H % H_tile != 0) begin
-      $display("ERROR: H(%0d) %% H_tile(%0d) != 0", H, H_tile); $finish;
-    end
-    if (P % P_tile != 0) begin
-      $display("ERROR: P(%0d) %% P_tile(%0d) != 0", P, P_tile); $finish;
-    end
-    if (N % N_TILE != 0) begin
-      $display("ERROR: N(%0d) %% N_TILE(%0d) != 0", N, N_TILE); $finish;
-    end
-  end
+  // ===== DUT params =====
+  parameter integer DW       = 16;
+  parameter integer H_TILE   = 1;
+  parameter integer P_TILE   = 1;
+  parameter integer N_TILE   = 64;
+  parameter integer N_TOTAL  = 128;
 
-  // -----------------------------
-  // DUT I/O
-  // -----------------------------
-  reg                      clk;
-  reg                      rstn;
+  // Latencies (DUT와 동일하게 맞추세요)
+  parameter integer LAT_DX_M  = 6;
+  parameter integer LAT_DBX_M = 6;
+  parameter integer LAT_DAH_M = 6;
+  parameter integer LAT_ADD_A = 11;
+  parameter integer LAT_HC_M  = 6;
+  parameter integer LAT_MUL   = 6;
+  parameter integer LAT_ADD   = 11;
+  parameter integer LAT_DIV   = 17;
+  parameter integer LAT_EXP   = 6 + LAT_MUL*3 + LAT_ADD*3;
+  parameter integer LAT_SP    = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1;
 
-  reg                      tile_valid_i;
-  wire                     tile_ready_o;
+  // Derived
+  parameter integer TILES_PER_GROUP = (N_TOTAL + N_TILE - 1) / N_TILE;
 
-  reg  [DW-1:0]            dt_i;
-  reg  [DW-1:0]            dA_i;
-  reg  [DW-1:0]            x_i;
-  reg  [DW-1:0]            D_i;
+  // ===== Clock / Reset =====
+  reg clk = 0;
+  always #5 clk = ~clk; // 100 MHz
+  reg rstn;
+
+  // ===== DUT I/O =====
+  reg                               tile_valid_i;
+  wire                              tile_ready_o; // 1'b1 가정
+  reg  [H_TILE*DW-1:0]              dt_i;
+  reg  [H_TILE*DW-1:0]              dt_bias_i;
+  reg  [H_TILE*DW-1:0]              A_i;
+  reg  [H_TILE*P_TILE*DW-1:0]       x_i;
+  reg  [H_TILE*DW-1:0]              D_i;
 
   reg  [N_TILE*DW-1:0]     B_tile_i;
   reg  [N_TILE*DW-1:0]     C_tile_i;

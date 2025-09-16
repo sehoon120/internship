@@ -1,29 +1,3 @@
-// xD[b*H*P + h*H*P + p] = D[h] × x[b*H*P + h*H*P + p];
-// xD.v
-// xD = x * D
-
-module xD #(
-  parameter integer DW       = 16,
-  parameter integer MUL_LAT  = 6
-)(
-  input  wire          clk,
-  input  wire          rstn,
-  input  wire          valid_i,
-  input  wire [DW-1:0] x_i,
-  input  wire [DW-1:0] D_i,
-  output wire [DW-1:0] xD_o,
-  output wire          valid_o
-);
-    fp16_mult_wrapper u_mul (
-        .clk(clk),
-        .valid_in(valid_i),
-        .a(x_i),
-        .b(D_i),
-        .result(xD_o),
-        .valid_out(valid_o)
-    );
-endmodule
-
 // xD_mul : per-(h,p) FP16 mul over H_TILE × P_TILE lanes
 module xD_mul #(
   parameter integer DW      = 16,
@@ -59,13 +33,13 @@ module xD_mul #(
     // (h,p)별 곱: x(h,p) * D(h)
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p
-        localparam int IDX = h*P_TILE + p;
+        localparam integer IDX = h*P_TILE + p;
 
         // x_i → x_lane[IDX]
         assign x_lane[IDX] = x_i[DW*(IDX+1)-1 -: DW];
 
         // FP16 multiplier 1개/lane
-        fp16_mul_wrapper u_mul (
+        fp16_mult_wrapper u_mul (
           .clk       (clk),
           .valid_in  (valid_i),
           .a         (x_lane[IDX]),

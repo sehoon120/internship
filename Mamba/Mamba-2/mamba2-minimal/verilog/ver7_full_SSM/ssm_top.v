@@ -25,7 +25,7 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_HC_M    = 6,    // hC mul latency
     parameter integer LAT_MUL     = 6,
     parameter integer LAT_ADD     = 11,
-    parameter integer LAT_DIV     = 17,
+    parameter integer LAT_DIV     = 15,
     parameter integer LAT_EXP     = 6 + LAT_MUL * 3 + LAT_ADD * 3,     // exp latency (예시)
     parameter integer LAT_SP      = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1    // Softplus latency (예시)
 )(
@@ -81,7 +81,7 @@ module SSMBLOCK_TOP #(
     wire [H_TILE*P_TILE*DW-1:0] xD_w;
     wire                        v_xD_w;
 
-    xD #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .M_LAT(LAT_DX_M)) u_xD (
+    xD_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .M_LAT(LAT_DX_M)) u_xD (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (tile_valid_i),
@@ -100,6 +100,15 @@ module SSMBLOCK_TOP #(
     wire group_start  = (group_tile_cnt_r == 0) && tile_valid_i;
     wire group_last   = (group_tile_cnt_r == TILES_PER_GROUP-1) && tile_valid_i;
 
+    wire group_s_d;
+    wire group_l_d;
+    
+    shift_reg #(.DW(2), .DEPTH(LAT_DX_M)) u_group_s_l_delay (
+        .clk(clk), .rstn(rstn),
+        .din({group_start, group_last}),
+        .dout({group_s_d, group_l_d})
+    );
+    
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
             group_tile_cnt_r <= 0;
@@ -119,7 +128,7 @@ module SSMBLOCK_TOP #(
             xD_latched_v <= 1'b0;
         end else begin
             // 첫 타일 구간에서 v_xD_w가 뜨면 래치
-            if (group_start && v_xD_w) begin
+            if (group_s_d && v_xD_w) begin
                 xD_latched_r <= xD_w;
                 xD_latched_v <= 1'b1;
             end
@@ -136,7 +145,7 @@ module SSMBLOCK_TOP #(
     wire [H_TILE*DW-1:0] delta_sp_w;
     wire                 v_delta_sp_w;
 
-    sp_dt #(.DW(DW), .H_TILE(H_TILE), .SP_LAT(LAT_SP)) u_sp (
+    sp_dt #(.DW(DW), .H_TILE(H_TILE), .SP_LAT(LAT_SP),  .LAT_MUL(LAT_MUL), .LAT_ADD(LAT_ADD), .LAT_DIV(LAT_DIV)) u_sp (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_delta_w),
@@ -151,12 +160,19 @@ module SSMBLOCK_TOP #(
     wire [H_TILE*DW-1:0] dA_tmp_w;
     wire                 v_dA_tmp_w;
 
+    wire [H_TILE*DW-1:0] A_i_d;
+    shift_reg #(.DW(H_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP)) u_zero_flag_delay (
+        .clk(clk), .rstn(rstn),
+        .din(A_i),
+        .dout(A_i_d)
+    );
+
     dA_mul #(.DW(DW), .H_TILE(H_TILE), .M_LAT(LAT_DX_M)) u_dA_tmp (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_delta_sp_w),
         .lhs_i   (delta_sp_w), // (h)
-        .rhs_i   (A_i),        // (h)
+        .rhs_i   (A_i_d),        // (h)
         .mul_o   (dA_tmp_w),   // (h)
         .valid_o (v_dA_tmp_w)
     );
@@ -181,13 +197,20 @@ module SSMBLOCK_TOP #(
     // ============================================================
     wire [H_TILE*P_TILE*DW-1:0] dx_w;
     wire                        v_dx_w;
+    wire [H_TILE*P_TILE*DW-1:0] x_i_d;
+
+    shift_reg #(.DW(H_TILE*P_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP)) u_x_delay (
+        .clk(clk), .rstn(rstn),
+        .din(x_i),
+        .dout(x_i_d)
+    );
 
     dx_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .MUL_LAT(LAT_DX_M)) u_dx (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_delta_sp_w),
         .h_i     (delta_sp_w), // (h)
-        .x_i     (x_i),        // (h*p)
+        .x_i     (x_i_d),        // (h*p)
         .dx_o    (dx_w),       // (h*p)
         .valid_o (v_dx_w)
     );
@@ -197,13 +220,20 @@ module SSMBLOCK_TOP #(
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] dBx_w;
     wire                               v_dBx_w;
+    wire [N_TILE*DW-1:0] B_tile_i_d;
+
+    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M)) u_B_w_delay (
+        .clk(clk), .rstn(rstn),
+        .din(B_tile_i),
+        .dout(B_tile_i_d)
+    );
 
     dBx_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .M_LAT(LAT_DBX_M)) u_dBx (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_dx_w),
         .dx_i    (dx_w),      // (h*p)
-        .B_tile_i(B_tile_i),  // (n)
+        .B_tile_i(B_tile_i_d),  // (n)
         .dBx_o   (dBx_w),     // (h*p*n)
         .valid_o (v_dBx_w)
     );
@@ -234,8 +264,8 @@ module SSMBLOCK_TOP #(
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_dAh_w & v_dBx_w), // 두 경로 정렬 가정 (필요 시 내부 정렬)
-        .lhs_i   (dAh_w),
-        .rhs_i   (dBx_w),
+        .dAh_i   (dAh_w),
+        .dBx_i   (dBx_w),
         .sum_o   (hnext_w),
         .valid_o (v_hnext_w)
     );

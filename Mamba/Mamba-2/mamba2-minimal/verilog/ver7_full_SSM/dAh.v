@@ -38,7 +38,7 @@ module dAh_mul #(
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h_prev
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p_prev
         for (n = 0; n < N_TILE; n = n + 1) begin : g_n_prev
-          localparam int IDX_HPN = (h*P_TILE + p)*N_TILE + n;
+          localparam integer IDX_HPN = (h*P_TILE + p)*N_TILE + n;
           assign hprev_hpn[IDX_HPN] = hprev_i[DW*(IDX_HPN+1)-1 -: DW];
         end
       end
@@ -48,9 +48,9 @@ module dAh_mul #(
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p
         for (n = 0; n < N_TILE; n = n + 1) begin : g_n
-          localparam int IDX_HPN = (h*P_TILE + p)*N_TILE + n;
+          localparam integer IDX_HPN = (h*P_TILE + p)*N_TILE + n;
 
-          fp16_mul_wrapper u_mul (
+          fp16_mult_wrapper u_mul (
             .clk       (clk),
             .valid_in  (valid_i),
             .a         (dA_h[h]),          // 같은 h 값을 모든 (p,n)에 브로드캐스트

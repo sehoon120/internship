@@ -30,7 +30,7 @@ module dA_mul #(
       assign rhs_lane[h] = rhs_i[DW*(h+1)-1 -: DW];
 
       // FP16 곱
-      fp16_mul_wrapper u_mul (
+      fp16_mult_wrapper u_mul (
         .clk       (clk),
         .valid_in  (valid_i),
         .a         (lhs_lane[h]),
