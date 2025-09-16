@@ -14,7 +14,7 @@ module SSMBLOCK_TOP #(
     parameter integer DW          = 16,
     parameter integer H_TILE      = 1,
     parameter integer P_TILE      = 1,
-    parameter integer N_TILE      = 64,
+    parameter integer N_TILE      = 128,
     parameter integer N_TOTAL     = 128,
 
     // Latency params (IP 설정에 맞춰 조정)
@@ -23,9 +23,9 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_DAH_M   = 6,    // (옵션) dAh 별도 mul latency
     parameter integer LAT_ADD_A   = 11,   // add latency (delta, h_next 등)
     parameter integer LAT_HC_M    = 6,    // hC mul latency
-    parameter integer LAT_MUL     = 6
-    parameter integer LAT_ADD     = 11
-    parameter integer LAT_DIV     = 17
+    parameter integer LAT_MUL     = 6,
+    parameter integer LAT_ADD     = 11,
+    parameter integer LAT_DIV     = 17,
     parameter integer LAT_EXP     = 6 + LAT_MUL * 3 + LAT_ADD * 3,     // exp latency (예시)
     parameter integer LAT_SP      = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1    // Softplus latency (예시)
 )(
@@ -332,8 +332,8 @@ module SSMBLOCK_TOP #(
     // [1] 그룹 완료 펄스(마지막 타일) → 1싸이클 딜레이
     //     group_done_pulse = (v_y_tile_w && group_last)  // 기존 정의 재사용
     // ------------------------------
-    wire group_done_pulse;  // 기존에 선언되어 있다면 재사용
-    // 예: wire group_done_pulse = v_y_tile_w && group_last;
+
+    wire group_done_pulse = v_y_tile_w && group_last;
 
     reg group_done_pulse_d1;
     always @(posedge clk or negedge rstn) begin
