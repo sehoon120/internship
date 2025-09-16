@@ -22,7 +22,7 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_DBX_M   = 6,    // (옵션) dBx 별도 mul latency
     parameter integer LAT_DAH_M   = 6,    // (옵션) dAh 별도 mul latency
     parameter integer LAT_ADD_A   = 11,   // add latency (delta, h_next 등)
-    parameter integer LAT_ACCU    = 11*4,
+    parameter integer LAT_ACCU    = 11*7,
     parameter integer LAT_HC_M    = 6,    // hC mul latency
     parameter integer LAT_MUL     = 6,
     parameter integer LAT_ADD     = 11,
@@ -184,7 +184,7 @@ module SSMBLOCK_TOP #(
     wire [H_TILE*DW-1:0] dA_w;
     wire                 v_dA_w;
 
-    dA_exp #(.DW(DW), .H_TILE(H_TILE), .EXP_LAT(LAT_EXP)) u_dA_exp (
+    dA_exp #(.DW(DW), .H_TILE(H_TILE), .LAT_EXP(LAT_EXP)) u_dA_exp (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_dA_tmp_w),
@@ -310,39 +310,59 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 7) y_tile = accumulation_n(hC) (hpn → hp) —— reduce over n
-    //     한 "타일(n방향 N_TILE개)"에 대해 (h*p*n) → (h*p)
+    // 7) y_tile = accumulation_n(hC) (hpn → hp) —— reduce over n)
     // ============================================================
+    reg  [H_TILE*P_TILE*N_TILE*DW-1:0] hC_buf [0:TILES_PER_GROUP-1]; // 8개 타일 버퍼
+    reg  [4:0]           tile_ptr;   // 0..7
+    reg                  grp_emit;   // 이번 싸이클에 8타일이 모였다는 펄스
+    wire                 accept_tile = v_hC_w;
+    
+    integer ti;
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            tile_ptr  <= 5'd0;
+            grp_emit  <= 1'b0;
+            for (ti=0; ti<TILES_PER_GROUP; ti=ti+1) hC_buf[ti] <= {H_TILE*P_TILE*N_TILE*DW{1'b0}};
+        end else begin
+            grp_emit <= 1'b0;
+
+            if (accept_tile) begin
+                // 현재 타일 저장
+                hC_buf[tile_ptr] <= hC_w;
+
+                // 타일 포인터 증가 및 그룹 완료
+                if (tile_ptr == TILES_PER_GROUP-1) begin
+                    tile_ptr <= 5'd0;
+                    grp_emit <= 1'b1;    // 8번째 타일이 막 들어온 싸이클
+                end else begin
+                    tile_ptr <= tile_ptr + 5'd1;
+                end
+            end
+        end
+    end
+
+    // 8개 타일을 128-lane 버스로 평탄화
+    wire [H_TILE*P_TILE*N_TOTAL*DW-1:0] hC_128_bus;
+    assign hC_128_bus = {
+        hC_buf[7], hC_buf[6], hC_buf[5], hC_buf[4],
+        hC_buf[3], hC_buf[2], hC_buf[1], hC_buf[0]
+    };
+    
     wire [H_TILE*P_TILE*DW-1:0] y_tile_w;
     wire                        v_y_tile_w;
 
-    accum_n #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE)) u_accum_n (
+    accum_n #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TOTAL(N_TOTAL)) u_accum_n (
         .clk       (clk),
         .rstn      (rstn),
-        .valid_i   (v_hC_w),
-        .hC_i      (hC_w),      // (h*p*n)
+        .valid_i   (grp_emit),
+        .hC_i      (hC_128_bus),      // (h*p*n)
         .sum_hp_o  (y_tile_w),  // (h*p)
         .valid_o   (v_y_tile_w) // "타일" 단위 완료 펄스
     );
-
-    // 7’) group_acc : 타일 결과를 버퍼링 후 FP16 벡터 가산으로 누적
-    wire [H_TILE*P_TILE*DW-1:0] group_sum_hp;
-    wire                        group_sum_valid;
-
-    group_accum_seq_fp16 #(
-    .DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE),
-    .TILES_PER_GROUP(TILES_PER_GROUP)
-    ) u_group_acc (
-    .clk        (clk),
-    .rstn       (rstn),
-    .valid_i    (v_y_tile_w),            // 타일 완료 펄스
-    .y_tile_i   (y_tile_w),
-    .last_i     (v_y_tile_w && group_last), // "이 타일이 그룹의 마지막" 표시
-    .group_sum_o(group_sum_hp),
-    .valid_o    (group_sum_valid)
-    );
-
+    
+    // ============================================================
     // 8) 최종 합: group_sum_hp + xD_latched  → y_out
+    // ============================================================
     wire [H_TILE*P_TILE*DW-1:0] y_sum_hp;
     wire                        v_y_sum_hp;
 
@@ -351,8 +371,8 @@ module SSMBLOCK_TOP #(
     ) u_y_out (
     .clk        (clk),
     .rstn       (rstn),
-    .valid_i    (group_sum_valid & xD_latched_v),  // 두 입력 동시 준비
-    .group_sum_i(group_sum_hp),
+    .valid_i    (v_y_tile_w & xD_latched_v),  // 두 입력 동시 준비
+    .group_sum_i(y_tile_w),
     .xD_i       (xD_latched_r),
     .y_o        (y_sum_hp),
     .valid_o    (v_y_sum_hp)
@@ -366,118 +386,5 @@ module SSMBLOCK_TOP #(
     if (!rstn) xD_latched_v <= 1'b0;
     else if (v_y_sum_hp) xD_latched_v <= 1'b0;
     end
-
-
-    // // ============================================================
-    // // 7’) group_acc: TILES_PER_GROUP 번 y_tile을 누적 (hp → hp)
-    // //     그룹 마지막에서 valid 펄스
-    // // ============================================================
-    // reg [H_TILE*P_TILE*DW-1:0] group_sum_r;
-    // reg                        group_sum_v;
-
-    // // v_y_tile_w가 뜰 때마다 누적, 그룹 마지막 타일에서 valid 띄움
-    // always @(posedge clk or negedge rstn) begin
-    //     if (!rstn) begin
-    //         group_sum_r <= {H_TILE*P_TILE*DW{1'b0}};
-    //         group_sum_v <= 1'b0;
-    //     end else begin
-    //         if (v_y_tile_w) begin
-    //             if (group_sum_v)
-    //                 group_sum_r <= add_hp(group_sum_r, y_tile_w); // 함수식 사용(아래 function) or 별도 adder
-    //             else
-    //                 group_sum_r <= y_tile_w;
-
-    //             // 그룹 누적 시작 표시
-    //             if (!group_sum_v)
-    //                 group_sum_v <= 1'b1;
-    //         end
-
-    //         // 그룹 종료 시점: 입력 타일이 마지막일 때 (동일 싸이클 v_y_tile_w가 가정)
-    //         if (v_y_tile_w && group_last) begin
-    //             // 다음 싸이클에 y_out에서 사용될 수 있도록 유지
-    //             // 이후 y_final_valid_o 발생과 함께 리셋
-    //         end
-
-    //         // y_final_valid_o 시점에서 다음 그룹 대비 초기화
-    //         if (y_final_valid_o) begin
-    //             group_sum_v <= 1'b0;
-    //         end
-    //     end
-    // end
-
-    // // 간단한 (h*p) 요소별 더하기 함수 (동일 폭, 2's-complement 가정)
-    // function [H_TILE*P_TILE*DW-1:0] add_hp;
-    //     input [H_TILE*P_TILE*DW-1:0] a;
-    //     input [H_TILE*P_TILE*DW-1:0] b;
-    //     integer k;
-    //     reg   [DW-1:0] sumk;
-    //     begin
-    //         for (k = 0; k < H_TILE*P_TILE; k = k + 1) begin
-    //             sumk = a[DW*(k+1)-1 -: DW] + b[DW*(k+1)-1 -: DW];
-    //             add_hp[DW*(k+1)-1 -: DW] = sumk;
-    //         end
-    //     end
-    // endfunction
-
-    // // ============================================================
-    // // 8) y_final = group_sum + xD_latched  —— add (hp)
-    // //     유효 펄스: 그룹 마지막 타일 처리 완료(v_y_tile_w && group_last)와
-    // //               xD_latched_v가 둘 다 준비된 시점
-    // // ============================================================
-    // // ------------------------------
-    // // [1] 그룹 완료 펄스(마지막 타일) → 1싸이클 딜레이
-    // //     group_done_pulse = (v_y_tile_w && group_last)  // 기존 정의 재사용
-    // // ------------------------------
-
-    // wire group_done_pulse = v_y_tile_w && group_last;
-
-    // reg group_done_pulse_d1;
-    // always @(posedge clk or negedge rstn) begin
-    // if (!rstn) group_done_pulse_d1 <= 1'b0;
-    // else        group_done_pulse_d1 <= group_done_pulse;
-    // end
-
-    // // ------------------------------
-    // // [2] fire_yout: 두 입력이 같은 싸이클에 준비되었을 때 valid
-    // //     - group_sum_r : 그룹 누적 최종 합(한 싸이클 전에 레지스터에 갱신됨)
-    // //     - xD_latched_r: 그룹 초반에 래치해 둔 xD
-    // // ------------------------------
-    // wire fire_yout = group_done_pulse_d1 & xD_latched_v;
-
-    // // ------------------------------
-    // // [3] y_out 인스턴스 (FP16 add IP 사용)
-    // //     A_LAT는 fp16_add_wrapper latency와 맞춰주세요 (보통 10~12)
-    // // ------------------------------
-    // wire [H_TILE*P_TILE*DW-1:0] y_sum_hp;
-    // wire                        v_y_sum_hp;
-
-    // y_out #(
-    // .DW     (DW),
-    // .H_TILE (H_TILE),
-    // .P_TILE (P_TILE),
-    // .A_LAT  (LAT_ADD_A)
-    // ) u_y_out (
-    // .clk        (clk),
-    // .rstn       (rstn),
-    // .valid_i    (fire_yout),      // 이 싸이클에 두 입력이 모두 유효
-    // .group_sum_i(group_sum_r),    // (hp) 그룹 누적 최종 합
-    // .xD_i       (xD_latched_r),   // (hp) x*D (그룹 시작에 래치)
-    // .y_o        (y_sum_hp),       // (hp)
-    // .valid_o    (v_y_sum_hp)
-    // );
-
-    // // 최종 출력
-    // assign y_final_o       = y_sum_hp;
-    // assign y_final_valid_o = v_y_sum_hp;
-
-    // // xD 래치 클리어: 최종 출력이 나간 싸이클에 0으로
-    // always @(posedge clk or negedge rstn) begin
-    // if (!rstn) begin
-    //     xD_latched_v <= 1'b0;
-    // end else if (v_y_sum_hp) begin
-    //     xD_latched_v <= 1'b0;
-    // end
-    // end
-
 
 endmodule

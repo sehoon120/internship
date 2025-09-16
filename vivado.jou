@@ -206,3 +206,26 @@ save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pu
 relaunch_sim
 run all
 save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+add_files -norecurse -scan_for_includes {/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/group_accum_seq_fp16.v}
+relaunch_sim
+relaunch_sim
+relaunch_sim
+close_sim
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg
+source tb_ssmblock_fullscan.tcl
+run all
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+run all
+add_files -norecurse -scan_for_includes /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/accumulator.v
+relaunch_sim
+close_sim
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg
+source tb_ssmblock_fullscan.tcl
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+relaunch_sim
+run all
+run all
