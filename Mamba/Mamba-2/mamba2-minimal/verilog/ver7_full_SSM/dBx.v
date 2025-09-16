@@ -32,7 +32,7 @@ module dBx_mul #(
     // dx(h,p) 슬라이스
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h_dx
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p_dx
-        localparam int IDX_HP = h*P_TILE + p;
+        localparam integer IDX_HP = h*P_TILE + p;
         assign dx_hp[IDX_HP] = dx_i[DW*(IDX_HP+1)-1 -: DW];
       end
     end
@@ -45,11 +45,11 @@ module dBx_mul #(
     // (h,p,n) 곱: dBx(h,p,n) = dx(h,p) * B(n)
     for (h = 0; h < H_TILE; h = h + 1) begin : g_h
       for (p = 0; p < P_TILE; p = p + 1) begin : g_p
-        localparam int IDX_HP = h*P_TILE + p;
+        localparam integer IDX_HP = h*P_TILE + p;
         for (n = 0; n < N_TILE; n = n + 1) begin : g_n
-          localparam int IDX_HPN = (IDX_HP*N_TILE) + n;
+          localparam integer IDX_HPN = (IDX_HP*N_TILE) + n;
 
-          fp16_mul_wrapper u_mul (
+          fp16_mult_wrapper u_mul (
             .clk       (clk),
             .valid_in  (valid_i),
             .a         (dx_hp[IDX_HP]), // 같은 (h,p)를 모든 n에 브로드캐스트

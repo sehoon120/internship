@@ -3,7 +3,7 @@
 
 // ===== File paths (edit here) =====
 `define PATH_PREFIX "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/"
-`define F_DT        {`PATH_PREFIX, "0_dt_full_full_SSM.hex"}
+`define F_DT        {`PATH_PREFIX, "0_dt_full_SSM.hex"}
 `define F_DTBIAS    {`PATH_PREFIX, "0_dt_bias_full_SSM.hex"}
 `define F_A         {`PATH_PREFIX, "0_A_full_SSM.hex"}
 `define F_X         {`PATH_PREFIX, "0_x_full_SSM.hex"}
@@ -30,7 +30,7 @@ module tb_ssmblock_top;
   parameter integer LAT_HC_M  = 6;
   parameter integer LAT_MUL   = 6;
   parameter integer LAT_ADD   = 11;
-  parameter integer LAT_DIV   = 17;
+  parameter integer LAT_DIV   = 15;
   parameter integer LAT_EXP   = 6 + LAT_MUL*3 + LAT_ADD*3;
   parameter integer LAT_SP    = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1;
 
