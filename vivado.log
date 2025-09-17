@@ -2199,3 +2199,1466 @@ WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-f
 ✅ Full scan completed. Results written: /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas/0_y_out_full_SSM.hex
 $finish called at time : 125915 ns : File "/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v" Line 270
 run: Time (s): cpu = 00:00:40 ; elapsed = 00:02:51 . Memory (MB): peak = 9600.191 ; gain = 0.000 ; free physical = 293267 ; free virtual = 481221
+export_ip_user_files -of_objects  [get_files /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v] -no_script -reset -force -quiet
+remove_files  /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+add_files -fileset sim_1 -norecurse -scan_for_includes /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+export_ip_user_files -of_objects  [get_files /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/group_accum_seq_fp16.v] -no_script -reset -force -quiet
+remove_files  /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/group_accum_seq_fp16.v
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+export_ip_user_files -of_objects  [get_files /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v] -no_script -reset -force -quiet
+remove_files  /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+reset_run impl_1
+launch_runs impl_1 -jobs 79
+[Wed Sep 17 14:09:48 2025] Launched impl_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/impl_1/runme.log
+set_property top SSMBLOCK_TOP [current_fileset]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/utils_1/imports/synth_1/softplus_or_exp16.dcp with file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/softplus_or_exp16.dcp
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+launch_runs impl_1 -jobs 79
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_add_vec.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/tb_top_server_full_SSM.v:]
+[Wed Sep 17 14:10:28 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/runme.log
+[Wed Sep 17 14:10:28 2025] Launched impl_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/impl_1/runme.log
+open_run impl_1
+INFO: [Device 21-403] Loading part xc7a200tfbg676-2
+INFO: [Device 21-9227] Part: xc7a200tfbg676-2 does not have CEAM library.
+Netlist sorting complete. Time (s): cpu = 00:00:00.46 ; elapsed = 00:00:00.45 . Memory (MB): peak = 10057.520 ; gain = 0.000 ; free physical = 288788 ; free virtual = 477725
+INFO: [Netlist 29-17] Analyzing 2257 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2024.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.07 . Memory (MB): peak = 10199.270 ; gain = 7.250 ; free physical = 288645 ; free virtual = 477583
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 10884.141 ; gain = 0.000 ; free physical = 288025 ; free virtual = 476962
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 10884.141 ; gain = 0.000 ; free physical = 288025 ; free virtual = 476962
+Read PlaceDB: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 10904.125 ; gain = 19.984 ; free physical = 288015 ; free virtual = 476953
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 10904.125 ; gain = 0.000 ; free physical = 288015 ; free virtual = 476953
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:00.49 ; elapsed = 00:00:00.23 . Memory (MB): peak = 10929.031 ; gain = 24.906 ; free physical = 287991 ; free virtual = 476929
+Read Physdb Files: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 10929.031 ; gain = 44.891 ; free physical = 287991 ; free virtual = 476929
+Restored from archive | CPU: 2.010000 secs | Memory: 53.855125 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 10929.031 ; gain = 44.891 ; free physical = 287991 ; free virtual = 476929
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 10929.031 ; gain = 0.000 ; free physical = 287991 ; free virtual = 476929
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 544 instances were transformed.
+  LUT6_2 => LUT6_2 (LUT5, LUT6): 368 instances
+  SRLC32E => SRL16E: 176 instances
+
+open_run: Time (s): cpu = 00:00:33 ; elapsed = 00:00:22 . Memory (MB): peak = 11181.152 ; gain = 1472.023 ; free physical = 287816 ; free virtual = 476760
+CRITICAL WARNING: [Timing 38-282] The design failed to meet the timing requirements. Please see the timing summary report for details on the timing violations.
+report_timing_summary -delay_type max -max_paths 10
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (lin64) Build 5076996 Wed May 22 18:36:09 MDT 2024
+| Date         : Wed Sep 17 14:32:27 2025
+| Host         : broccoli running 64-bit Red Hat Enterprise Linux release 8.10 (Ootpa)
+| Command      : report_timing_summary -delay_type max -max_paths 10
+| Design       : SSMBLOCK_TOP
+| Device       : 7a200t-fbg676
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Summary Report
+
+------------------------------------------------------------------------------------------------
+| Timer Settings
+| --------------
+------------------------------------------------------------------------------------------------
+
+  Enable Multi Corner Analysis               :  Yes
+  Enable Pessimism Removal                   :  Yes
+  Pessimism Removal Resolution               :  Nearest Common Node
+  Enable Input Delay Default Clock           :  No
+  Enable Preset / Clear Arcs                 :  No
+  Disable Flight Delays                      :  No
+  Ignore I/O Paths                           :  No
+  Timing Early Launch at Borrowing Latches   :  No
+  Borrow Time for Max Delay Exceptions       :  Yes
+  Merge Timing Exceptions                    :  Yes
+  Inter-SLR Compensation                     :  Conservative
+
+  Corner  Analyze    Analyze    
+  Name    Max Paths  Min Paths  
+  ------  ---------  ---------  
+  Slow    Yes        Yes        
+  Fast    Yes        Yes        
+
+
+------------------------------------------------------------------------------------------------
+| Report Methodology
+| ------------------
+------------------------------------------------------------------------------------------------
+
+Rule       Severity  Description                    Violations  
+---------  --------  -----------------------------  ----------  
+TIMING-16  Warning   Large setup violation          48          
+TIMING-18  Warning   Missing input or output delay  291         
+
+Note: This report is based on the most recent report_methodology run and may not be up-to-date. Run report_methodology on the current design for the latest report.
+
+
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking no_clock (0)
+2. checking constant_clock (0)
+3. checking pulse_width_clock (0)
+4. checking unconstrained_internal_endpoints (0)
+5. checking no_input_delay (274)
+6. checking no_output_delay (17)
+7. checking multiple_clock (0)
+8. checking generated_clocks (0)
+9. checking loops (0)
+10. checking partial_input_delay (0)
+11. checking partial_output_delay (0)
+12. checking latch_loops (0)
+
+1. checking no_clock (0)
+------------------------
+ There are 0 register/latch pins with no clock.
+
+
+2. checking constant_clock (0)
+------------------------------
+ There are 0 register/latch pins with constant_clock.
+
+
+3. checking pulse_width_clock (0)
+---------------------------------
+ There are 0 register/latch pins which need pulse_width check
+
+
+4. checking unconstrained_internal_endpoints (0)
+------------------------------------------------
+ There are 0 pins that are not constrained for maximum delay.
+
+ There are 0 pins that are not constrained for maximum delay due to constant clock.
+
+
+5. checking no_input_delay (274)
+--------------------------------
+ There are 274 input ports with no input delay specified. (HIGH)
+
+ There are 0 input ports with no input delay but user has a false path constraint.
+
+
+6. checking no_output_delay (17)
+--------------------------------
+ There are 17 ports with no output delay specified. (HIGH)
+
+ There are 0 ports with no output delay but user has a false path constraint
+
+ There are 0 ports with no output delay but with a timing clock defined on it or propagating through it
+
+
+7. checking multiple_clock (0)
+------------------------------
+ There are 0 register/latch pins with multiple clocks.
+
+
+8. checking generated_clocks (0)
+--------------------------------
+ There are 0 generated clocks that are not connected to a clock source.
+
+
+9. checking loops (0)
+---------------------
+ There are 0 combinational loops in the design.
+
+
+10. checking partial_input_delay (0)
+------------------------------------
+ There are 0 input ports with partial input delay specified.
+
+
+11. checking partial_output_delay (0)
+-------------------------------------
+ There are 0 ports with partial output delay specified.
+
+
+12. checking latch_loops (0)
+----------------------------
+ There are 0 combinational latch loops in the design through latch input
+
+
+
+------------------------------------------------------------------------------------------------
+| Design Timing Summary
+| ---------------------
+------------------------------------------------------------------------------------------------
+
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+    -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+    -10.973     -410.400                     71                43830        0.931        0.000                       0                 30955  
+
+
+Timing constraints are not met.
+
+
+------------------------------------------------------------------------------------------------
+| Clock Summary
+| -------------
+------------------------------------------------------------------------------------------------
+
+Clock  Waveform(ns)         Period(ns)      Frequency(MHz)
+-----  ------------         ----------      --------------
+clk    {0.000 1.785}        3.570           280.112         
+
+
+------------------------------------------------------------------------------------------------
+| Intra Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+-----             -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+clk               -10.973     -410.400                     71                43830        0.931        0.000                       0                 30955  
+
+
+------------------------------------------------------------------------------------------------
+| Inter Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints  
+----------    --------          -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Other Path Groups Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints  
+----------    ----------    --------          -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Timing Details
+| --------------
+------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+From Clock:  clk
+  To Clock:  clk
+
+Setup :           71  Failing Endpoints,  Worst Slack      -10.973ns,  Total Violation     -410.400ns
+Hold  :           NA  Failing Endpoints,  Worst Slack           NA  ,  Total Violation           NA
+PW    :            0  Failing Endpoints,  Worst Slack        0.931ns,  Total Violation        0.000ns
+---------------------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack (VIOLATED) :        -10.973ns  (required time - arrival time)
+  Source:                 u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.533ns  (logic 5.121ns (35.237%)  route 9.412ns (64.763%))
+  Logic Levels:           25  (CARRY4=9 LUT1=1 LUT2=3 LUT4=2 LUT6=9 MUXF7=1)
+  Clock Path Skew:        -0.051ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.136ns = ( 7.706 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.494ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.399     4.494    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X73Y108        FDRE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X73Y108        FDRE (Prop_fdre_C_Q)         0.379     4.873 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/Q
+                         net (fo=5, routed)           0.560     5.432    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]_repN_1_alias
+    SLICE_X72Y108        LUT4 (Prop_lut4_I0_O)        0.105     5.537 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36/O
+                         net (fo=4, routed)           0.713     6.250    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36_n_0
+    SLICE_X72Y108        LUT6 (Prop_lut6_I5_O)        0.105     6.355 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101/O
+                         net (fo=1, routed)           0.000     6.355    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101_n_0
+    SLICE_X72Y108        MUXF7 (Prop_muxf7_I0_O)      0.173     6.528 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92/O
+                         net (fo=1, routed)           0.703     7.231    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92_n_0
+    SLICE_X72Y109        LUT6 (Prop_lut6_I4_O)        0.241     7.472 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72/O
+                         net (fo=2, routed)           0.333     7.805    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X71Y110        LUT2 (Prop_lut2_I0_O)        0.105     7.910 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76/O
+                         net (fo=1, routed)           0.000     7.910    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76_n_0
+    SLICE_X71Y110        CARRY4 (Prop_carry4_S[0]_O[2])
+                                                      0.453     8.363 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35/O[2]
+                         net (fo=1, routed)           0.521     8.884    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35_n_5
+    SLICE_X73Y111        LUT1 (Prop_lut1_I0_O)        0.253     9.137 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62/O
+                         net (fo=1, routed)           0.000     9.137    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62_n_0
+    SLICE_X73Y111        CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     9.594 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30_n_0
+    SLICE_X73Y112        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.692 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23/CO[3]
+                         net (fo=1, routed)           0.000     9.692    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23_n_0
+    SLICE_X73Y113        CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.180     9.872 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23/O[0]
+                         net (fo=1, routed)           0.806    10.677    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23_n_7
+    SLICE_X74Y111        LUT6 (Prop_lut6_I5_O)        0.249    10.926 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16/O
+                         net (fo=6, routed)           0.699    11.625    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16_n_0
+    SLICE_X75Y114        LUT2 (Prop_lut2_I0_O)        0.105    11.730 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    11.730    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/g_shift.pipe_reg[0][0]_1[0]
+    SLICE_X75Y114        CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440    12.170 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.706    12.876    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X76Y114        LUT2 (Prop_lut2_I0_O)        0.105    12.981 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4/O
+                         net (fo=6, routed)           0.430    13.411    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4_n_0
+    SLICE_X75Y109        LUT6 (Prop_lut6_I5_O)        0.105    13.516 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21/O
+                         net (fo=1, routed)           0.000    13.516    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21_n_0
+    SLICE_X75Y109        CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.848 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15/CO[3]
+                         net (fo=1, routed)           0.000    13.848    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15_n_0
+    SLICE_X75Y110        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    13.946 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13/CO[3]
+                         net (fo=1, routed)           0.000    13.946    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13_n_0
+    SLICE_X75Y111        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    14.044 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14/CO[3]
+                         net (fo=1, routed)           0.000    14.044    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14_n_0
+    SLICE_X75Y112        CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    14.309 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_19/O[1]
+                         net (fo=2, routed)           0.780    15.089    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[14]
+    SLICE_X76Y115        LUT6 (Prop_lut6_I5_O)        0.250    15.339 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6/O
+                         net (fo=2, routed)           0.812    16.152    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6_n_0
+    SLICE_X77Y114        LUT6 (Prop_lut6_I4_O)        0.105    16.257 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_comp/O
+                         net (fo=3, routed)           0.255    16.512    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_n_0
+    SLICE_X77Y112        LUT6 (Prop_lut6_I5_O)        0.105    16.617 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4/O
+                         net (fo=6, routed)           0.999    17.615    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4_n_0
+    SLICE_X76Y108        LUT6 (Prop_lut6_I1_O)        0.105    17.720 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_3/O
+                         net (fo=1, routed)           0.560    18.280    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_3_n_0
+    SLICE_X76Y108        LUT6 (Prop_lut6_I0_O)        0.105    18.385 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_2/O
+                         net (fo=2, routed)           0.537    18.921    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_2_n_0
+    SLICE_X76Y110        LUT4 (Prop_lut4_I3_O)        0.105    19.026 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[6]_i_1/O
+                         net (fo=1, routed)           0.000    19.026    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/D[6]
+    SLICE_X76Y110        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.282     7.706    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X76Y110        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]/C
+                         clock pessimism              0.307     8.013    
+                         clock uncertainty           -0.035     7.977    
+    SLICE_X76Y110        FDCE (Setup_fdce_C_D)        0.076     8.053    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]
+  -------------------------------------------------------------------
+                         required time                          8.053    
+                         arrival time                         -19.026    
+  -------------------------------------------------------------------
+                         slack                                -10.973    
+
+Slack (VIOLATED) :        -10.964ns  (required time - arrival time)
+  Source:                 u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[7]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.554ns  (logic 5.142ns (35.331%)  route 9.412ns (64.669%))
+  Logic Levels:           25  (CARRY4=9 LUT1=1 LUT2=3 LUT4=2 LUT6=9 MUXF7=1)
+  Clock Path Skew:        -0.051ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.136ns = ( 7.706 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.494ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.399     4.494    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X73Y108        FDRE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X73Y108        FDRE (Prop_fdre_C_Q)         0.379     4.873 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/Q
+                         net (fo=5, routed)           0.560     5.432    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]_repN_1_alias
+    SLICE_X72Y108        LUT4 (Prop_lut4_I0_O)        0.105     5.537 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36/O
+                         net (fo=4, routed)           0.713     6.250    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36_n_0
+    SLICE_X72Y108        LUT6 (Prop_lut6_I5_O)        0.105     6.355 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101/O
+                         net (fo=1, routed)           0.000     6.355    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101_n_0
+    SLICE_X72Y108        MUXF7 (Prop_muxf7_I0_O)      0.173     6.528 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92/O
+                         net (fo=1, routed)           0.703     7.231    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92_n_0
+    SLICE_X72Y109        LUT6 (Prop_lut6_I4_O)        0.241     7.472 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72/O
+                         net (fo=2, routed)           0.333     7.805    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X71Y110        LUT2 (Prop_lut2_I0_O)        0.105     7.910 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76/O
+                         net (fo=1, routed)           0.000     7.910    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76_n_0
+    SLICE_X71Y110        CARRY4 (Prop_carry4_S[0]_O[2])
+                                                      0.453     8.363 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35/O[2]
+                         net (fo=1, routed)           0.521     8.884    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35_n_5
+    SLICE_X73Y111        LUT1 (Prop_lut1_I0_O)        0.253     9.137 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62/O
+                         net (fo=1, routed)           0.000     9.137    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62_n_0
+    SLICE_X73Y111        CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     9.594 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30_n_0
+    SLICE_X73Y112        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.692 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23/CO[3]
+                         net (fo=1, routed)           0.000     9.692    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23_n_0
+    SLICE_X73Y113        CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.180     9.872 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23/O[0]
+                         net (fo=1, routed)           0.806    10.677    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23_n_7
+    SLICE_X74Y111        LUT6 (Prop_lut6_I5_O)        0.249    10.926 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16/O
+                         net (fo=6, routed)           0.699    11.625    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16_n_0
+    SLICE_X75Y114        LUT2 (Prop_lut2_I0_O)        0.105    11.730 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    11.730    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/g_shift.pipe_reg[0][0]_1[0]
+    SLICE_X75Y114        CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440    12.170 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.706    12.876    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X76Y114        LUT2 (Prop_lut2_I0_O)        0.105    12.981 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4/O
+                         net (fo=6, routed)           0.430    13.411    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4_n_0
+    SLICE_X75Y109        LUT6 (Prop_lut6_I5_O)        0.105    13.516 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21/O
+                         net (fo=1, routed)           0.000    13.516    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21_n_0
+    SLICE_X75Y109        CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.848 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15/CO[3]
+                         net (fo=1, routed)           0.000    13.848    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15_n_0
+    SLICE_X75Y110        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    13.946 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13/CO[3]
+                         net (fo=1, routed)           0.000    13.946    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13_n_0
+    SLICE_X75Y111        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    14.044 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14/CO[3]
+                         net (fo=1, routed)           0.000    14.044    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14_n_0
+    SLICE_X75Y112        CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    14.309 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_19/O[1]
+                         net (fo=2, routed)           0.780    15.089    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[14]
+    SLICE_X76Y115        LUT6 (Prop_lut6_I5_O)        0.250    15.339 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6/O
+                         net (fo=2, routed)           0.812    16.152    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6_n_0
+    SLICE_X77Y114        LUT6 (Prop_lut6_I4_O)        0.105    16.257 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_comp/O
+                         net (fo=3, routed)           0.255    16.512    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_n_0
+    SLICE_X77Y112        LUT6 (Prop_lut6_I5_O)        0.105    16.617 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4/O
+                         net (fo=6, routed)           0.999    17.615    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4_n_0
+    SLICE_X76Y108        LUT6 (Prop_lut6_I1_O)        0.105    17.720 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_3/O
+                         net (fo=1, routed)           0.560    18.280    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_3_n_0
+    SLICE_X76Y108        LUT6 (Prop_lut6_I0_O)        0.105    18.385 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_2/O
+                         net (fo=2, routed)           0.537    18.921    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_2_n_0
+    SLICE_X76Y110        LUT4 (Prop_lut4_I1_O)        0.126    19.047 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[7]_i_1/O
+                         net (fo=1, routed)           0.000    19.047    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/D[7]
+    SLICE_X76Y110        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[7]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.282     7.706    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X76Y110        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[7]/C
+                         clock pessimism              0.307     8.013    
+                         clock uncertainty           -0.035     7.977    
+    SLICE_X76Y110        FDCE (Setup_fdce_C_D)        0.106     8.083    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[7]
+  -------------------------------------------------------------------
+                         required time                          8.083    
+                         arrival time                         -19.047    
+  -------------------------------------------------------------------
+                         slack                                -10.964    
+
+Slack (VIOLATED) :        -10.931ns  (required time - arrival time)
+  Source:                 u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.482ns  (logic 5.131ns (35.429%)  route 9.351ns (64.571%))
+  Logic Levels:           25  (CARRY4=9 LUT1=1 LUT2=3 LUT4=3 LUT6=8 MUXF7=1)
+  Clock Path Skew:        -0.052ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.135ns = ( 7.705 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.494ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.399     4.494    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X73Y108        FDRE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X73Y108        FDRE (Prop_fdre_C_Q)         0.379     4.873 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/Q
+                         net (fo=5, routed)           0.560     5.432    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]_repN_1_alias
+    SLICE_X72Y108        LUT4 (Prop_lut4_I0_O)        0.105     5.537 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36/O
+                         net (fo=4, routed)           0.713     6.250    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36_n_0
+    SLICE_X72Y108        LUT6 (Prop_lut6_I5_O)        0.105     6.355 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101/O
+                         net (fo=1, routed)           0.000     6.355    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101_n_0
+    SLICE_X72Y108        MUXF7 (Prop_muxf7_I0_O)      0.173     6.528 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92/O
+                         net (fo=1, routed)           0.703     7.231    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92_n_0
+    SLICE_X72Y109        LUT6 (Prop_lut6_I4_O)        0.241     7.472 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72/O
+                         net (fo=2, routed)           0.333     7.805    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X71Y110        LUT2 (Prop_lut2_I0_O)        0.105     7.910 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76/O
+                         net (fo=1, routed)           0.000     7.910    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76_n_0
+    SLICE_X71Y110        CARRY4 (Prop_carry4_S[0]_O[2])
+                                                      0.453     8.363 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35/O[2]
+                         net (fo=1, routed)           0.521     8.884    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35_n_5
+    SLICE_X73Y111        LUT1 (Prop_lut1_I0_O)        0.253     9.137 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62/O
+                         net (fo=1, routed)           0.000     9.137    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62_n_0
+    SLICE_X73Y111        CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     9.594 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30_n_0
+    SLICE_X73Y112        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.692 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23/CO[3]
+                         net (fo=1, routed)           0.000     9.692    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23_n_0
+    SLICE_X73Y113        CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.180     9.872 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23/O[0]
+                         net (fo=1, routed)           0.806    10.677    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23_n_7
+    SLICE_X74Y111        LUT6 (Prop_lut6_I5_O)        0.249    10.926 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16/O
+                         net (fo=6, routed)           0.699    11.625    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16_n_0
+    SLICE_X75Y114        LUT2 (Prop_lut2_I0_O)        0.105    11.730 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    11.730    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/g_shift.pipe_reg[0][0]_1[0]
+    SLICE_X75Y114        CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440    12.170 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.706    12.876    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X76Y114        LUT2 (Prop_lut2_I0_O)        0.105    12.981 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4/O
+                         net (fo=6, routed)           0.430    13.411    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4_n_0
+    SLICE_X75Y109        LUT6 (Prop_lut6_I5_O)        0.105    13.516 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21/O
+                         net (fo=1, routed)           0.000    13.516    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21_n_0
+    SLICE_X75Y109        CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.848 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15/CO[3]
+                         net (fo=1, routed)           0.000    13.848    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15_n_0
+    SLICE_X75Y110        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    13.946 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13/CO[3]
+                         net (fo=1, routed)           0.000    13.946    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13_n_0
+    SLICE_X75Y111        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    14.044 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14/CO[3]
+                         net (fo=1, routed)           0.000    14.044    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14_n_0
+    SLICE_X75Y112        CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    14.309 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_19/O[1]
+                         net (fo=2, routed)           0.780    15.089    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[14]
+    SLICE_X76Y115        LUT6 (Prop_lut6_I5_O)        0.250    15.339 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6/O
+                         net (fo=2, routed)           0.812    16.152    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6_n_0
+    SLICE_X77Y114        LUT6 (Prop_lut6_I4_O)        0.105    16.257 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_comp/O
+                         net (fo=3, routed)           0.360    16.617    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_n_0
+    SLICE_X77Y111        LUT4 (Prop_lut4_I3_O)        0.105    16.722 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_5/O
+                         net (fo=7, routed)           0.578    17.299    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_5_n_0
+    SLICE_X76Y110        LUT6 (Prop_lut6_I5_O)        0.105    17.404 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[8]_i_3/O
+                         net (fo=1, routed)           0.689    18.094    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[8]_i_3_n_0
+    SLICE_X77Y110        LUT6 (Prop_lut6_I0_O)        0.105    18.199 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[8]_i_2/O
+                         net (fo=2, routed)           0.662    18.861    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[8]_i_2_n_0
+    SLICE_X77Y111        LUT4 (Prop_lut4_I1_O)        0.115    18.976 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[8]_i_1/O
+                         net (fo=1, routed)           0.000    18.976    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/D[8]
+    SLICE_X77Y111        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.281     7.705    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X77Y111        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]/C
+                         clock pessimism              0.307     8.012    
+                         clock uncertainty           -0.035     7.976    
+    SLICE_X77Y111        FDCE (Setup_fdce_C_D)        0.069     8.045    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]
+  -------------------------------------------------------------------
+                         required time                          8.045    
+                         arrival time                         -18.976    
+  -------------------------------------------------------------------
+                         slack                                -10.931    
+
+Slack (VIOLATED) :        -10.798ns  (required time - arrival time)
+  Source:                 u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[3]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.351ns  (logic 5.134ns (35.774%)  route 9.217ns (64.226%))
+  Logic Levels:           25  (CARRY4=9 LUT1=1 LUT2=3 LUT3=1 LUT4=2 LUT5=1 LUT6=7 MUXF7=1)
+  Clock Path Skew:        -0.051ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.136ns = ( 7.706 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.494ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.399     4.494    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X73Y108        FDRE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X73Y108        FDRE (Prop_fdre_C_Q)         0.379     4.873 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/Q
+                         net (fo=5, routed)           0.560     5.432    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]_repN_1_alias
+    SLICE_X72Y108        LUT4 (Prop_lut4_I0_O)        0.105     5.537 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36/O
+                         net (fo=4, routed)           0.713     6.250    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36_n_0
+    SLICE_X72Y108        LUT6 (Prop_lut6_I5_O)        0.105     6.355 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101/O
+                         net (fo=1, routed)           0.000     6.355    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101_n_0
+    SLICE_X72Y108        MUXF7 (Prop_muxf7_I0_O)      0.173     6.528 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92/O
+                         net (fo=1, routed)           0.703     7.231    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92_n_0
+    SLICE_X72Y109        LUT6 (Prop_lut6_I4_O)        0.241     7.472 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72/O
+                         net (fo=2, routed)           0.333     7.805    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X71Y110        LUT2 (Prop_lut2_I0_O)        0.105     7.910 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76/O
+                         net (fo=1, routed)           0.000     7.910    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76_n_0
+    SLICE_X71Y110        CARRY4 (Prop_carry4_S[0]_O[2])
+                                                      0.453     8.363 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35/O[2]
+                         net (fo=1, routed)           0.521     8.884    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35_n_5
+    SLICE_X73Y111        LUT1 (Prop_lut1_I0_O)        0.253     9.137 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62/O
+                         net (fo=1, routed)           0.000     9.137    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62_n_0
+    SLICE_X73Y111        CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     9.594 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30_n_0
+    SLICE_X73Y112        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.692 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23/CO[3]
+                         net (fo=1, routed)           0.000     9.692    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23_n_0
+    SLICE_X73Y113        CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.180     9.872 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23/O[0]
+                         net (fo=1, routed)           0.806    10.677    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23_n_7
+    SLICE_X74Y111        LUT6 (Prop_lut6_I5_O)        0.249    10.926 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16/O
+                         net (fo=6, routed)           0.699    11.625    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16_n_0
+    SLICE_X75Y114        LUT2 (Prop_lut2_I0_O)        0.105    11.730 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    11.730    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/g_shift.pipe_reg[0][0]_1[0]
+    SLICE_X75Y114        CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440    12.170 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.706    12.876    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X76Y114        LUT2 (Prop_lut2_I0_O)        0.105    12.981 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4/O
+                         net (fo=6, routed)           0.430    13.411    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4_n_0
+    SLICE_X75Y109        LUT6 (Prop_lut6_I5_O)        0.105    13.516 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21/O
+                         net (fo=1, routed)           0.000    13.516    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21_n_0
+    SLICE_X75Y109        CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.848 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15/CO[3]
+                         net (fo=1, routed)           0.000    13.848    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15_n_0
+    SLICE_X75Y110        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    13.946 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13/CO[3]
+                         net (fo=1, routed)           0.000    13.946    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13_n_0
+    SLICE_X75Y111        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    14.044 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14/CO[3]
+                         net (fo=1, routed)           0.000    14.044    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14_n_0
+    SLICE_X75Y112        CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    14.309 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_19/O[1]
+                         net (fo=2, routed)           0.780    15.089    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[14]
+    SLICE_X76Y115        LUT6 (Prop_lut6_I5_O)        0.250    15.339 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6/O
+                         net (fo=2, routed)           0.812    16.152    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6_n_0
+    SLICE_X77Y114        LUT6 (Prop_lut6_I4_O)        0.105    16.257 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_comp/O
+                         net (fo=3, routed)           0.255    16.512    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_n_0
+    SLICE_X77Y112        LUT6 (Prop_lut6_I5_O)        0.105    16.617 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4/O
+                         net (fo=6, routed)           0.513    17.129    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4_n_0
+    SLICE_X77Y110        LUT3 (Prop_lut3_I0_O)        0.105    17.234 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_6/O
+                         net (fo=10, routed)          0.724    17.959    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_6_n_0
+    SLICE_X76Y109        LUT5 (Prop_lut5_I2_O)        0.105    18.064 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[4]_i_2/O
+                         net (fo=2, routed)           0.663    18.727    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[4]_i_2_n_0
+    SLICE_X77Y110        LUT4 (Prop_lut4_I3_O)        0.118    18.845 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[3]_i_1/O
+                         net (fo=1, routed)           0.000    18.845    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/D[3]
+    SLICE_X77Y110        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[3]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.282     7.706    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X77Y110        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[3]/C
+                         clock pessimism              0.307     8.013    
+                         clock uncertainty           -0.035     7.977    
+    SLICE_X77Y110        FDCE (Setup_fdce_C_D)        0.069     8.046    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[3]
+  -------------------------------------------------------------------
+                         required time                          8.046    
+                         arrival time                         -18.845    
+  -------------------------------------------------------------------
+                         slack                                -10.798    
+
+Slack (VIOLATED) :        -10.791ns  (required time - arrival time)
+  Source:                 u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[4]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.352ns  (logic 5.121ns (35.681%)  route 9.231ns (64.319%))
+  Logic Levels:           25  (CARRY4=9 LUT1=1 LUT2=3 LUT3=1 LUT4=2 LUT5=1 LUT6=7 MUXF7=1)
+  Clock Path Skew:        -0.050ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.137ns = ( 7.707 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.494ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.399     4.494    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X73Y108        FDRE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X73Y108        FDRE (Prop_fdre_C_Q)         0.379     4.873 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/Q
+                         net (fo=5, routed)           0.560     5.432    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]_repN_1_alias
+    SLICE_X72Y108        LUT4 (Prop_lut4_I0_O)        0.105     5.537 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36/O
+                         net (fo=4, routed)           0.713     6.250    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36_n_0
+    SLICE_X72Y108        LUT6 (Prop_lut6_I5_O)        0.105     6.355 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101/O
+                         net (fo=1, routed)           0.000     6.355    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101_n_0
+    SLICE_X72Y108        MUXF7 (Prop_muxf7_I0_O)      0.173     6.528 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92/O
+                         net (fo=1, routed)           0.703     7.231    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92_n_0
+    SLICE_X72Y109        LUT6 (Prop_lut6_I4_O)        0.241     7.472 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72/O
+                         net (fo=2, routed)           0.333     7.805    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X71Y110        LUT2 (Prop_lut2_I0_O)        0.105     7.910 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76/O
+                         net (fo=1, routed)           0.000     7.910    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76_n_0
+    SLICE_X71Y110        CARRY4 (Prop_carry4_S[0]_O[2])
+                                                      0.453     8.363 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35/O[2]
+                         net (fo=1, routed)           0.521     8.884    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35_n_5
+    SLICE_X73Y111        LUT1 (Prop_lut1_I0_O)        0.253     9.137 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62/O
+                         net (fo=1, routed)           0.000     9.137    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62_n_0
+    SLICE_X73Y111        CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     9.594 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30_n_0
+    SLICE_X73Y112        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.692 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23/CO[3]
+                         net (fo=1, routed)           0.000     9.692    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23_n_0
+    SLICE_X73Y113        CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.180     9.872 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23/O[0]
+                         net (fo=1, routed)           0.806    10.677    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23_n_7
+    SLICE_X74Y111        LUT6 (Prop_lut6_I5_O)        0.249    10.926 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16/O
+                         net (fo=6, routed)           0.699    11.625    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16_n_0
+    SLICE_X75Y114        LUT2 (Prop_lut2_I0_O)        0.105    11.730 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    11.730    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/g_shift.pipe_reg[0][0]_1[0]
+    SLICE_X75Y114        CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440    12.170 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.706    12.876    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X76Y114        LUT2 (Prop_lut2_I0_O)        0.105    12.981 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4/O
+                         net (fo=6, routed)           0.430    13.411    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4_n_0
+    SLICE_X75Y109        LUT6 (Prop_lut6_I5_O)        0.105    13.516 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21/O
+                         net (fo=1, routed)           0.000    13.516    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21_n_0
+    SLICE_X75Y109        CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.848 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15/CO[3]
+                         net (fo=1, routed)           0.000    13.848    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15_n_0
+    SLICE_X75Y110        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    13.946 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13/CO[3]
+                         net (fo=1, routed)           0.000    13.946    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13_n_0
+    SLICE_X75Y111        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    14.044 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14/CO[3]
+                         net (fo=1, routed)           0.000    14.044    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14_n_0
+    SLICE_X75Y112        CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    14.309 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_19/O[1]
+                         net (fo=2, routed)           0.780    15.089    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[14]
+    SLICE_X76Y115        LUT6 (Prop_lut6_I5_O)        0.250    15.339 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6/O
+                         net (fo=2, routed)           0.812    16.152    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6_n_0
+    SLICE_X77Y114        LUT6 (Prop_lut6_I4_O)        0.105    16.257 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_comp/O
+                         net (fo=3, routed)           0.255    16.512    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_n_0
+    SLICE_X77Y112        LUT6 (Prop_lut6_I5_O)        0.105    16.617 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4/O
+                         net (fo=6, routed)           0.513    17.129    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4_n_0
+    SLICE_X77Y110        LUT3 (Prop_lut3_I0_O)        0.105    17.234 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_6/O
+                         net (fo=10, routed)          0.724    17.959    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_6_n_0
+    SLICE_X76Y109        LUT5 (Prop_lut5_I2_O)        0.105    18.064 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[4]_i_2/O
+                         net (fo=2, routed)           0.677    18.741    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[4]_i_2_n_0
+    SLICE_X76Y108        LUT4 (Prop_lut4_I1_O)        0.105    18.846 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[4]_i_1/O
+                         net (fo=1, routed)           0.000    18.846    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/D[4]
+    SLICE_X76Y108        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.283     7.707    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X76Y108        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[4]/C
+                         clock pessimism              0.307     8.014    
+                         clock uncertainty           -0.035     7.978    
+    SLICE_X76Y108        FDCE (Setup_fdce_C_D)        0.076     8.054    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[4]
+  -------------------------------------------------------------------
+                         required time                          8.054    
+                         arrival time                         -18.846    
+  -------------------------------------------------------------------
+                         slack                                -10.791    
+
+Slack (VIOLATED) :        -10.758ns  (required time - arrival time)
+  Source:                 u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[9]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.273ns  (logic 5.121ns (35.880%)  route 9.152ns (64.120%))
+  Logic Levels:           25  (CARRY4=9 LUT1=1 LUT2=3 LUT4=1 LUT6=10 MUXF7=1)
+  Clock Path Skew:        -0.052ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.135ns = ( 7.705 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.494ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.399     4.494    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X73Y108        FDRE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X73Y108        FDRE (Prop_fdre_C_Q)         0.379     4.873 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/Q
+                         net (fo=5, routed)           0.560     5.432    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]_repN_1_alias
+    SLICE_X72Y108        LUT4 (Prop_lut4_I0_O)        0.105     5.537 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36/O
+                         net (fo=4, routed)           0.713     6.250    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36_n_0
+    SLICE_X72Y108        LUT6 (Prop_lut6_I5_O)        0.105     6.355 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101/O
+                         net (fo=1, routed)           0.000     6.355    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101_n_0
+    SLICE_X72Y108        MUXF7 (Prop_muxf7_I0_O)      0.173     6.528 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92/O
+                         net (fo=1, routed)           0.703     7.231    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92_n_0
+    SLICE_X72Y109        LUT6 (Prop_lut6_I4_O)        0.241     7.472 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72/O
+                         net (fo=2, routed)           0.333     7.805    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X71Y110        LUT2 (Prop_lut2_I0_O)        0.105     7.910 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76/O
+                         net (fo=1, routed)           0.000     7.910    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76_n_0
+    SLICE_X71Y110        CARRY4 (Prop_carry4_S[0]_O[2])
+                                                      0.453     8.363 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35/O[2]
+                         net (fo=1, routed)           0.521     8.884    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35_n_5
+    SLICE_X73Y111        LUT1 (Prop_lut1_I0_O)        0.253     9.137 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62/O
+                         net (fo=1, routed)           0.000     9.137    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62_n_0
+    SLICE_X73Y111        CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     9.594 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30_n_0
+    SLICE_X73Y112        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.692 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23/CO[3]
+                         net (fo=1, routed)           0.000     9.692    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23_n_0
+    SLICE_X73Y113        CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.180     9.872 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23/O[0]
+                         net (fo=1, routed)           0.806    10.677    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23_n_7
+    SLICE_X74Y111        LUT6 (Prop_lut6_I5_O)        0.249    10.926 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16/O
+                         net (fo=6, routed)           0.699    11.625    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16_n_0
+    SLICE_X75Y114        LUT2 (Prop_lut2_I0_O)        0.105    11.730 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    11.730    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/g_shift.pipe_reg[0][0]_1[0]
+    SLICE_X75Y114        CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440    12.170 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.706    12.876    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X76Y114        LUT2 (Prop_lut2_I0_O)        0.105    12.981 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4/O
+                         net (fo=6, routed)           0.430    13.411    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4_n_0
+    SLICE_X75Y109        LUT6 (Prop_lut6_I5_O)        0.105    13.516 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21/O
+                         net (fo=1, routed)           0.000    13.516    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21_n_0
+    SLICE_X75Y109        CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.848 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15/CO[3]
+                         net (fo=1, routed)           0.000    13.848    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15_n_0
+    SLICE_X75Y110        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    13.946 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13/CO[3]
+                         net (fo=1, routed)           0.000    13.946    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13_n_0
+    SLICE_X75Y111        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    14.044 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14/CO[3]
+                         net (fo=1, routed)           0.000    14.044    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14_n_0
+    SLICE_X75Y112        CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    14.309 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_19/O[1]
+                         net (fo=2, routed)           0.780    15.089    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[14]
+    SLICE_X76Y115        LUT6 (Prop_lut6_I5_O)        0.250    15.339 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6/O
+                         net (fo=2, routed)           0.816    16.155    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6_n_0
+    SLICE_X77Y109        LUT6 (Prop_lut6_I0_O)        0.105    16.260 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_2/O
+                         net (fo=9, routed)           0.590    16.851    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_2_n_0
+    SLICE_X77Y114        LUT6 (Prop_lut6_I0_O)        0.105    16.956 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_11/O
+                         net (fo=2, routed)           0.373    17.328    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_11_n_0
+    SLICE_X77Y112        LUT6 (Prop_lut6_I2_O)        0.105    17.433 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_9/O
+                         net (fo=1, routed)           0.458    17.891    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_9_n_0
+    SLICE_X77Y111        LUT6 (Prop_lut6_I5_O)        0.105    17.996 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_2/O
+                         net (fo=2, routed)           0.665    18.661    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_2_n_0
+    SLICE_X77Y112        LUT6 (Prop_lut6_I1_O)        0.105    18.766 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_1/O
+                         net (fo=1, routed)           0.000    18.766    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/D[9]
+    SLICE_X77Y112        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[9]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.281     7.705    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X77Y112        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[9]/C
+                         clock pessimism              0.307     8.012    
+                         clock uncertainty           -0.035     7.976    
+    SLICE_X77Y112        FDCE (Setup_fdce_C_D)        0.032     8.008    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[9]
+  -------------------------------------------------------------------
+                         required time                          8.008    
+                         arrival time                         -18.766    
+  -------------------------------------------------------------------
+                         slack                                -10.758    
+
+Slack (VIOLATED) :        -10.664ns  (required time - arrival time)
+  Source:                 u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.270ns  (logic 4.859ns (34.050%)  route 9.411ns (65.950%))
+  Logic Levels:           25  (CARRY4=8 LUT1=1 LUT2=2 LUT4=3 LUT5=1 LUT6=9 MUXF7=1)
+  Clock Path Skew:        -0.034ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.166ns = ( 7.736 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.507ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.412     4.507    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X111Y131       FDRE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X111Y131       FDRE (Prop_fdre_C_Q)         0.379     4.886 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/Q
+                         net (fo=6, routed)           0.554     5.440    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]
+    SLICE_X109Y130       LUT4 (Prop_lut4_I0_O)        0.105     5.545 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36__0/O
+                         net (fo=4, routed)           0.424     5.969    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36__0_n_0
+    SLICE_X104Y131       LUT6 (Prop_lut6_I5_O)        0.105     6.074 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101__0/O
+                         net (fo=1, routed)           0.000     6.074    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101__0_n_0
+    SLICE_X104Y131       MUXF7 (Prop_muxf7_I0_O)      0.201     6.275 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92__0/O
+                         net (fo=1, routed)           0.374     6.649    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92__0_n_0
+    SLICE_X108Y130       LUT6 (Prop_lut6_I4_O)        0.242     6.891 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72__0/O
+                         net (fo=2, routed)           0.661     7.552    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X108Y131       LUT4 (Prop_lut4_I1_O)        0.105     7.657 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76__0_comp/O
+                         net (fo=1, routed)           0.000     7.657    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76__0_n_0
+    SLICE_X108Y131       CARRY4 (Prop_carry4_S[0]_O[0])
+                                                      0.210     7.867 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35__0/O[0]
+                         net (fo=2, routed)           0.274     8.141    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35__0_n_7
+    SLICE_X109Y131       LUT1 (Prop_lut1_I0_O)        0.238     8.379 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_59__0/O
+                         net (fo=1, routed)           0.538     8.918    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_59__0_n_0
+    SLICE_X109Y132       CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.480     9.398 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30__0/CO[3]
+                         net (fo=1, routed)           0.000     9.398    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30__0_n_0
+    SLICE_X109Y133       CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.496 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23__0/CO[3]
+                         net (fo=1, routed)           0.000     9.496    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23__0_n_0
+    SLICE_X109Y134       CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.594 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23__0/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23__0_n_0
+    SLICE_X109Y135       CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.200     9.794 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_19__0/O[2]
+                         net (fo=1, routed)           0.608    10.401    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_19__0_n_5
+    SLICE_X109Y136       LUT6 (Prop_lut6_I3_O)        0.253    10.654 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_10__0/O
+                         net (fo=9, routed)           0.619    11.273    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_10__0_n_0
+    SLICE_X110Y133       LUT2 (Prop_lut2_I0_O)        0.105    11.378 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_5__0/O
+                         net (fo=1, routed)           0.000    11.378    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1[15]_i_5__0_0[3]
+    SLICE_X110Y133       CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    11.710 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.869    12.579    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X108Y136       LUT2 (Prop_lut2_I0_O)        0.105    12.684 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe_reg[8][4]_srl9_u_xd_delay_g_shift.pipe_reg_c_7_c_i_4/O
+                         net (fo=6, routed)           0.603    13.287    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe_reg[8][4]_srl9_u_xd_delay_g_shift.pipe_reg_c_7_c_i_4_n_0
+    SLICE_X111Y133       LUT6 (Prop_lut6_I5_O)        0.105    13.392 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21__0/O
+                         net (fo=1, routed)           0.000    13.392    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21__0_n_0
+    SLICE_X111Y133       CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.724 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15__0/CO[3]
+                         net (fo=1, routed)           0.000    13.724    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15__0_n_0
+    SLICE_X111Y134       CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    13.989 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13__0/O[1]
+                         net (fo=2, routed)           0.683    14.672    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[6]
+    SLICE_X113Y134       LUT5 (Prop_lut5_I3_O)        0.250    14.922 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_7__0/O
+                         net (fo=4, routed)           0.541    15.463    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_7__0_n_0
+    SLICE_X115Y134       LUT6 (Prop_lut6_I1_O)        0.105    15.568 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_8__0/O
+                         net (fo=1, routed)           0.541    16.109    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_8__0_n_0
+    SLICE_X115Y135       LUT6 (Prop_lut6_I2_O)        0.105    16.214 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_2__0/O
+                         net (fo=10, routed)          0.727    16.941    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_2__0_n_0
+    SLICE_X117Y135       LUT6 (Prop_lut6_I0_O)        0.105    17.046 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_11__0/O
+                         net (fo=2, routed)           0.627    17.673    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_11__0_n_0
+    SLICE_X117Y137       LUT6 (Prop_lut6_I2_O)        0.105    17.778 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_9__0/O
+                         net (fo=1, routed)           0.233    18.011    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_9__0_n_0
+    SLICE_X117Y135       LUT6 (Prop_lut6_I5_O)        0.105    18.116 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_2__0/O
+                         net (fo=2, routed)           0.535    18.651    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_2__0_n_0
+    SLICE_X116Y136       LUT4 (Prop_lut4_I3_O)        0.126    18.777 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[8]_i_1__0/O
+                         net (fo=1, routed)           0.000    18.777    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/D[8]
+    SLICE_X116Y136       FDCE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.312     7.736    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X116Y136       FDCE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]/C
+                         clock pessimism              0.307     8.043    
+                         clock uncertainty           -0.035     8.007    
+    SLICE_X116Y136       FDCE (Setup_fdce_C_D)        0.106     8.113    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[8]
+  -------------------------------------------------------------------
+                         required time                          8.113    
+                         arrival time                         -18.777    
+  -------------------------------------------------------------------
+                         slack                                -10.664    
+
+Slack (VIOLATED) :        -10.624ns  (required time - arrival time)
+  Source:                 u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.197ns  (logic 4.838ns (34.078%)  route 9.359ns (65.922%))
+  Logic Levels:           25  (CARRY4=8 LUT1=1 LUT2=2 LUT4=3 LUT5=2 LUT6=8 MUXF7=1)
+  Clock Path Skew:        -0.034ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.166ns = ( 7.736 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.507ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.412     4.507    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X111Y131       FDRE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X111Y131       FDRE (Prop_fdre_C_Q)         0.379     4.886 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/Q
+                         net (fo=6, routed)           0.554     5.440    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]
+    SLICE_X109Y130       LUT4 (Prop_lut4_I0_O)        0.105     5.545 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36__0/O
+                         net (fo=4, routed)           0.424     5.969    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36__0_n_0
+    SLICE_X104Y131       LUT6 (Prop_lut6_I5_O)        0.105     6.074 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101__0/O
+                         net (fo=1, routed)           0.000     6.074    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101__0_n_0
+    SLICE_X104Y131       MUXF7 (Prop_muxf7_I0_O)      0.201     6.275 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92__0/O
+                         net (fo=1, routed)           0.374     6.649    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92__0_n_0
+    SLICE_X108Y130       LUT6 (Prop_lut6_I4_O)        0.242     6.891 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72__0/O
+                         net (fo=2, routed)           0.661     7.552    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X108Y131       LUT4 (Prop_lut4_I1_O)        0.105     7.657 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76__0_comp/O
+                         net (fo=1, routed)           0.000     7.657    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76__0_n_0
+    SLICE_X108Y131       CARRY4 (Prop_carry4_S[0]_O[0])
+                                                      0.210     7.867 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35__0/O[0]
+                         net (fo=2, routed)           0.274     8.141    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35__0_n_7
+    SLICE_X109Y131       LUT1 (Prop_lut1_I0_O)        0.238     8.379 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_59__0/O
+                         net (fo=1, routed)           0.538     8.918    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_59__0_n_0
+    SLICE_X109Y132       CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.480     9.398 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30__0/CO[3]
+                         net (fo=1, routed)           0.000     9.398    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30__0_n_0
+    SLICE_X109Y133       CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.496 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23__0/CO[3]
+                         net (fo=1, routed)           0.000     9.496    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23__0_n_0
+    SLICE_X109Y134       CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.594 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23__0/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23__0_n_0
+    SLICE_X109Y135       CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.200     9.794 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_19__0/O[2]
+                         net (fo=1, routed)           0.608    10.401    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_19__0_n_5
+    SLICE_X109Y136       LUT6 (Prop_lut6_I3_O)        0.253    10.654 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_10__0/O
+                         net (fo=9, routed)           0.619    11.273    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_10__0_n_0
+    SLICE_X110Y133       LUT2 (Prop_lut2_I0_O)        0.105    11.378 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_5__0/O
+                         net (fo=1, routed)           0.000    11.378    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1[15]_i_5__0_0[3]
+    SLICE_X110Y133       CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    11.710 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.869    12.579    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X108Y136       LUT2 (Prop_lut2_I0_O)        0.105    12.684 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe_reg[8][4]_srl9_u_xd_delay_g_shift.pipe_reg_c_7_c_i_4/O
+                         net (fo=6, routed)           0.603    13.287    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe_reg[8][4]_srl9_u_xd_delay_g_shift.pipe_reg_c_7_c_i_4_n_0
+    SLICE_X111Y133       LUT6 (Prop_lut6_I5_O)        0.105    13.392 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21__0/O
+                         net (fo=1, routed)           0.000    13.392    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21__0_n_0
+    SLICE_X111Y133       CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.724 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15__0/CO[3]
+                         net (fo=1, routed)           0.000    13.724    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15__0_n_0
+    SLICE_X111Y134       CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    13.989 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13__0/O[1]
+                         net (fo=2, routed)           0.683    14.672    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[6]
+    SLICE_X113Y134       LUT5 (Prop_lut5_I3_O)        0.250    14.922 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_7__0/O
+                         net (fo=4, routed)           0.504    15.426    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_7__0_n_0
+    SLICE_X114Y135       LUT6 (Prop_lut6_I0_O)        0.105    15.531 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_27__0/O
+                         net (fo=1, routed)           0.122    15.653    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_27__0_n_0
+    SLICE_X114Y135       LUT6 (Prop_lut6_I4_O)        0.105    15.758 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_15__0/O
+                         net (fo=4, routed)           0.274    16.032    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_15__0_n_0
+    SLICE_X117Y135       LUT5 (Prop_lut5_I4_O)        0.105    16.137 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[10]_i_2__0/O
+                         net (fo=16, routed)          0.853    16.989    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[10]_i_2__0_n_0
+    SLICE_X114Y136       LUT6 (Prop_lut6_I3_O)        0.105    17.094 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_8__0_comp/O
+                         net (fo=10, routed)          0.703    17.798    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_8__0_n_0
+    SLICE_X114Y137       LUT6 (Prop_lut6_I5_O)        0.105    17.903 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[6]_i_2__0/O
+                         net (fo=2, routed)           0.696    18.598    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[6]_i_2__0_n_0
+    SLICE_X116Y136       LUT4 (Prop_lut4_I1_O)        0.105    18.703 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[6]_i_1__0/O
+                         net (fo=1, routed)           0.000    18.703    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/D[6]
+    SLICE_X116Y136       FDCE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.312     7.736    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X116Y136       FDCE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]/C
+                         clock pessimism              0.307     8.043    
+                         clock uncertainty           -0.035     8.007    
+    SLICE_X116Y136       FDCE (Setup_fdce_C_D)        0.072     8.079    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[6]
+  -------------------------------------------------------------------
+                         required time                          8.079    
+                         arrival time                         -18.703    
+  -------------------------------------------------------------------
+                         slack                                -10.624    
+
+Slack (VIOLATED) :        -10.622ns  (required time - arrival time)
+  Source:                 u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[0]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.176ns  (logic 5.121ns (36.124%)  route 9.055ns (63.876%))
+  Logic Levels:           25  (CARRY4=9 LUT1=1 LUT2=4 LUT3=1 LUT4=2 LUT6=7 MUXF7=1)
+  Clock Path Skew:        -0.052ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.135ns = ( 7.705 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.494ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.399     4.494    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X73Y108        FDRE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X73Y108        FDRE (Prop_fdre_C_Q)         0.379     4.873 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]_replica_1/Q
+                         net (fo=5, routed)           0.560     5.432    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]_repN_1_alias
+    SLICE_X72Y108        LUT4 (Prop_lut4_I0_O)        0.105     5.537 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36/O
+                         net (fo=4, routed)           0.713     6.250    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36_n_0
+    SLICE_X72Y108        LUT6 (Prop_lut6_I5_O)        0.105     6.355 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101/O
+                         net (fo=1, routed)           0.000     6.355    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101_n_0
+    SLICE_X72Y108        MUXF7 (Prop_muxf7_I0_O)      0.173     6.528 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92/O
+                         net (fo=1, routed)           0.703     7.231    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92_n_0
+    SLICE_X72Y109        LUT6 (Prop_lut6_I4_O)        0.241     7.472 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72/O
+                         net (fo=2, routed)           0.333     7.805    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X71Y110        LUT2 (Prop_lut2_I0_O)        0.105     7.910 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76/O
+                         net (fo=1, routed)           0.000     7.910    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76_n_0
+    SLICE_X71Y110        CARRY4 (Prop_carry4_S[0]_O[2])
+                                                      0.453     8.363 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35/O[2]
+                         net (fo=1, routed)           0.521     8.884    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35_n_5
+    SLICE_X73Y111        LUT1 (Prop_lut1_I0_O)        0.253     9.137 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62/O
+                         net (fo=1, routed)           0.000     9.137    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_62_n_0
+    SLICE_X73Y111        CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     9.594 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30_n_0
+    SLICE_X73Y112        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.692 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23/CO[3]
+                         net (fo=1, routed)           0.000     9.692    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23_n_0
+    SLICE_X73Y113        CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.180     9.872 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23/O[0]
+                         net (fo=1, routed)           0.806    10.677    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23_n_7
+    SLICE_X74Y111        LUT6 (Prop_lut6_I5_O)        0.249    10.926 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16/O
+                         net (fo=6, routed)           0.699    11.625    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_16_n_0
+    SLICE_X75Y114        LUT2 (Prop_lut2_I0_O)        0.105    11.730 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_8/O
+                         net (fo=1, routed)           0.000    11.730    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/g_shift.pipe_reg[0][0]_1[0]
+    SLICE_X75Y114        CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440    12.170 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.706    12.876    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X76Y114        LUT2 (Prop_lut2_I0_O)        0.105    12.981 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4/O
+                         net (fo=6, routed)           0.430    13.411    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe[0][4]_i_4_n_0
+    SLICE_X75Y109        LUT6 (Prop_lut6_I5_O)        0.105    13.516 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21/O
+                         net (fo=1, routed)           0.000    13.516    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21_n_0
+    SLICE_X75Y109        CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.848 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15/CO[3]
+                         net (fo=1, routed)           0.000    13.848    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15_n_0
+    SLICE_X75Y110        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    13.946 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13/CO[3]
+                         net (fo=1, routed)           0.000    13.946    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13_n_0
+    SLICE_X75Y111        CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098    14.044 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14/CO[3]
+                         net (fo=1, routed)           0.000    14.044    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_14_n_0
+    SLICE_X75Y112        CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    14.309 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[14]_i_19/O[1]
+                         net (fo=2, routed)           0.780    15.089    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[14]
+    SLICE_X76Y115        LUT6 (Prop_lut6_I5_O)        0.250    15.339 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6/O
+                         net (fo=2, routed)           0.812    16.152    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_6_n_0
+    SLICE_X77Y114        LUT6 (Prop_lut6_I4_O)        0.105    16.257 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_comp/O
+                         net (fo=3, routed)           0.255    16.512    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_18_n_0
+    SLICE_X77Y112        LUT6 (Prop_lut6_I5_O)        0.105    16.617 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4/O
+                         net (fo=6, routed)           0.513    17.129    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_4_n_0
+    SLICE_X77Y110        LUT3 (Prop_lut3_I0_O)        0.105    17.234 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_6/O
+                         net (fo=10, routed)          0.571    17.806    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_6_n_0
+    SLICE_X77Y109        LUT4 (Prop_lut4_I3_O)        0.105    17.911 f  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[1]_i_2/O
+                         net (fo=2, routed)           0.654    18.565    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[1]_i_2_n_0
+    SLICE_X76Y111        LUT2 (Prop_lut2_I1_O)        0.105    18.670 r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[0]_i_1/O
+                         net (fo=1, routed)           0.000    18.670    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/D[0]
+    SLICE_X76Y111        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.281     7.705    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X76Y111        FDCE                                         r  u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[0]/C
+                         clock pessimism              0.307     8.012    
+                         clock uncertainty           -0.035     7.976    
+    SLICE_X76Y111        FDCE (Setup_fdce_C_D)        0.072     8.048    u_dA_exp/g_exp[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[0]
+  -------------------------------------------------------------------
+                         required time                          8.048    
+                         arrival time                         -18.670    
+  -------------------------------------------------------------------
+                         slack                                -10.622    
+
+Slack (VIOLATED) :        -10.611ns  (required time - arrival time)
+  Source:                 u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Destination:            u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[5]/D
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@1.785ns period=3.570ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            3.570ns  (clk rise@3.570ns - clk rise@0.000ns)
+  Data Path Delay:        14.180ns  (logic 4.851ns (34.209%)  route 9.329ns (65.791%))
+  Logic Levels:           25  (CARRY4=8 LUT1=1 LUT2=2 LUT4=3 LUT5=2 LUT6=8 MUXF7=1)
+  Clock Path Skew:        -0.034ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    4.166ns = ( 7.736 - 3.570 ) 
+    Source Clock Delay      (SCD):    4.507ns
+    Clock Pessimism Removal (CPR):    0.307ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  
+    Y22                                               0.000     0.000 r  clk (IN)
+                         net (fo=0)                   0.000     0.000    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.914     0.914 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           2.100     3.014    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     3.095 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.412     4.507    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/aclk
+    SLICE_X111Y131       FDRE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X111Y131       FDRE (Prop_fdre_C_Q)         0.379     4.886 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_fp16_mult/inst/i_synth/MULT.OP/i_non_prim.OP/RESULT_REG.NORMAL.mant_op_reg[3]/Q
+                         net (fo=6, routed)           0.554     5.440    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/m_axis_result_tdata[3]
+    SLICE_X109Y130       LUT4 (Prop_lut4_I0_O)        0.105     5.545 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36__0/O
+                         net (fo=4, routed)           0.424     5.969    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_36__0_n_0
+    SLICE_X104Y131       LUT6 (Prop_lut6_I5_O)        0.105     6.074 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101__0/O
+                         net (fo=1, routed)           0.000     6.074    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_101__0_n_0
+    SLICE_X104Y131       MUXF7 (Prop_muxf7_I0_O)      0.201     6.275 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92__0/O
+                         net (fo=1, routed)           0.374     6.649    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_92__0_n_0
+    SLICE_X108Y130       LUT6 (Prop_lut6_I4_O)        0.242     6.891 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_72__0/O
+                         net (fo=2, routed)           0.661     7.552    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/u_kpick/frac_nz1_out
+    SLICE_X108Y131       LUT4 (Prop_lut4_I1_O)        0.105     7.657 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76__0_comp/O
+                         net (fo=1, routed)           0.000     7.657    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_76__0_n_0
+    SLICE_X108Y131       CARRY4 (Prop_carry4_S[0]_O[0])
+                                                      0.210     7.867 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35__0/O[0]
+                         net (fo=2, routed)           0.274     8.141    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_35__0_n_7
+    SLICE_X109Y131       LUT1 (Prop_lut1_I0_O)        0.238     8.379 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_59__0/O
+                         net (fo=1, routed)           0.538     8.918    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_59__0_n_0
+    SLICE_X109Y132       CARRY4 (Prop_carry4_CYINIT_CO[3])
+                                                      0.480     9.398 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30__0/CO[3]
+                         net (fo=1, routed)           0.000     9.398    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_30__0_n_0
+    SLICE_X109Y133       CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.496 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23__0/CO[3]
+                         net (fo=1, routed)           0.000     9.496    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry_i_23__0_n_0
+    SLICE_X109Y134       CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     9.594 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23__0/CO[3]
+                         net (fo=1, routed)           0.000     9.594    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_23__0_n_0
+    SLICE_X109Y135       CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.200     9.794 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_19__0/O[2]
+                         net (fo=1, routed)           0.608    10.401    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_19__0_n_5
+    SLICE_X109Y136       LUT6 (Prop_lut6_I3_O)        0.253    10.654 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_10__0/O
+                         net (fo=9, routed)           0.619    11.273    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_10__0_n_0
+    SLICE_X110Y133       LUT2 (Prop_lut2_I0_O)        0.105    11.378 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/k_floor_c1_carry__0_i_5__0/O
+                         net (fo=1, routed)           0.000    11.378    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1[15]_i_5__0_0[3]
+    SLICE_X110Y133       CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    11.710 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/k_floor_c1_carry__0/CO[3]
+                         net (fo=38, routed)          0.869    12.579    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/CO[0]
+    SLICE_X108Y136       LUT2 (Prop_lut2_I0_O)        0.105    12.684 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe_reg[8][4]_srl9_u_xd_delay_g_shift.pipe_reg_c_7_c_i_4/O
+                         net (fo=6, routed)           0.603    13.287    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/g_shift.pipe_reg[8][4]_srl9_u_xd_delay_g_shift.pipe_reg_c_7_c_i_4_n_0
+    SLICE_X111Y133       LUT6 (Prop_lut6_I5_O)        0.105    13.392 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21__0/O
+                         net (fo=1, routed)           0.000    13.392    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_21__0_n_0
+    SLICE_X111Y133       CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332    13.724 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15__0/CO[3]
+                         net (fo=1, routed)           0.000    13.724    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_15__0_n_0
+    SLICE_X111Y134       CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.265    13.989 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1_reg[9]_i_13__0/O[1]
+                         net (fo=2, routed)           0.683    14.672    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/p2[6]
+    SLICE_X113Y134       LUT5 (Prop_lut5_I3_O)        0.250    14.922 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_7__0/O
+                         net (fo=4, routed)           0.504    15.426    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_7__0_n_0
+    SLICE_X114Y135       LUT6 (Prop_lut6_I0_O)        0.105    15.531 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_27__0/O
+                         net (fo=1, routed)           0.122    15.653    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_27__0_n_0
+    SLICE_X114Y135       LUT6 (Prop_lut6_I4_O)        0.105    15.758 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_15__0/O
+                         net (fo=4, routed)           0.274    16.032    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[14]_i_15__0_n_0
+    SLICE_X117Y135       LUT5 (Prop_lut5_I4_O)        0.105    16.137 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[10]_i_2__0/O
+                         net (fo=16, routed)          0.853    16.989    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[10]_i_2__0_n_0
+    SLICE_X114Y136       LUT6 (Prop_lut6_I3_O)        0.105    17.094 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_8__0_comp/O
+                         net (fo=10, routed)          0.703    17.798    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[9]_i_8__0_n_0
+    SLICE_X114Y137       LUT6 (Prop_lut6_I5_O)        0.105    17.903 f  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[6]_i_2__0/O
+                         net (fo=2, routed)           0.666    18.569    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[6]_i_2__0_n_0
+    SLICE_X114Y137       LUT4 (Prop_lut4_I3_O)        0.118    18.687 r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_mul_log2e/nkfp_d1[5]_i_1__0/O
+                         net (fo=1, routed)           0.000    18.687    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/D[5]
+    SLICE_X114Y137       FDCE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        3.570     3.570 r  
+    Y22                                               0.000     3.570 r  clk (IN)
+                         net (fo=0)                   0.000     3.570    clk
+    Y22                  IBUF (Prop_ibuf_I_O)         0.783     4.353 r  clk_IBUF_inst/O
+                         net (fo=1, routed)           1.994     6.347    clk_IBUF
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077     6.424 r  clk_IBUF_BUFG_inst/O
+                         net (fo=30955, routed)       1.312     7.736    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/clk_IBUF_BUFG
+    SLICE_X114Y137       FDCE                                         r  u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[5]/C
+                         clock pessimism              0.307     8.043    
+                         clock uncertainty           -0.035     8.007    
+    SLICE_X114Y137       FDCE (Setup_fdce_C_D)        0.069     8.076    u_sp/g_softplus[0].u_soft_or_exp/u_exp/u_kpick/nkfp_d1_reg[5]
+  -------------------------------------------------------------------
+                         required time                          8.076    
+                         arrival time                         -18.687    
+  -------------------------------------------------------------------
+                         slack                                -10.611    
+
+
+
+
+
+Pulse Width Checks
+--------------------------------------------------------------------------------------
+Clock Name:         clk
+Waveform(ns):       { 0.000 1.785 }
+Period(ns):         3.570
+Sources:            { clk }
+
+Check Type        Corner  Lib Pin      Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location       Pin
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X0Y59    u_accum_n/G_H[0].G_P[0].u_tree/L1[0].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X0Y52    u_accum_n/G_H[0].G_P[0].u_tree/L1[10].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X2Y53    u_accum_n/G_H[0].G_P[0].u_tree/L1[12].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X3Y54    u_accum_n/G_H[0].G_P[0].u_tree/L1[13].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X2Y52    u_accum_n/G_H[0].G_P[0].u_tree/L1[14].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X4Y53    u_accum_n/G_H[0].G_P[0].u_tree/L1[15].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X0Y36    u_accum_n/G_H[0].G_P[0].u_tree/L1[16].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X0Y33    u_accum_n/G_H[0].G_P[0].u_tree/L1[17].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X0Y42    u_accum_n/G_H[0].G_P[0].u_tree/L1[18].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Min Period        n/a     DSP48E1/CLK  n/a            2.147         3.570       1.423      DSP48_X0Y37    u_accum_n/G_H[0].G_P[0].u_tree/L1[19].add/u_fp16_add/inst/i_synth/ADDSUB_OP.ADDSUB/DSP.OP/DSP48E1_BODY_HP.ALIGN_ADD/DSP2/i_no_versal_es1_workaround.DSP/CLK
+Low Pulse Width   Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y95   u_B_w_delay/g_shift.pipe_reg[105][0]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y95   u_B_w_delay/g_shift.pipe_reg[105][0]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y116  u_B_w_delay/g_shift.pipe_reg[105][10]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y116  u_B_w_delay/g_shift.pipe_reg[105][10]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y116  u_B_w_delay/g_shift.pipe_reg[105][11]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y116  u_B_w_delay/g_shift.pipe_reg[105][11]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y109  u_B_w_delay/g_shift.pipe_reg[105][12]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y109  u_B_w_delay/g_shift.pipe_reg[105][12]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X44Y115  u_B_w_delay/g_shift.pipe_reg[105][13]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+Low Pulse Width   Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X44Y115  u_B_w_delay/g_shift.pipe_reg[105][13]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y95   u_B_w_delay/g_shift.pipe_reg[105][0]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y95   u_B_w_delay/g_shift.pipe_reg[105][0]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y116  u_B_w_delay/g_shift.pipe_reg[105][10]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X46Y116  u_B_w_delay/g_shift.pipe_reg[105][10]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y116  u_B_w_delay/g_shift.pipe_reg[105][11]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y116  u_B_w_delay/g_shift.pipe_reg[105][11]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y109  u_B_w_delay/g_shift.pipe_reg[105][12]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X48Y109  u_B_w_delay/g_shift.pipe_reg[105][12]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Slow    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X44Y115  u_B_w_delay/g_shift.pipe_reg[105][13]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+High Pulse Width  Fast    SRL16E/CLK   n/a            0.854         1.785       0.931      SLICE_X44Y115  u_B_w_delay/g_shift.pipe_reg[105][13]_srl10_u_xd_delay_g_shift.pipe_reg_c_104_c/CLK
+
+
+
