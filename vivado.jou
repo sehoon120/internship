@@ -63,3 +63,16 @@ launch_runs impl_1 -jobs 79
 wait_on_run impl_1
 open_run impl_1
 report_timing_summary -delay_type max -max_paths 10
+close_design
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg
+source tb_ssmblock_fullscan.tcl
+run all
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+reset_run synth_1
+launch_runs impl_1 -jobs 79
+wait_on_run impl_1
+close_sim

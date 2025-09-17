@@ -28,7 +28,7 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_MUL     = 6,
     parameter integer LAT_ADD     = 11,
     parameter integer LAT_DIV     = 15,
-    parameter integer LAT_EXP     = 6 + LAT_MUL * 3 + LAT_ADD * 3,     // exp latency (예시)
+    parameter integer LAT_EXP     = 6 + LAT_MUL * 3 + LAT_ADD * 3 + 1,     // exp latency (예시)
     parameter integer LAT_SP      = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1    // Softplus latency (예시)
 )(
     input  wire                              clk,
@@ -153,7 +153,7 @@ module SSMBLOCK_TOP #(
     wire [H_TILE*DW-1:0] delta_sp_w;
     wire                 v_delta_sp_w;
 
-    sp_dt #(.DW(DW), .H_TILE(H_TILE), .SP_LAT(LAT_SP),  .LAT_MUL(LAT_MUL), .LAT_ADD(LAT_ADD), .LAT_DIV(LAT_DIV)) u_sp (
+    sp_dt #(.DW(DW), .H_TILE(H_TILE), .SP_LAT(LAT_SP), .LAT_EXP(LAT_EXP), .LAT_MUL(LAT_MUL), .LAT_ADD(LAT_ADD), .LAT_DIV(LAT_DIV)) u_sp (
         .clk     (clk),
         .rstn    (rstn),
         .valid_i (v_delta_w),

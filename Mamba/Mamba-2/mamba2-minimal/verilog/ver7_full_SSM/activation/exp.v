@@ -12,8 +12,8 @@
 
 module exp16_base2_pwl8 #(
     parameter integer DW       = 16,
-    parameter integer LAT_MUL  = 1,   // your FP16 mul latency
-    parameter integer LAT_ADD  = 1,  // your FP16 add latency
+    parameter integer LAT_MUL  = 6,   // your FP16 mul latency
+    parameter integer LAT_ADD  = 11,  // your FP16 add latency
     parameter integer K_MIN    = -16, // supported integer power range
     parameter integer K_MAX    =  16
 )(
