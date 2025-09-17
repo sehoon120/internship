@@ -1,5 +1,5 @@
 // ============================================================================
-// SSMBLOCK_TOP — tile-in → N-accum → (group-accum over TILES_PER_GROUP) → +xD
+// SSMBLOCK_TOP - tile-in → N-accum → (group-accum over TILES_PER_GROUP) → +xD
 // y_final_o: size (H_TILE*P_TILE), y_final_valid_o: group 마다 1펄스
 // ----------------------------------------------------------------------------
 // 가정:
@@ -61,7 +61,7 @@ module SSMBLOCK_TOP #(
     assign tile_ready_o = 1'b1;
 
     // ============================================================
-    // 0) delta = dt + dt_bias (h)  —— add
+    // 0) delta = dt + dt_bias (h)  -- add
     // ============================================================
     wire [H_TILE*DW-1:0] delta_w;
     wire                 v_delta_w;
@@ -77,7 +77,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 0’) xD = x * D (hp) —— mul
+    // 0') xD = x * D (hp) -- mul
     //   그룹 끝에서 y_tmp와 더하기 위해 레지스터로 홀드
     // ============================================================
     wire [H_TILE*P_TILE*DW-1:0] xD_w;
@@ -135,11 +135,17 @@ module SSMBLOCK_TOP #(
                 xD_latched_v <= 1'b1;
             end
             // 그룹 끝에서 y_out 사용 후 클리어 (y_final_valid_o 발생과 동기)
-            if (y_final_valid_o) begin
+            if (group_l_d) begin
                 xD_latched_v <= 1'b0;
             end
         end
     end
+
+    wire [H_TILE*P_TILE*DW-1:0] xD_w_d;
+    wire  v_xD_w_d;
+    shift_reg #(.DW(H_TILE*P_TILE*DW + 1), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE)) u_xd_delay (
+        .clk(clk), .rstn(rstn), .din({xD_latched_r, xD_latched_v}), .dout({xD_w_d, v_xD_w_d})
+    );
 
     // ============================================================
     // 1) delta_sp = Softplus(delta) (h)
@@ -157,7 +163,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 2) dA_tmp = delta_sp * A (h) —— mul
+    // 2) dA_tmp = delta_sp * A (h) -- mul
     // ============================================================
     wire [H_TILE*DW-1:0] dA_tmp_w;
     wire                 v_dA_tmp_w;
@@ -180,7 +186,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 3) dA = exp(dA_tmp) (h) —— exp
+    // 3) dA = exp(dA_tmp) (h) -- exp
     // ============================================================
     wire [H_TILE*DW-1:0] dA_w;
     wire                 v_dA_w;
@@ -195,7 +201,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 2’) dx = delta_sp * x (hp) —— mul  (broadcast h → hp)
+    // 2') dx = delta_sp * x (hp) -- mul  (broadcast h → hp)
     // ============================================================
     wire [H_TILE*P_TILE*DW-1:0] dx_w;
     wire                        v_dx_w;
@@ -218,7 +224,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 3’) dBx = dx * B_tile (hpn) —— mul (broadcast B[n] → hp)
+    // 3') dBx = dx * B_tile (hpn) -- mul (broadcast B[n] → hp)
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] dBx_w;
     wire                               v_dBx_w;
@@ -241,7 +247,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 4) dAh = dA * hprev_tile (hpn) —— mul (broadcast dA[h] → p*n)
+    // 4) dAh = dA * hprev_tile (hpn) -- mul (broadcast dA[h] → p*n)
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] dAh_w;
     wire                               v_dAh_w;
@@ -264,7 +270,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 5) h_next = dAh + dBx (hpn) —— add
+    // 5) h_next = dAh + dBx (hpn) -- add
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] hnext_w;
     wire                               v_hnext_w;
@@ -288,7 +294,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 6) hC = h_next * C_tile (hpn) —— mul (broadcast C[n] → h*p)
+    // 6) hC = h_next * C_tile (hpn) -- mul (broadcast C[n] → h*p)
     // ============================================================
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] hC_w;
     wire                               v_hC_w;
@@ -311,7 +317,7 @@ module SSMBLOCK_TOP #(
     );
 
     // ============================================================
-    // 7) y_tile = accumulation_n(hC) (hpn → hp) —— reduce over n)
+    // 7) y_tile = accumulation_n(hC) (hpn → hp) -- reduce over n)
     // ============================================================
     reg  [H_TILE*P_TILE*N_TILE*DW-1:0] hC_buf [0:TILES_PER_GROUP-1]; // 8개 타일 버퍼
     reg  [4:0]           tile_ptr;   // 0..7
@@ -372,9 +378,9 @@ module SSMBLOCK_TOP #(
     ) u_y_out (
     .clk        (clk),
     .rstn       (rstn),
-    .valid_i    (v_y_tile_w & xD_latched_v),  // 두 입력 동시 준비
+    .valid_i    (v_y_tile_w & v_xD_w_d),  // 두 입력 동시 준비
     .group_sum_i(y_tile_w),
-    .xD_i       (xD_latched_r),
+    .xD_i       (xD_w_d),
     .y_o        (y_sum_hp),
     .valid_o    (v_y_sum_hp)
     );
@@ -382,11 +388,11 @@ module SSMBLOCK_TOP #(
     assign y_final_o       = y_sum_hp;
     assign y_final_valid_o = v_y_sum_hp;
 
-    // xD 래치 클리어
-    always @(posedge clk or negedge rstn) begin
-    if (!rstn) xD_latched_v <= 1'b0;
-    else if (v_y_sum_hp) xD_latched_v <= 1'b0;
-    end
+    // // xD 래치 클리어
+    // always @(posedge clk or negedge rstn) begin
+    // if (!rstn) xD_latched_v <= 1'b0;
+    // else if (v_y_sum_hp) xD_latched_v <= 1'b0;
+    // end
 
 
     // ============================================================================
