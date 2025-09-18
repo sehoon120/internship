@@ -9,7 +9,7 @@
 //  - backpressure는 사용하지 않아 tile_ready_o=1'b1.
 //  - 각 valid는 모듈 latency에 맞춰 내부에서 정렬됨.
 // ----------------------------------------------------------------------------
-`define SIM 
+//`define SIM 
 
 module SSMBLOCK_TOP #(
     parameter integer DW          = 16,
@@ -28,7 +28,7 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_MUL     = 6,
     parameter integer LAT_ADD     = 11,
     parameter integer LAT_DIV     = 15,
-    parameter integer LAT_EXP     = 6 + LAT_MUL * 3 + LAT_ADD * 3 + 1,     // exp latency (예시)
+    parameter integer LAT_EXP     = 6 + LAT_MUL * 3 + LAT_ADD * 3 + 1+1+1,     // exp latency (예시)
     parameter integer LAT_SP      = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1    // Softplus latency (예시)
 )(
     input  wire                              clk,
@@ -143,8 +143,17 @@ module SSMBLOCK_TOP #(
 
     wire [H_TILE*P_TILE*DW-1:0] xD_w_d;
     wire  v_xD_w_d;
-    shift_reg #(.DW(H_TILE*P_TILE*DW + 1), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE)) u_xd_delay (
-        .clk(clk), .rstn(rstn), .din({xD_latched_r, xD_latched_v}), .dout({xD_w_d, v_xD_w_d})
+//    shift_reg #(.DW(H_TILE*P_TILE*DW + 1), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE)) u_xd_delay (
+//        .clk(clk), .rstn(rstn), .din({xD_latched_r, xD_latched_v}), .dout({xD_w_d, v_xD_w_d})
+//    );
+    pipe_bus_bram #(
+        .W(H_TILE*P_TILE*DW), 
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE),
+        .USE_V(1)
+    ) u_xd_delay_bram (
+        .clk(clk), .rstn(rstn),
+        .din(xD_latched_r), .vin(xD_latched_v),
+        .dout(xD_w_d), .vout(v_xD_w_d)
     );
 
     // ============================================================
@@ -169,10 +178,19 @@ module SSMBLOCK_TOP #(
     wire                 v_dA_tmp_w;
 
     wire [H_TILE*DW-1:0] A_i_d;
-    shift_reg #(.DW(H_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP)) u_zero_flag_delay (
+//    shift_reg #(.DW(H_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP)) u_zero_flag_delay (
+//        .clk(clk), .rstn(rstn),
+//        .din(A_i),
+//        .dout(A_i_d)
+//    );
+    pipe_bus_bram #(
+        .W(H_TILE*DW), 
+        .D(LAT_ADD_A + LAT_SP),
+        .USE_V(0)
+    ) u_zero_flag_delay_bram (
         .clk(clk), .rstn(rstn),
-        .din(A_i),
-        .dout(A_i_d)
+        .din(A_i), .vin(1'b0),
+        .dout(A_i_d), .vout()
     );
 
     dA_mul #(.DW(DW), .H_TILE(H_TILE), .M_LAT(LAT_DX_M)) u_dA_tmp (
@@ -207,10 +225,19 @@ module SSMBLOCK_TOP #(
     wire                        v_dx_w;
     wire [H_TILE*P_TILE*DW-1:0] x_i_d;
 
-    shift_reg #(.DW(H_TILE*P_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP)) u_x_delay (
+//    shift_reg #(.DW(H_TILE*P_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP)) u_x_delay (
+//        .clk(clk), .rstn(rstn),
+//        .din(x_i),
+//        .dout(x_i_d)
+//    );
+    pipe_bus_bram #(
+        .W(H_TILE*P_TILE*DW), 
+        .D(LAT_ADD_A + LAT_SP),
+        .USE_V(0)
+    ) u_x_delay_bram (
         .clk(clk), .rstn(rstn),
-        .din(x_i),
-        .dout(x_i_d)
+        .din(x_i), .vin(1'b0),
+        .dout(x_i_d), .vout()
     );
 
     dx_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .MUL_LAT(LAT_DX_M)) u_dx (
@@ -230,10 +257,19 @@ module SSMBLOCK_TOP #(
     wire                               v_dBx_w;
     wire [N_TILE*DW-1:0] B_tile_i_d;
 
-    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + 1)) u_B_w_delay (
+//    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + 1)) u_B_w_delay (
+//        .clk(clk), .rstn(rstn),
+//        .din(B_tile_i),
+//        .dout(B_tile_i_d)
+//    );
+    pipe_bus_bram #(
+        .W(N_TILE*DW), 
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + 1),
+        .USE_V(0)
+    ) u_B_w_delay_bram (
         .clk(clk), .rstn(rstn),
-        .din(B_tile_i),
-        .dout(B_tile_i_d)
+        .din(B_tile_i), .vin(1'b0),
+        .dout(B_tile_i_d), .vout()
     );
 
     dBx_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .M_LAT(LAT_DBX_M)) u_dBx (
@@ -253,10 +289,19 @@ module SSMBLOCK_TOP #(
     wire                               v_dAh_w;
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] hprev_tile_i_d;
 
-    shift_reg #(.DW(H_TILE*P_TILE*N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + 2)) u_hprev_delay (
+//    shift_reg #(.DW(H_TILE*P_TILE*N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + 2)) u_hprev_delay (
+//        .clk(clk), .rstn(rstn),
+//        .din(hprev_tile_i),
+//        .dout(hprev_tile_i_d)
+//    );
+    pipe_bus_bram #(
+        .W(H_TILE*P_TILE*N_TILE*DW), 
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + 2),
+        .USE_V(0)
+    ) u_hprev_delay_bram (
         .clk(clk), .rstn(rstn),
-        .din(hprev_tile_i),
-        .dout(hprev_tile_i_d)
+        .din(hprev_tile_i), .vin(1'b0),
+        .dout(hprev_tile_i_d), .vout()
     );
     
     dAh_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .M_LAT(LAT_DAH_M)) u_dAh (
@@ -277,10 +322,19 @@ module SSMBLOCK_TOP #(
     wire [H_TILE*P_TILE*N_TILE*DW-1:0] dBx_w_d;
     wire                               v_dBx_w_d;
 
-    shift_reg #(.DW(H_TILE*P_TILE*N_TILE*DW+1), .DEPTH((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M))) u_dbx_delay (
+//    shift_reg #(.DW(H_TILE*P_TILE*N_TILE*DW+1), .DEPTH((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M))) u_dbx_delay (
+//        .clk(clk), .rstn(rstn),
+//        .din({dBx_w, v_dBx_w}),
+//        .dout({dBx_w_d, v_dBx_w_d})
+//    );
+    pipe_bus_bram #(
+        .W(H_TILE*P_TILE*N_TILE*DW), 
+        .D((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M)),
+        .USE_V(1)
+    ) u_dbx_delay_bram (
         .clk(clk), .rstn(rstn),
-        .din({dBx_w, v_dBx_w}),
-        .dout({dBx_w_d, v_dBx_w_d})
+        .din(dBx_w), .vin(v_dBx_w),
+        .dout(dBx_w_d), .vout(v_dBx_w_d)
     );
 
     hnext_add #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .A_LAT(LAT_ADD_A)) u_hnext (
@@ -300,10 +354,19 @@ module SSMBLOCK_TOP #(
     wire                               v_hC_w;
     wire [N_TILE*DW-1:0] C_tile_i_d;
 
-    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_ADD_A)) u_C_delay (
+//    shift_reg #(.DW(N_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_ADD_A)) u_C_delay (
+//        .clk(clk), .rstn(rstn),
+//        .din(C_tile_i),
+//        .dout(C_tile_i_d)
+//    );
+    pipe_bus_bram #(
+        .W(N_TILE*DW), 
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_ADD_A),
+        .USE_V(0)
+    ) u_C_delay_bram (
         .clk(clk), .rstn(rstn),
-        .din(C_tile_i),
-        .dout(C_tile_i_d)
+        .din(C_tile_i), .vin(1'b0),
+        .dout(C_tile_i_d), .vout()
     );
     
     hC_mul #(.DW(DW), .H_TILE(H_TILE), .P_TILE(P_TILE), .N_TILE(N_TILE), .M_LAT(LAT_HC_M)) u_hC (
@@ -528,3 +591,8 @@ module SSMBLOCK_TOP #(
     `endif
     
 endmodule
+
+
+
+
+

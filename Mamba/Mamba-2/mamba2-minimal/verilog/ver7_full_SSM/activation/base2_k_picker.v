@@ -1,10 +1,17 @@
-// ================================================================
-// base2_k_picker (3-cycle total latency, glitch-free f_o)
-//  - Stage A: t 파싱/전처리(ipart_abs, frac_nz, flags) 레지스터
-//  - Stage B: k_floor 결론 + 클램프 + k→FP16(LUT) + (-k) 레지스터
-//  - Stage C: f = t - k  (fp16_add, latency = LAT_ADD)
-//  출력은 add_v에 게이트되어 글리치 없음
-// ================================================================
+// ============================================================================
+// base2_k_picker_v2 (4-cycle total latency: A → B1 → B2 → C(+LAT_ADD))
+//  - 목적: Stage-B 과밀 경로(클램프 + LUT + 부호반전) 분리로 타이밍 개선
+//  - 변경: Stage-B를 B1(정수 k_floor + clamp) / B2(k→FP16 LUT + -k)로 분리
+//  - 출력은 fp16_add의 valid_o(add_v)에 정렬되어 글리치 없음
+//  - 기능 동일, 파이프라인 1cycle 증가
+// ----------------------------------------------------------------------------
+// 타이밍 가이드:
+//  * A: 전처리(ipart_abs/frac_nz 등)
+//  * B1: k_floor_s1 계산 + 클램프 → k_clamped_r ([-16..16], 8bit 저장)
+//  * B2: k2fp16(k_clamped_r) → nkfp_d1 레지스터
+//  * C: f = t - k  (fp16_add, latency = LAT_ADD)
+//  * k_o/k_fp16_o는 add_v에 맞춰 정렬됨(shift_reg DEPTH = LAT_ADD)
+// ============================================================================
 module base2_k_picker #(
     parameter integer DW      = 16,
     parameter integer K_MIN   = -16,
@@ -52,10 +59,7 @@ module base2_k_picker #(
         frac_nz_c   = 1'b0;
 
         if (!(is_inf_nan || is_zero || is_subnorm)) begin
-            // 1.xxx * 2^shift, where man = 1.xxx in 11비트 정수 표현
-            // man16 = {1xxxx.x}를 16비트로 확장 (비트10이 암묵적 1)
-            // 16'd1024 == (1 << 10)
-            // {6'd0, m} 로 하위 10비트에 분수 배치
+            // 1.xxx * 2^shift, man16 = {1, m[9:0]} << or >>
             if (shift >= 10) begin
                 ipart_abs_c = (16'd1024 | {6'd0, m}) << (shift - 10);
                 frac_nz_c   = 1'b0;
@@ -107,13 +111,13 @@ module base2_k_picker #(
     end
 
     // ============================================================
-    // Stage B (t + 2): k_floor 결론 + 클램프 + FP16 변환(LUT) + (-k)
+    // Stage B1a (t + 2): k_floor 결론만 레지스터
     // ============================================================
-    reg                 v1;
-    reg  [DW-1:0]       t_d1;
-    reg  [DW-1:0]       nkfp_d1;
+    reg                 v1a;
+    reg  [DW-1:0]       t_d1a;
+    reg  signed [15:0]  k_floor_r;     // 16b 보존
 
-    // k_floor 결론 (Stage A 레지스터 기반)
+    // k_floor_s1 (Stage A 결과만 사용)
     wire signed [15:0] k_floor_s1 =
         is_inf_nan_r ? (s_r ? -16'sd32768 : 16'sd32767) :
         is_zero_r    ? 16'sd0 :
@@ -123,10 +127,48 @@ module base2_k_picker #(
         (frac_nz_r)  ? -$signed(ipart_abs_r + 16'd1) :
                        -$signed(ipart_abs_r);
 
-    // 클램프
-    wire signed [15:0] k_clamped =
-        (k_floor_s1 < K_MIN) ? K_MIN :
-        (k_floor_s1 > K_MAX) ? K_MAX : k_floor_s1;
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            v1a       <= 1'b0;
+            t_d1a     <= {DW{1'b0}};
+            k_floor_r <= 16'sd0;
+        end else begin
+            v1a       <= v0;
+            t_d1a     <= t_d0;
+            k_floor_r <= k_floor_s1;
+        end
+    end
+
+    // ============================================================
+    // Stage B1b (t + 3): 클램프만 레지스터 (8b 축소)
+    // ============================================================
+    reg                 v1b;
+    reg  [DW-1:0]       t_d1b;
+    reg  signed [7:0]   k_clamped_r;   // [-16..+16]
+
+    // 클램프 (16비트 비교 → 저장은 8비트)
+    wire signed [15:0] k_clamped_s1 =
+        (k_floor_r < K_MIN) ? K_MIN :
+        (k_floor_r > K_MAX) ? K_MAX : k_floor_r;
+
+    always @(posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            v1b          <= 1'b0;
+            t_d1b        <= {DW{1'b0}};
+            k_clamped_r  <= 8'sd0;
+        end else begin
+            v1b          <= v1a;
+            t_d1b        <= t_d1a;
+            k_clamped_r  <= k_clamped_s1[7:0]; // sign-preserve
+        end
+    end
+
+    // ============================================================
+    // Stage B2 (t + 4): 정수→FP16 LUT + (-k) 레지스터
+    // ============================================================
+    reg                 v1c;
+    reg  [DW-1:0]       t_d1c;
+    reg  [DW-1:0]       nkfp_d1;
 
     // 정수 → FP16: 작은 LUT (-16..16)
     function [15:0] k2fp16;
@@ -152,41 +194,23 @@ module base2_k_picker #(
         end
     endfunction
 
-    wire [DW-1:0] kfp_s1  = k2fp16(k_clamped);
+    wire [DW-1:0] kfp_s1  = k2fp16({{8{k_clamped_r[7]}}, k_clamped_r});
     wire [DW-1:0] nkfp_s1 = {~kfp_s1[DW-1], kfp_s1[DW-2:0]};
 
-    // Stage B 레지스터
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
-            v1       <= 1'b0;
-            t_d1     <= {DW{1'b0}};
+            v1c      <= 1'b0;
+            t_d1c    <= {DW{1'b0}};
             nkfp_d1  <= {DW{1'b0}};
         end else begin
-            v1       <= v0;
-            t_d1     <= t_d0;
+            v1c      <= v1b;
+            t_d1c    <= t_d1b;
             nkfp_d1  <= nkfp_s1;
         end
     end
 
-    // k/k_fp16는 adder 지연(LAT_ADD)에 맞춰 정렬
-    wire  signed [7:0] k_d_align;
-    wire  [DW-1:0]     kfp_d_align;
-
-    // ※ 입력은 Stage-B 시점의 값 (t+1 경계에서 캡처됨)
-    shift_reg #(.DW(8),  .DEPTH(LAT_ADD)) u_align_k (
-        .clk(clk), .rstn(rstn),
-        .din(k_clamped[7:0]),
-        .dout(k_d_align)
-    );
-
-    shift_reg #(.DW(DW), .DEPTH(LAT_ADD)) u_align_kfp (
-        .clk(clk), .rstn(rstn),
-        .din(kfp_s1),
-        .dout(kfp_d_align)
-    );
-
     // ============================================================
-    // Stage C (t + 2 + LAT_ADD): f = t - k
+    // Stage C (t + 4 + LAT_ADD): f = t - k
     // ============================================================
     wire [DW-1:0] sum_w;
     wire          add_v;
@@ -194,31 +218,54 @@ module base2_k_picker #(
     fp16_add u_sub (
         .clk     (clk),
         .rstn    (rstn),
-        .valid_i (v1),      // t+1 기준
-        .a_i     (t_d1),    // t 스냅샷
-        .b_i     (nkfp_d1), // -k 스냅샷
-        .sum_o   (sum_w),   // t+1+LAT_ADD
+        .valid_i (v1c),      // B2 기준
+        .a_i     (t_d1c),    // t 스냅샷 (B2 타이밍 기준)
+        .b_i     (nkfp_d1),  // -k 스냅샷
+        .sum_o   (sum_w),    // B2 + LAT_ADD
         .valid_o (add_v)
     );
 
-    // 출력 레지스터(글리치 방지)
-    reg [DW-1:0] f_r;
-    always @(posedge clk or negedge rstn) begin
-        if (!rstn) begin
-            f_r       <= {DW{1'b0}};
-            k_o       <= 8'sd0;
-            k_fp16_o  <= {DW{1'b0}};
-            valid_o   <= 1'b0;
-        end else begin
-            valid_o   <= add_v;
-            if (add_v) begin
-                f_r      <= sum_w;
-                k_o      <= k_d_align;     // adder 결과와 정렬
-                k_fp16_o <= kfp_d_align;
-            end
+    // k/k_fp16 정렬: B2 타이밍 기준으로 정렬 소스 이동 + LAT_ADD==0 가드
+reg signed [7:0] k_clamped_b2_r;
+always @(posedge clk or negedge rstn) begin
+    if (!rstn) k_clamped_b2_r <= 8'sd0; else if (v1c) k_clamped_b2_r <= k_clamped_r;
+end
+
+wire  signed [7:0] k_d_align;
+wire  [DW-1:0]     kfp_d_align;
+
+generate
+if (LAT_ADD == 0) begin : G_ALIGN0
+    assign k_d_align   = k_clamped_b2_r;
+    assign kfp_d_align = kfp_s1;
+end else begin : G_ALIGNN
+    shift_reg #(.DW(8),  .DEPTH(LAT_ADD)) u_align_k (
+        .clk(clk), .rstn(rstn), .din(k_clamped_b2_r), .dout(k_d_align)
+    );
+    shift_reg #(.DW(DW), .DEPTH(LAT_ADD)) u_align_kfp (
+        .clk(clk), .rstn(rstn), .din(kfp_s1), .dout(kfp_d_align)
+    );
+end
+endgenerate
+
+// 출력 레지스터(글리치 방지)
+reg [DW-1:0] f_r;
+always @(posedge clk or negedge rstn) begin
+    if (!rstn) begin
+        f_r       <= {DW{1'b0}};
+        k_o       <= 8'sd0;
+        k_fp16_o  <= {DW{1'b0}};
+        valid_o   <= 1'b0;
+    end else begin
+        valid_o   <= add_v;
+        if (add_v) begin
+            f_r      <= sum_w;
+            k_o      <= k_d_align;     // adder 결과와 정렬
+            k_fp16_o <= kfp_d_align;
         end
     end
+end
 
-    assign f_o = f_r;
+assign f_o = f_r;
 
 endmodule
