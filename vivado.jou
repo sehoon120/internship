@@ -44,3 +44,53 @@ launch_simulation
 open_wave_config /home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg
 source tb_ssmblock_fullscan.tcl
 run all
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+relaunch_sim
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+relaunch_sim
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+relaunch_sim
+run all
+relaunch_sim
+relaunch_sim
+save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
+close_sim

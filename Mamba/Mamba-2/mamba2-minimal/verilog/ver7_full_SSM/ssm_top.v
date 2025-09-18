@@ -15,9 +15,9 @@ module SSMBLOCK_TOP #(
     parameter integer DW          = 16,
     parameter integer H_TILE      = 1,
     parameter integer P_TILE      = 1,
-    parameter integer N_TILE      = 4,
+    parameter integer N_TILE      = 128,
     parameter integer N_TOTAL     = 128,
-
+ 
     // Latency params (IP 설정에 맞춰 조정)
     parameter integer LAT_DX_M    = 6,    // mul latency (dx, dBx, dAh, hC 등에 공통 사용)
     parameter integer LAT_DBX_M   = 6,    // (옵션) dBx 별도 mul latency
@@ -135,7 +135,7 @@ module SSMBLOCK_TOP #(
                 xD_latched_v <= 1'b1;
             end
             // 그룹 끝에서 y_out 사용 후 클리어 (y_final_valid_o 발생과 동기)
-            if (group_l_d) begin
+            else if (group_l_d) begin
                 xD_latched_v <= 1'b0;
             end
         end
@@ -146,7 +146,7 @@ module SSMBLOCK_TOP #(
 //    shift_reg #(.DW(H_TILE*P_TILE*DW + 1), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE)) u_xd_delay (
 //        .clk(clk), .rstn(rstn), .din({xD_latched_r, xD_latched_v}), .dout({xD_w_d, v_xD_w_d})
 //    );
-    pipe_bus_bram #(
+    pipe_bus_bram #(  // 3cycle more delay needed
         .W(H_TILE*P_TILE*DW), 
         .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE),
         .USE_V(1)
