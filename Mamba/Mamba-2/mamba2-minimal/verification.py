@@ -12,7 +12,7 @@ def exp_fast8(x: torch.Tensor) -> torch.Tensor:
     2^f는 f∈[0,1)에서 8구간(pwl) 1차 근사.
     """
     # 상수/준비
-    log2e = 1.4426950408889634  # 1/ln(2)
+    log2e = 1.4423828  # 1.4426950408889634  # 1/ln(2)
     device, dtype = x.device, x.dtype
 
     # t = x*log2(e) = k + f
@@ -92,19 +92,21 @@ C = load_hex_tensor(f"{base_path}/0_C_full_SSM.hex", (B_, N_))
 D = load_hex_tensor(f"{base_path}/0_D_full_SSM.hex", (H_,))
 h_prev = load_hex_tensor(f"{base_path}/0_ssm_state_full_SSM.hex", (B_, H_, P_, N_))
 
+DT_SP = torch.zeros((B_, H_), dtype=torch.float16)
+DA = torch.zeros((B_, H_), dtype=torch.float16)
 Y = torch.zeros((B_, H_, P_), dtype=torch.float16)
 ln2 = math.log(2)
     
 for h_idx in range(0, H_, h_slice):
+    dt_bias_tile = dt_bias[:, h_idx:h_idx+h_slice]
+    dt_tile = dt[:, h_idx:h_idx+h_slice]
+    A_tile = A[h_idx:h_idx+h_slice]
+    D_tile = D[h_idx:h_idx+h_slice]
     for p_idx in range(0, P_, p_slice):
+        x_tile = x[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice]
         for n_idx in range(0, N_, n_slice):
-            dt_bias_tile = dt_bias[:, h_idx:h_idx+h_slice]
-            dt_tile = dt[:, h_idx:h_idx+h_slice]
-            x_tile = x[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice]
-            A_tile = A[h_idx:h_idx+h_slice]
             B_tile = B[:, n_idx:n_idx+n_slice]
             C_tile = C[:, n_idx:n_idx+n_slice]
-            D_tile = D[h_idx:h_idx+h_slice]
             h_tile = h_prev[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice, n_idx:n_idx+n_slice]
             # print_tensor_fp16_hex_inline(h_tile)
             # tile tensor로 변경해서 연산
@@ -112,7 +114,12 @@ for h_idx in range(0, H_, h_slice):
             dt_sp_tile = torch.where((dt_tile + dt_bias_tile) == 0, ln2, (dt_tile + dt_bias_tile) / (1 - exp_fast8(-(dt_tile + dt_bias_tile)/ln2)))
             # dt_sp_tile = F.softplus(dt_tile + dt_bias_tile)
             dA_tile = exp_fast8(dt_sp_tile * A_tile)
-            dA_tile = torch.exp(dt_sp_tile * A_tile)
+            # dA_tile = torch.exp(dt_sp_tile * A_tile)
+            
+            # if h_idx == 3 and n_idx == 0:  # and (p_idx >= 48) 
+            #     if p_idx == 48:
+            #         
+            
             dx_tile = torch.einsum("bh, bhp -> bhp", dt_sp_tile, x_tile)
             dxB_tile = torch.einsum("bhp, bn -> bhpn", dx_tile, B_tile)
             # dBx_tile = torch.einsum("bh, bn, bhp -> bhpn", dt_tile, B_tile, x_tile)
@@ -135,11 +142,15 @@ for h_idx in range(0, H_, h_slice):
             # print_tensor_fp16_hex_inline(y)
             
 
-            Y[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice] += y
+        Y[:, h_idx:h_idx+h_slice, p_idx:p_idx+p_slice] += y
+    DT_SP[:, h_idx:h_idx+h_slice] += dt_sp_tile
+    DA[:, h_idx:h_idx+h_slice] += dA_tile
 
 Y = rearrange(Y, "b h p -> b (h p)")
 
 # 결과 저장
+save_tensor_as_hex(DT_SP, f"{base_path}/dt_sp_approx.hex")
+save_tensor_as_hex(DA, f"{base_path}/da_exp_approx.hex")
 save_tensor_as_hex(Y, f"{base_path}/0_y_out_python_full_SSM_approx.hex")
 # print("(❁´◡`❁) 연산 완료! 결과 저장 위치:", f"{base_path}/0_y_out_python.hex")
 # # print("y_Python =\n", Y.view(H_, P_))
@@ -180,8 +191,22 @@ def compare_fp16_hex(file1, file2):
         i = idx.item()
         print(f"[{i}] Py={t1[i].item():.6f}, Verilog={t2[i].item():.6f}, AbsErr={val.item():.6f}")
 
+    # # ➕ 추가: t1에서 절대값이 2 또는 3보다 큰 값 찾기
+    # mask2 = torch.abs(t1) > 2.0
+    # mask3 = torch.abs(t1) > 3.0
+    # idx2 = torch.nonzero(mask2, as_tuple=False).flatten().tolist()
+    # idx3 = torch.nonzero(mask3, as_tuple=False).flatten().tolist()
+
+    # print(f"\n🔎 |t1| > 2.0 → {len(idx2)} elements")
+    # if idx2:
+    #     print("  indices:", idx2[:20], "..." if len(idx2) > 20 else "")
+    # print(f"🔎 |t1| > 3.0 → {len(idx3)} elements")
+    # if idx3:
+    #     print("  indices:", idx3[:20], "..." if len(idx3) > 20 else "")
+
+
 # 사용 예시
 file_pth = "C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas"
 file_py = f"{file_pth}/0_y_out_python_full_SSM_approx.hex"  # 0_y_out_python_full_SSM.hex"
-file_v =  f"{file_pth}/0_y_out_python_full_SSM.hex"  # 0_y_out_full_SSM.hex"
+file_v =  f"{file_pth}/0_y_out_full_SSM.hex"  # <- verilog 결과
 compare_fp16_hex(file_py, file_v)
