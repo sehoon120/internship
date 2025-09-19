@@ -226,7 +226,7 @@ module exp16_base2_pwl8 #(
     
     wire [DW-1:0]       two_pow_k_align;
     
-    shift_reg #(.DW(DW+2), .DEPTH(3 + LAT_MUL + LAT_ADD + LAT_ADD)) u_align_tow_pow_k (
+    shift_reg #(.DW(DW+2), .DEPTH(3 + LAT_MUL + LAT_ADD + LAT_ADD-1)) u_align_tow_pow_k (  // only H
         .clk(clk), .rstn(rstn),
         .din(two_pow_k),
         .dout(two_pow_k_align)

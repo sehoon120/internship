@@ -148,7 +148,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(  // 3cycle more delay needed
         .W(H_TILE*P_TILE*DW), 
-        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE),
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE + 3),
         .USE_V(1)
     ) u_xd_delay_bram (
         .clk(clk), .rstn(rstn),
