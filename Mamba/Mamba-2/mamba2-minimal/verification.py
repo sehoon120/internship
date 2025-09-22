@@ -111,10 +111,10 @@ for h_idx in range(0, H_, h_slice):
             # print_tensor_fp16_hex_inline(h_tile)
             # tile tensor로 변경해서 연산
             # print((dt_tile + dt_bias_tile).shape)
-            dt_sp_tile = torch.where((dt_tile + dt_bias_tile) == 0, ln2, (dt_tile + dt_bias_tile) / (1 - exp_fast8(-(dt_tile + dt_bias_tile)/ln2)))
-            # dt_sp_tile = F.softplus(dt_tile + dt_bias_tile)
-            dA_tile = exp_fast8(dt_sp_tile * A_tile)
-            # dA_tile = torch.exp(dt_sp_tile * A_tile)
+            # dt_sp_tile = torch.where((dt_tile + dt_bias_tile) == 0, ln2, (dt_tile + dt_bias_tile) / (1 - exp_fast8(-(dt_tile + dt_bias_tile)/ln2)))
+            dt_sp_tile = F.softplus(dt_tile + dt_bias_tile)
+            # dA_tile = exp_fast8(dt_sp_tile * A_tile)
+            dA_tile = torch.exp(dt_sp_tile * A_tile)
             
             # if h_idx == 3 and n_idx == 0:  # and (p_idx >= 48) 
             #     if p_idx == 48:
