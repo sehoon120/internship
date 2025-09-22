@@ -32,7 +32,7 @@ module SSMBLOCK_TOP #(
     parameter integer LAT_ADD     = 11,
     parameter integer LAT_DIV     = 15,
     parameter integer LAT_EXP     = 6 + LAT_MUL * 3 + LAT_ADD * 3 + 1+1+1,     // exp latency (예시)
-    parameter integer LAT_SP      = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1 + 2  // latching delay   // Softplus latency (예시)
+    parameter integer LAT_SP      = LAT_EXP + LAT_MUL + LAT_ADD + LAT_DIV + 1 //+ 2  // latching delay   // Softplus latency (예시)
 )(
     input  wire                              clk,
     input  wire                              rstn,
@@ -144,7 +144,7 @@ module SSMBLOCK_TOP #(
 
     // softplus(delta) 결과 래치 타이밍 맞춤
     wire hstart_to_sp_d, hlast_to_sp_d;
-    shift_reg #(.DW(2), .DEPTH(LAT_ADD_A + LAT_SP)) u_h_sp_align (
+    shift_reg #(.DW(2), .DEPTH(LAT_ADD_A + LAT_SP)) u_h_sp_align (  // 
       .clk(clk), .rstn(rstn),
       .din({h_start_raw, h_last_raw}),
       .dout({hstart_to_sp_d, hlast_to_sp_d})
@@ -154,9 +154,9 @@ module SSMBLOCK_TOP #(
     
     // exp 결과(dA) 래치 타이밍 맞춤
     wire hstart_to_exp_d, hlast_to_exp_d;
-    shift_reg #(.DW(2), .DEPTH(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+1)) u_h_exp_align (
+    shift_reg #(.DW(2), .DEPTH(LAT_DX_M+ LAT_EXP+2)) u_h_exp_align (  //  
       .clk(clk), .rstn(rstn),
-      .din({h_start_raw, h_last_raw}),
+      .din({hstart_to_sp_d, hlast_to_sp_d}),
       .dout({hstart_to_exp_d, hlast_to_exp_d})
     );
     
@@ -189,7 +189,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(  // 3cycle more delay needed
         .W(H_TILE*P_TILE*DW), 
-        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+1 + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE + 3),
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+1 + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE + 3 + 1),
         .USE_V(1)
     ) u_xd_delay_bram (
         .clk(clk), .rstn(rstn),
@@ -222,9 +222,10 @@ module SSMBLOCK_TOP #(
         if (hstart_to_sp_d && v_delta_sp_w) begin
           delta_sp_latched_r <= delta_sp_w;
           delta_sp_latched_v <= 1'b1;
-        end else if (hlast_to_sp_d) begin
-          delta_sp_latched_v <= 1'b0;
-        end
+        end 
+//        else if (hlast_to_sp_d) begin
+//          delta_sp_latched_v <= 1'b0;
+//        end
       end
     end
 
@@ -243,7 +244,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(
         .W(H_TILE*DW), 
-        .D(LAT_ADD_A + LAT_SP),
+        .D(LAT_ADD_A + LAT_SP + 1),
         .USE_V(0)
     ) u_zero_flag_delay_bram (
         .clk(clk), .rstn(rstn),
@@ -286,9 +287,10 @@ module SSMBLOCK_TOP #(
         if (hstart_to_exp_d && v_dA_w) begin
           dA_latched_r <= dA_w;
           dA_latched_v <= 1'b1;
-        end else if (hlast_to_exp_d) begin
-          dA_latched_v <= 1'b0;
-        end
+        end 
+//        else if (hlast_to_exp_d) begin
+//          dA_latched_v <= 1'b0;
+//        end
       end
     end
     
@@ -306,7 +308,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(
         .W(H_TILE*P_TILE*DW), 
-        .D(LAT_ADD_A + LAT_SP),
+        .D(LAT_ADD_A + LAT_SP + 1),
         .USE_V(0)
     ) u_x_delay_bram (
         .clk(clk), .rstn(rstn),
@@ -403,7 +405,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(
         .W(H_TILE*P_TILE*N_TILE*DW), 
-        .D((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+2 + LAT_DAH_M + 2) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M)),
+        .D((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+2 + LAT_DAH_M + 1) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M)),
         .USE_V(1)
     ) u_dbx_delay_bram (
         .clk(clk), .rstn(rstn),
