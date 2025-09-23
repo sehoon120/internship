@@ -144,21 +144,36 @@ module SSMBLOCK_TOP #(
       end
     end
 
-    // softplus(delta) 결과 래치 타이밍 맞춤
-    wire hstart_to_sp_d, hlast_to_sp_d;
-    shift_reg #(.DW(2), .DEPTH(LAT_ADD_A + LAT_SP)) u_h_sp_align (  // 
+    // softplus(delta) mode select
+    wire hstart_to_mode_d, hlast_to_mode_d;
+    shift_reg #(.DW(2), .DEPTH(LAT_ADD_A)) u_h_mode_align (  // 
       .clk(clk), .rstn(rstn),
       .din({h_start_raw, h_last_raw}),
+      .dout({hstart_to_mode_d, hlast_to_mode_d})
+    );
+    
+    wire hstart_to_sp_d, hlast_to_sp_d;
+    shift_reg #(.DW(2), .DEPTH(LAT_SP)) u_h_sp_align (  // 
+      .clk(clk), .rstn(rstn),
+      .din({hstart_to_mode_d, hlast_to_mode_d}),
       .dout({hstart_to_sp_d, hlast_to_sp_d})
     );
     
     
     
-    // exp 결과(dA) 래치 타이밍 맞춤
-    wire hstart_to_exp_d, hlast_to_exp_d;
-    shift_reg #(.DW(2), .DEPTH(LAT_DX_M+ LAT_EXP+2)) u_h_exp_align (  //  
+    // exp mode select
+    wire hstart_to_exp_mode_d, hlast_to_exp_mode_d;
+    shift_reg #(.DW(2), .DEPTH(LAT_DX_M+ 1)) u_h_exp_mode_align (  //  
       .clk(clk), .rstn(rstn),
       .din({hstart_to_sp_d, hlast_to_sp_d}),
+      .dout({hstart_to_exp_mode_d, hlast_to_exp_mode_d})
+    );
+    
+    // exp 결과(dA) 래치 타이밍 맞춤
+    wire hstart_to_exp_d, hlast_to_exp_d;
+    shift_reg #(.DW(2), .DEPTH(LAT_EXP+1)) u_h_exp_align (  //  
+      .clk(clk), .rstn(rstn),
+      .din({hstart_to_exp_mode_d, hlast_to_exp_mode_d}),
       .dout({hstart_to_exp_d, hlast_to_exp_d})
     );
     
@@ -226,13 +241,13 @@ module SSMBLOCK_TOP #(
       .clk(clk), .rstn(rstn),
 
       // SP 요청: delta → softplus
-      .sp_req_v (v_delta_w),
+      .sp_req_v (v_delta_w & hstart_to_mode_d),
       .sp_x     (delta_w),
       .sp_rsp_v (v_shared_sp),
       .sp_y     (shared_sp_y),
 
       // EXP 요청: dA_tmp → exp
-      .exp_req_v (v_dA_tmp_w),
+      .exp_req_v (v_dA_tmp_w & hstart_to_exp_mode_d),
       .exp_x     (dA_tmp_w),
       .exp_rsp_v (v_shared_exp),
       .exp_y     (shared_exp_y)
