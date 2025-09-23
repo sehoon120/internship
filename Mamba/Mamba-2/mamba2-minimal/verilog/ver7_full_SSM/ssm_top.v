@@ -202,17 +202,48 @@ module SSMBLOCK_TOP #(
     // ============================================================
     // 1) delta_sp = Softplus(delta) (h)
     // ============================================================
-    wire [H_TILE*DW-1:0] delta_sp_w;
-    wire                 v_delta_sp_w;
+    // wire [H_TILE*DW-1:0] delta_sp_w;
+    // wire                 v_delta_sp_w;
 
-    sp_dt #(.DW(DW), .H_TILE(H_TILE), .SP_LAT(LAT_SP), .LAT_EXP(LAT_EXP), .LAT_MUL(LAT_MUL), .LAT_ADD(LAT_ADD), .LAT_DIV(LAT_DIV)) u_sp (
-        .clk     (clk),
-        .rstn    (rstn),
-        .valid_i (v_delta_w),
-        .dt_i    (delta_w),
-        .sp_dt_o (delta_sp_w),
-        .valid_o (v_delta_sp_w)
+    // sp_dt #(.DW(DW), .H_TILE(H_TILE), .SP_LAT(LAT_SP), .LAT_EXP(LAT_EXP), .LAT_MUL(LAT_MUL), .LAT_ADD(LAT_ADD), .LAT_DIV(LAT_DIV)) u_sp (
+    //     .clk     (clk),
+    //     .rstn    (rstn),
+    //     .valid_i (v_delta_w),
+    //     .dt_i    (delta_w),
+    //     .sp_dt_o (delta_sp_w),
+    //     .valid_o (v_delta_sp_w)
+    // );
+
+    wire [H_TILE*DW-1:0] shared_sp_y, shared_exp_y;
+    wire v_shared_sp, v_shared_exp;
+    wire [H_TILE*DW-1:0] dA_tmp_w;
+    wire                 v_dA_tmp_w;
+
+    exp_sp_shared #(
+      .DW(DW), .H_TILE(H_TILE),
+      .LAT_EXP(LAT_EXP), .LAT_SP(LAT_SP)
+    ) u_shared (
+      .clk(clk), .rstn(rstn),
+
+      // SP 요청: delta → softplus
+      .sp_req_v (v_delta_w),
+      .sp_x     (delta_w),
+      .sp_rsp_v (v_shared_sp),
+      .sp_y     (shared_sp_y),
+
+      // EXP 요청: dA_tmp → exp
+      .exp_req_v (v_dA_tmp_w),
+      .exp_x     (dA_tmp_w),
+      .exp_rsp_v (v_shared_exp),
+      .exp_y     (shared_exp_y)
     );
+
+    // 다운스트림은 기존 신호명 그대로 재바인딩
+    wire [H_TILE*DW-1:0] delta_sp_w = shared_sp_y;
+    wire                 v_delta_sp_w = v_shared_sp;
+
+    wire [H_TILE*DW-1:0] dA_w = shared_exp_y;
+    wire                 v_dA_w = v_shared_exp;
 
     reg  [H_TILE*DW-1:0] delta_sp_latched_r;
     reg                  delta_sp_latched_v;
@@ -235,8 +266,7 @@ module SSMBLOCK_TOP #(
     // ============================================================
     // 2) dA_tmp = delta_sp * A (h) -- mul
     // ============================================================
-    wire [H_TILE*DW-1:0] dA_tmp_w;
-    wire                 v_dA_tmp_w;
+    
 
     wire [H_TILE*DW-1:0] A_i_d;
 //    shift_reg #(.DW(H_TILE*DW), .DEPTH(LAT_ADD_A + LAT_SP)) u_zero_flag_delay (
@@ -267,17 +297,17 @@ module SSMBLOCK_TOP #(
     // ============================================================
     // 3) dA = exp(dA_tmp) (h) -- exp
     // ============================================================
-    wire [H_TILE*DW-1:0] dA_w;
-    wire                 v_dA_w;
+    // wire [H_TILE*DW-1:0] dA_w;
+    // wire                 v_dA_w;
 
-    dA_exp #(.DW(DW), .H_TILE(H_TILE), .LAT_EXP(LAT_EXP)) u_dA_exp (
-        .clk     (clk),
-        .rstn    (rstn),
-        .valid_i (v_dA_tmp_w),
-        .in_i    (dA_tmp_w),
-        .exp_o   (dA_w),
-        .valid_o (v_dA_w)
-    );
+    // dA_exp #(.DW(DW), .H_TILE(H_TILE), .LAT_EXP(LAT_EXP)) u_dA_exp (
+    //     .clk     (clk),
+    //     .rstn    (rstn),
+    //     .valid_i (v_dA_tmp_w),
+    //     .in_i    (dA_tmp_w),
+    //     .exp_o   (dA_w),
+    //     .valid_o (v_dA_w)
+    // );
 
     reg  [H_TILE*DW-1:0] dA_latched_r;
     reg                  dA_latched_v;
