@@ -196,16 +196,19 @@ module base2_k_picker #(
 
     wire [DW-1:0] kfp_s1  = k2fp16({{8{k_clamped_r[7]}}, k_clamped_r});
     wire [DW-1:0] nkfp_s1 = {~kfp_s1[DW-1], kfp_s1[DW-2:0]};
+    reg  signed [7:0]   k_clamped_r_d;
 
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
             v1c      <= 1'b0;
             t_d1c    <= {DW{1'b0}};
             nkfp_d1  <= {DW{1'b0}};
+            k_clamped_r_d <= {7{1'b0}};
         end else begin
             v1c      <= v1b;
             t_d1c    <= t_d1b;
             nkfp_d1  <= nkfp_s1;
+            k_clamped_r_d <= k_clamped_r;
         end
     end
 
@@ -228,7 +231,7 @@ module base2_k_picker #(
     // k/k_fp16 정렬: B2 타이밍 기준으로 정렬 소스 이동 + LAT_ADD==0 가드
 reg signed [7:0] k_clamped_b2_r;
 always @(posedge clk or negedge rstn) begin
-    if (!rstn) k_clamped_b2_r <= 8'sd0; else if (v1c) k_clamped_b2_r <= k_clamped_r;
+    if (!rstn) k_clamped_b2_r <= 8'sd0; else if (v1c) k_clamped_b2_r <= k_clamped_r_d;
 end
 
 wire  signed [7:0] k_d_align;
@@ -239,10 +242,10 @@ if (LAT_ADD == 0) begin : G_ALIGN0
     assign k_d_align   = k_clamped_b2_r;
     assign kfp_d_align = kfp_s1;
 end else begin : G_ALIGNN
-    shift_reg #(.DW(8),  .DEPTH(LAT_ADD)) u_align_k (
+    shift_reg #(.DW(8),  .DEPTH(LAT_ADD-1)) u_align_k (
         .clk(clk), .rstn(rstn), .din(k_clamped_b2_r), .dout(k_d_align)
     );
-    shift_reg #(.DW(DW), .DEPTH(LAT_ADD)) u_align_kfp (
+    shift_reg #(.DW(DW), .DEPTH(LAT_ADD+1)) u_align_kfp (
         .clk(clk), .rstn(rstn), .din(kfp_s1), .dout(kfp_d_align)
     );
 end

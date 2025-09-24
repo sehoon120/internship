@@ -171,7 +171,7 @@ module SSMBLOCK_TOP #(
     
     // exp 결과(dA) 래치 타이밍 맞춤
     wire hstart_to_exp_d, hlast_to_exp_d;
-    shift_reg #(.DW(2), .DEPTH(LAT_EXP+1)) u_h_exp_align (  //  
+    shift_reg #(.DW(2), .DEPTH(LAT_EXP+LAT_MUL)) u_h_exp_align (  //  
       .clk(clk), .rstn(rstn),
       .din({hstart_to_exp_mode_d, hlast_to_exp_mode_d}),
       .dout({hstart_to_exp_d, hlast_to_exp_d})
@@ -206,7 +206,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(  // 3cycle more delay needed
         .W(H_TILE*P_TILE*DW), 
-        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+1 + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE + 3 + 1),
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+1+5 + LAT_DAH_M + 2 + LAT_DX_M +  LAT_ACCU + N_TOTAL/N_TILE + 3 + 1),
         .USE_V(1)
     ) u_xd_delay_bram (
         .clk(clk), .rstn(rstn),
@@ -233,24 +233,29 @@ module SSMBLOCK_TOP #(
     wire v_shared_sp, v_shared_exp;
     wire [H_TILE*DW-1:0] dA_tmp_w;
     wire                 v_dA_tmp_w;
+    wire                 mode_softplus_o;
 
     exp_sp_shared #(
-      .DW(DW), .H_TILE(H_TILE),
-      .LAT_EXP(LAT_EXP), .LAT_SP(LAT_SP)
+      .DW(DW),  // .H_TILE(H_TILE),
+      .LAT_EXP(LAT_EXP),
+      .LAT_MUL(LAT_MUL), .LAT_ADD(LAT_ADD), .LAT_DIV(LAT_DIV)
     ) u_shared (
       .clk(clk), .rstn(rstn),
 
       // SP 요청: delta → softplus
-      .sp_req_v (v_delta_w & hstart_to_mode_d),
+      .sp_req_v (v_delta_w),  // & hstart_to_mode_d),
       .sp_x     (delta_w),
+      .v_sp     (hstart_to_mode_d),
       .sp_rsp_v (v_shared_sp),
       .sp_y     (shared_sp_y),
-
+      
       // EXP 요청: dA_tmp → exp
-      .exp_req_v (v_dA_tmp_w & hstart_to_exp_mode_d),
+      .exp_req_v (v_dA_tmp_w),  // & hstart_to_exp_mode_d),
       .exp_x     (dA_tmp_w),
+      .v_exp     (hstart_to_exp_mode_d),
       .exp_rsp_v (v_shared_exp),
-      .exp_y     (shared_exp_y)
+      .exp_y     (shared_exp_y),
+      .mode_softplus_o (mode_softplus_o)
     );
 
     // 다운스트림은 기존 신호명 그대로 재바인딩
@@ -419,7 +424,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(
         .W(H_TILE*P_TILE*N_TILE*DW), 
-        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+2 + 2),
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+5+2 + 2),
         .USE_V(0)
     ) u_hprev_delay_bram (
         .clk(clk), .rstn(rstn),
@@ -452,7 +457,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(
         .W(H_TILE*P_TILE*N_TILE*DW), 
-        .D((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+2 + LAT_DAH_M + 1) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M)),
+        .D((LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+2+5 + LAT_DAH_M + 1) - (LAT_ADD_A + LAT_SP + LAT_DX_M + 1 + LAT_DBX_M)),
         .USE_V(1)
     ) u_dbx_delay_bram (
         .clk(clk), .rstn(rstn),
@@ -484,7 +489,7 @@ module SSMBLOCK_TOP #(
 //    );
     pipe_bus_bram #(
         .W(N_TILE*DW), 
-        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+2 + LAT_DAH_M + 2 + LAT_ADD_A),
+        .D(LAT_ADD_A + LAT_SP + LAT_DX_M + LAT_EXP+2+5 + LAT_DAH_M + 2 + LAT_ADD_A),
         .USE_V(0)
     ) u_C_delay_bram (
         .clk(clk), .rstn(rstn),
