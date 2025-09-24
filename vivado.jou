@@ -42,3 +42,23 @@ relaunch_sim
 save_wave_config {/home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg}
 relaunch_sim
 relaunch_sim
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+wait_on_run synth_1
+close_sim
+close [ open /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_major_monitor.v w ]
+add_files /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/hp_major_monitor.v
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg
+source tb_ssmblock_fullscan.tcl
+run all
+relaunch_sim
+run all
+close_sim
+vlog +define+ORDER_P_MAJOR tb_ssmblock_fullscan.v hp_major_monitor.v
+xvlog -d ORDER_P_MAJOR tb_ssmblock_fullscan.v hp_major_monitor.v
+launch_simulation
+open_wave_config /home/intern-2501/Mamba_SSM_Block_ver7/tb_softplus_or_exp16_pure_behav.wcfg
+source tb_ssmblock_fullscan.tcl
+run all
+close_sim
