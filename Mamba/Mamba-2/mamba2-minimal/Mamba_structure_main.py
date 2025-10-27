@@ -154,8 +154,8 @@ with torch.no_grad():
             x = rearrange(x, "b (h p) -> b h p", p=config.headdim)
 # ====================  Full SSM Block Started  ====================
             # SSM step
-            # if token_num == 0: # i == 0: and 
-            #     print(dt + model.backbone['layers'][i]['mixer'].dt_bias)
+            # if token_num == 0 and i == 0: # i == 0: and 
+                # print(A.shape, B.shape, C.shape)
 
             dt = dt.to(dtype=torch.float16)
             dt_bias_w = model.backbone['layers'][i]['mixer'].dt_bias.to(dtype=torch.float16)
