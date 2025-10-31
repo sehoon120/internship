@@ -21,6 +21,8 @@ import numpy as np
 # 이 부분 고치던중
 current_dir = os.path.dirname(os.path.abspath(__file__))
 save_dir = os.path.join(current_dir, "../../../..", "intermediate_datas")
+save_dir_full = os.path.join(current_dir, "verilog/intermediate_full_mamba_datas")
+
 os.makedirs(save_dir, exist_ok=True)  # 디렉토리 없으면 생성
 
 # FP16 텐서를 .hex로 저장하는 함수
@@ -39,6 +41,9 @@ def save_tensor_fp32_hex(tensor, path):
         for v in u32:
             f.write(f"{int(v):08x}\n")
 
+def p(token, layer, w):
+    if token == 0 and layer == 0:
+        print(w)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -126,24 +131,85 @@ with torch.no_grad():
         residual = u
         for i in range(config.n_layer):  # model(tokens, h)
             t1_m = time.perf_counter()
+            # p(token_num, i, residual.shape)  # torch.Size([1, 1, 768])
+            if i == 0 and token_num == 0:
+                q = residual.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir_full, f"{i}_residual.hex"))
+
+                q = model.backbone['layers'][i]['mixer'].dt_bias.to(dtype=torch.float16)
+                # dt_bias_w = dt_bias_w.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir_full, f"{i}_dt_bias_w.hex"))
+
+                q = -torch.exp(model.backbone['layers'][i]['mixer'].A_log).to(dtype=torch.float16)
+                # A = A.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir_full, f"{i}_A.hex"))
+
+                q = model.backbone['layers'][i]['mixer'].D.to(dtype=torch.float16)
+                # D = D.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir_full, f"{i}_D.hex"))
+
+                q = rearrange(model.backbone['layers'][i]['mixer'].conv1d.weight, "d 1 w -> d w")
+                q = q.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir_full, f"{i}_c_W.hex"))
+                # print('c_W')
+                # p(token_num, i, q.shape)
+
+                c_b = model.backbone['layers'][i]['mixer'].conv1d.bias
+                c_b = c_b.to(dtype=torch.float16)
+                save_tensor_fp16_hex(c_b,  os.path.join(save_dir_full, f"{i}_c_b.hex"))
+                
+                RMS_W1 = model.backbone['layers'][i].norm.weight
+                RMS_W1 = RMS_W1.to(dtype=torch.float16)
+                save_tensor_fp16_hex(RMS_W1,  os.path.join(save_dir_full, f"{i}_RMS_W1.hex"))
+                # print('RMS_W1')
+                # p(token_num, i, RMS_W1.shape)
+
+                RMS_W2 = model.backbone['layers'][i]['mixer'].norm.weight
+                RMS_W2 = RMS_W2.to(dtype=torch.float16)
+                save_tensor_fp16_hex(RMS_W2,  os.path.join(save_dir_full, f"{i}_RMS_W2.hex"))
+                # print('RMS_W2')
+                # p(token_num, i, RMS_W2.shape)
+
+                in_proj_W = model.backbone['layers'][i]['mixer'].in_proj.weight
+                in_proj_W = in_proj_W.to(dtype=torch.float16)
+                save_tensor_fp16_hex(in_proj_W,  os.path.join(save_dir_full, f"{i}_in_proj_W.hex"))
+                # print('in_proj_W')
+                # p(token_num, i, in_proj_W.shape)
+
+                out_proj_W = model.backbone['layers'][i]['mixer'].out_proj.weight
+                out_proj_W = out_proj_W.to(dtype=torch.float16)
+                save_tensor_fp16_hex(out_proj_W,  os.path.join(save_dir_full, f"{i}_out_proj_W.hex"))
+                # print('out_proj_W')
+                # p(token_num, i, out_proj_W.shape)
+                
+                c_s = h[i].conv_state
+                c_s = c_s.to(dtype=torch.float16)
+                save_tensor_fp16_hex(c_s,  os.path.join(save_dir_full, f"{i}_c_s.hex"))
+                # print('c_b, c_s')
+                # p(token_num, i, (c_b.shape, c_s.shape))  # 
+
+
             x = model.backbone['layers'][i].norm(residual)
             # 1. projection
             assert x.shape[1] == 1
+            # p(token_num, i, x.shape)  # torch.Size([1, 1, 768])
             zxbcdt = model.backbone['layers'][i]['mixer'].in_proj(x.squeeze(1))  # shape: (B, L, D_in_proj)
+            # p(token_num, i, zxbcdt.shape)  # torch.Size([1, 3352])
             z, xBC, dt = torch.split(
                 zxbcdt,
                 [config.d_inner, config.d_inner + 2 * config.d_state, config.nheads],
                 dim=-1,
             )
-
+            # p(token_num, i, h[i].conv_state.shape)  # torch.Size([1, 1792, 4])
             h[i].conv_state.copy_(torch.roll(h[i].conv_state, shifts=-1, dims=-1))
             h[i].conv_state[:, :, -1] = xBC
 
+            # p(token_num, i, model.backbone['layers'][i]['mixer'].conv1d.weight.shape)  # torch.Size([1792, 1, 4])
             xBC = torch.sum(
                 h[i].conv_state * rearrange(model.backbone['layers'][i]['mixer'].conv1d.weight, "d 1 w -> d w"), dim=-1
-            )
+            )  # rearrange(model.backbone['layers'][i]['mixer'].conv1d.weight, "d 1 w -> d w")
 
-            xBC += model.backbone['layers'][i]['mixer'].conv1d.bias
+            xBC += model.backbone['layers'][i]['mixer'].conv1d.bias  # model.backbone['layers'][i]['mixer'].conv1d.bias
 
             t1 = time.perf_counter()
 
@@ -157,25 +223,31 @@ with torch.no_grad():
             # if token_num == 0 and i == 0: # i == 0: and 
                 # print(A.shape, B.shape, C.shape)
 
-            dt = dt.to(dtype=torch.float16)
-            dt_bias_w = model.backbone['layers'][i]['mixer'].dt_bias.to(dtype=torch.float16)
-            A = A.to(dtype=torch.float16)
-            x = x.to(dtype=torch.float16)
-            B = B.to(dtype=torch.float16)
-            C = C.to(dtype=torch.float16)
-            D = model.backbone['layers'][i]['mixer'].D.to(dtype=torch.float16)
-            h[i] = h[i]._replace(ssm_state=h[i].ssm_state.to(dtype=torch.float16))
+            # dt = dt.to(dtype=torch.float16)
+            # # # dt_bias_w = model.backbone['layers'][i]['mixer'].dt_bias.to(dtype=torch.float16)
+            # # A = A.to(dtype=torch.float16)
+            # x = x.to(dtype=torch.float16)
+            # B = B.to(dtype=torch.float16)
+            # C = C.to(dtype=torch.float16)
+            # # D = model.backbone['layers'][i]['mixer'].D.to(dtype=torch.float16)
+            # h[i] = h[i]._replace(ssm_state=h[i].ssm_state.to(dtype=torch.float16))
             if i == 0 and token_num == 0:
-                save_tensor_fp16_hex(dt,  os.path.join(save_dir, f"{i}_dt_full_SSM.hex"))
-                save_tensor_fp16_hex(dt_bias_w,  os.path.join(save_dir, f"{i}_dt_bias_full_SSM.hex"))
-                save_tensor_fp16_hex(x,   os.path.join(save_dir, f"{i}_x_full_SSM.hex"))
-                save_tensor_fp16_hex(A,   os.path.join(save_dir, f"{i}_A_full_SSM.hex"))
-                save_tensor_fp16_hex(B,   os.path.join(save_dir, f"{i}_B_full_SSM.hex"))
-                save_tensor_fp16_hex(C,   os.path.join(save_dir, f"{i}_C_full_SSM.hex"))
-                save_tensor_fp16_hex(D,   os.path.join(save_dir, f"{i}_D_full_SSM.hex"))
-                save_tensor_fp16_hex(h[i].ssm_state, os.path.join(save_dir, f"{i}_ssm_state_full_SSM.hex"))
+                q = dt.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir, f"{i}_dt.hex"))
+                # save_tensor_fp16_hex(dt_bias_w,  os.path.join(save_dir, f"{i}_dt_bias.hex"))
+                q = x.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,   os.path.join(save_dir, f"{i}_x.hex"))
+                # save_tensor_fp16_hex(A,   os.path.join(save_dir, f"{i}_A.hex"))
+                q = B.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,   os.path.join(save_dir, f"{i}_B.hex"))
+                q = C.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,   os.path.join(save_dir, f"{i}_C.hex"))
+                # save_tensor_fp16_hex(D,   os.path.join(save_dir, f"{i}_D.hex"))
+                # save_tensor_fp16_hex(h[i].ssm_state, os.path.join(save_dir, f"{i}_ssm_state_full_SSM.hex"))
+                q = h[i].ssm_state.to(dtype=torch.float16)
+                save_tensor_fp16_hex(h[i].ssm_state,  os.path.join(save_dir_full, f"{i}_h_ssm_state.hex"))
 
-            dt = F.softplus(dt + dt_bias_w)  # model.backbone['layers'][i]['mixer'].dt_bias)  # (batch, nheads)
+            dt = F.softplus(dt + model.backbone['layers'][i]['mixer'].dt_bias)  #   # (batch, nheads)
             # delta = dt + model.backbone['layers'][i]['mixer'].dt_bias
             # dt = torch.where(delta <= 0, torch.exp(delta), delta + torch.exp(-delta))
             dA = torch.exp(dt * A)  # (batch, nheads)
@@ -219,28 +291,39 @@ with torch.no_grad():
 
             y = torch.einsum("bhpn, bn -> bhp", h[i].ssm_state, C)
 
-            y = y + rearrange(D, "h -> h 1") * x
+            y = y + rearrange(model.backbone['layers'][i]['mixer'].D, "h -> h 1") * x
             # print("dtype of ssm_state:", h[i].ssm_state.dtype)
             # print("dtype of dA:", dA.dtype)
             # print("dtype of dBx:", dBx.dtype)
             y = rearrange(y, "b h p -> b (h p)")
-            if i == 0 and token_num == 0:
-                save_tensor_fp16_hex(y,   os.path.join(save_dir, f"{i}_y_out_python_full_SSM.hex"))
+            # if i == 0 and token_num == 0:
+            #     save_tensor_fp16_hex(y,   os.path.join(save_dir, f"{i}_y_out_python_full_SSM.hex"))
 
             
             # print("SSM time: ", ssm_time)
             y = y.to(dtype=torch.float32)
+
+            if i == 0 and token_num == 0:
+                q = y.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir_full, f"{i}_y_SSM.hex"))
             
             
 # ====================  SSM Block Finished  ====================
-
+            # p(token_num, i, y.shape)  # torch.Size([1, 1536])
+            # p(token_num, i, residual.shape)  # torch.Size([1, 1, 768])
             y = y * F.silu(z)
             t2 = time.perf_counter()
             
             y = model.backbone['layers'][i]['mixer'].norm(y)
+            # p(token_num, i, y.shape)  # torch.Size([1, 1536])
             y = model.backbone['layers'][i]['mixer'].out_proj(y)
+            # p(token_num, i, y.shape)  # torch.Size([1, 768])
 
             residual = residual + y.unsqueeze(1)
+            # p(token_num, i, residual.shape)  # torch.Size([1, 1, 768])
+            if i == 0 and token_num == 0:
+                q = y.to(dtype=torch.float16)
+                save_tensor_fp16_hex(q,  os.path.join(save_dir_full, f"{i}_y.hex"))
 
             t2_m = time.perf_counter()
             ssm_time.append(t2 - t1)
