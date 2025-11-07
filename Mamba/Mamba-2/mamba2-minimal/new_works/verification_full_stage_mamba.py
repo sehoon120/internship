@@ -71,7 +71,7 @@ H_ = 24
 P_ = 64
 N_ = 128
 
-M_ = H_*P_/2  # 768
+M_ = int(H_*P_/2)  # 768
 C_ = H_*P_+2*N_  # 1792
 T_ = H_*P_+C_+H_  # 3352
 
@@ -88,14 +88,14 @@ base_path = "C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/inter
 c_b = load_hex_tensor(f"{base_path}/0_c_b.hex", (C_))
 c_s = load_hex_tensor(f"{base_path}/0_c_s.hex", (B_, C_, 4))
 c_W = load_hex_tensor(f"{base_path}/0_c_W.hex", (C_, 4))
-in_proj_W = load_hex_tensor(f"{base_path}/0_in_proj_W.hex", (T_, M_))
+in_proj_W = load_hex_tensor(f"{base_path}/0_in_proj_W.hex", (T_, M_))  # 2574336/
 out_proj_W = load_hex_tensor(f"{base_path}/0_out_proj_W.hex", (M_, H_*P_))
 RMS_W1 = load_hex_tensor(f"{base_path}/0_RMS_W1.hex", (M_))
 RMS_W2 = load_hex_tensor(f"{base_path}/0_RMS_W2.hex", (H_*P_))
 dt_bias = load_hex_tensor(f"{base_path}/0_dt_bias_w.hex", (B_, H_))
 A = load_hex_tensor(f"{base_path}/0_A.hex", (H_,))
 D = load_hex_tensor(f"{base_path}/0_D.hex", (H_,))
-h_prev = load_hex_tensor(f"{base_path}/0_ssm_state.hex", (B_, H_, P_, N_))
+h_prev = load_hex_tensor(f"{base_path}/0_h_ssm_state.hex", (B_, H_, P_, N_))
 
 x_inter = load_hex_tensor(f"{base_path}/0_x.hex", (B_, H_, P_))  # SSM start
 dt_inter = load_hex_tensor(f"{base_path}/0_dt.hex", (B_, H_))  # inter
@@ -249,7 +249,7 @@ def compare_fp16_hex(file1, file2):
 
 
 # 사용 예시
-file_pth = "C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas"
-file_py = f"{file_pth}/0_y_out_python_approx.hex"  # 0_y_out_python.hex"
-file_v =  f"{file_pth}/0_y_out.hex"  # <- verilog 결과
+file_pth = "C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_full_mamba_datas"
+file_py = f"{file_pth}/0_y_SSM_python.hex"  # 0_y_out_python.hex"
+file_v =  f"{file_pth}/0_y_SSM.hex"  # <- verilog 결과
 compare_fp16_hex(file_py, file_v)

@@ -1,0 +1,6 @@
+LightMamba
+https://huggingface.co/PKU-SEC-Lab/LightMamba
+
+Quamba2
+https://huggingface.co/papers/2503.22879
+https://huggingface.co/ut-enyac
