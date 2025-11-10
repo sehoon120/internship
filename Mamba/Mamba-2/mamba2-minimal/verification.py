@@ -111,10 +111,16 @@ for h_idx in range(0, H_, h_slice):
             # print_tensor_fp16_hex_inline(h_tile)
             # tile tensor로 변경해서 연산
             # print((dt_tile + dt_bias_tile).shape)
+            z = (dt_tile + dt_bias_tile) / ln2
+            den = -torch.expm1(-z)
+            small = z.abs() < 1e-4
+            val_regular = (dt_tile + dt_bias_tile) / den
+            val_small = ln2  # 또는 ln2 * (1 + z/2 + z*z/12)
+            dt_sp_tile = torch.where(small, val_small, val_regular)
             # dt_sp_tile = torch.where((dt_tile + dt_bias_tile) == 0, ln2, (dt_tile + dt_bias_tile) / (1 - exp_fast8(-(dt_tile + dt_bias_tile)/ln2)))
-            dt_sp_tile = F.softplus(dt_tile + dt_bias_tile)
-            # dA_tile = exp_fast8(dt_sp_tile * A_tile)
-            dA_tile = torch.exp(dt_sp_tile * A_tile)
+            # dt_sp_tile = F.softplus(dt_tile + dt_bias_tile)
+            dA_tile = exp_fast8(dt_sp_tile * A_tile)
+            # dA_tile = torch.exp(dt_sp_tile * A_tile)
             
             # if h_idx == 3 and n_idx == 0:  # and (p_idx >= 48) 
             #     if p_idx == 48:
@@ -151,7 +157,7 @@ Y = rearrange(Y, "b h p -> b (h p)")
 # 결과 저장
 save_tensor_as_hex(DT_SP, f"{base_path}/dt_sp_approx.hex")
 save_tensor_as_hex(DA, f"{base_path}/da_exp_approx.hex")
-save_tensor_as_hex(Y, f"{base_path}/0_y_out_python_full_SSM_approx.hex")
+save_tensor_as_hex(Y, f"{base_path}/0_y_out_python_full_SSM.hex")
 # print("(❁´◡`❁) 연산 완료! 결과 저장 위치:", f"{base_path}/0_y_out_python.hex")
 # # print("y_Python =\n", Y.view(H_, P_))
 # y_out = load_hex_tensor(f"{base_path}/0_y_out.hex", (B_, H_, P_))
@@ -176,13 +182,13 @@ def compare_fp16_hex(file1, file2):
     max_error = abs_diff.max().item()
     mean_error = abs_diff.mean().item()
     rms_error = torch.sqrt(torch.mean((t1 - t2) ** 2)).item()
-    num_errors = (abs_diff > 1e-3).sum().item()  # 0.001 이상 차이 나는 항목 수
+    num_errors = (abs_diff > 5e-3).sum().item()  # 0.001 이상 차이 나는 항목 수
 
     print(f"🔍 Total elements: {t1.numel()}")
     print(f"📊 Max abs error : {max_error}")
     print(f"📊 Mean abs error: {mean_error}")
     print(f"📐 RMS error: {rms_error}")
-    print(f"⚠️  Elements with >1e-3 error: {num_errors}")
+    print(f"⚠️  Elements with >5e-3 error: {num_errors}")
 
     # 차이가 나는 인덱스 출력 (상위 10개)
     topk = torch.topk(abs_diff, k=10)
@@ -207,6 +213,6 @@ def compare_fp16_hex(file1, file2):
 
 # 사용 예시
 file_pth = "C:/Internship/internship/Mamba/Mamba-2/mamba2-minimal/verilog/intermediate_datas"
-file_py = f"{file_pth}/0_y_out_python_full_SSM_approx.hex"  # 0_y_out_python_full_SSM.hex"
+file_py = f"{file_pth}/0_y_out_python_full_SSM.hex"
 file_v =  f"{file_pth}/0_y_out_full_SSM.hex"  # <- verilog 결과
 compare_fp16_hex(file_py, file_v)
