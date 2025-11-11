@@ -1,0 +1,367 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Thu Sep 25 13:23:06 2025
+# Process ID: 1259501
+# Current directory: /home/intern-2501/internship
+# Command line: vivado
+# Log file: /home/intern-2501/internship/vivado.log
+# Journal file: /home/intern-2501/internship/vivado.jou
+# Running On        :broccoli
+# Platform          :RedHatEnterprise
+# Operating System  :Red Hat Enterprise Linux release 8.10 (Ootpa)
+# Processor Detail  :Intel(R) Xeon(R) Gold 6242R CPU @ 3.10GHz
+# CPU Frequency     :3800.002 MHz
+# CPU Physical cores:40
+# CPU Logical cores :80
+# Host memory       :539818 MB
+# Swap memory       :4294 MB
+# Total Virtual     :544113 MB
+# Available Virtual :503303 MB
+#-----------------------------------------------------------
+start_gui
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:au280:part0:1.2 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/au280/1.2/board.xml as part xcu280-fsvh2892-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /TOOLS/Xilinx/Vivado/2024.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+open_project /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/TOOLS/Xilinx/Vivado/2024.1/data/ip'.
+close [ open /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v w ]
+add_files /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+set_property top SSMBLOCK_TOP_BR [current_fileset]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/utils_1/imports/synth_1/softplus_or_exp16.dcp with file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/SSMBLOCK_TOP.dcp
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+launch_runs synth_1 -jobs 79
+[Thu Sep 25 14:08:52 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+open_run synth_1 -name synth_1
+Design is defaulting to impl run constrset: constrs_1
+Design is defaulting to synth run part: xc7a200tfbg676-2
+INFO: [Device 21-403] Loading part xc7a200tfbg676-2
+INFO: [Device 21-9227] Part: xc7a200tfbg676-2 does not have CEAM library.
+INFO: [Project 1-454] Reading design checkpoint '/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.gen/sources_1/ip/floating_point_0_1/floating_point_0.dcp' for cell 'u_accum_n/G_H[0].G_P[0].u_tree/L1[0].add/u_fp16_add'
+INFO: [Project 1-454] Reading design checkpoint '/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.gen/sources_1/ip/floating_point_1_1/floating_point_1.dcp' for cell 'u_dA_tmp/g_lane[0].u_mul/u_fp16_mult'
+INFO: [Project 1-454] Reading design checkpoint '/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.gen/sources_1/ip/floating_point_2_1/floating_point_2.dcp' for cell 'u_shared/u_core/u_div_softplus/u_fp16_div'
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 9541.504 ; gain = 0.000 ; free physical = 277824 ; free virtual = 476368
+INFO: [Netlist 29-17] Analyzing 9698 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2024.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/constrs_1/new/top.xdc]
+Finished Parsing XDC File [/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/constrs_1/new/top.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00.09 ; elapsed = 00:00:00.09 . Memory (MB): peak = 9845.883 ; gain = 0.000 ; free physical = 277591 ; free virtual = 476136
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 1827 instances were transformed.
+  LUT6_2 => LUT6_2 (LUT5, LUT6): 1827 instances
+
+open_run: Time (s): cpu = 00:00:49 ; elapsed = 00:00:38 . Memory (MB): peak = 10110.812 ; gain = 1305.293 ; free physical = 277369 ; free virtual = 475920
+set_property is_enabled false [get_files  /home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/utils_1/imports/synth_1/softplus_or_exp16.dcp with file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/SSMBLOCK_TOP_BR.dcp
+launch_runs synth_1 -jobs 79
+[Thu Sep 25 14:22:29 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/runme.log
+close_design
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/utils_1/imports/synth_1/softplus_or_exp16.dcp with file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/SSMBLOCK_TOP_BR.dcp
+launch_runs synth_1 -jobs 79
+[Thu Sep 25 14:29:32 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+reset_run synth_1
+launch_runs synth_1 -jobs 79
+[Thu Sep 25 14:32:58 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/utils_1/imports/synth_1/softplus_or_exp16.dcp with file /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/SSMBLOCK_TOP_BR.dcp
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+launch_runs synth_1 -jobs 79
+[Thu Sep 25 16:06:55 2025] Launched synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/synth_1/runme.log
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name floating_point_3
+set_property -dict [list \
+  CONFIG.A_Precision_Type {Single} \
+  CONFIG.C_A_Exponent_Width {8} \
+  CONFIG.C_A_Fraction_Width {24} \
+  CONFIG.C_Latency {21} \
+  CONFIG.C_Mult_Usage {Medium_Usage} \
+  CONFIG.C_Rate {1} \
+  CONFIG.C_Result_Exponent_Width {8} \
+  CONFIG.C_Result_Fraction_Width {24} \
+  CONFIG.Operation_Type {Exponential} \
+  CONFIG.Result_Precision_Type {Single} \
+] [get_ips floating_point_3]
+generate_target {instantiation_template} [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3/floating_point_3.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'floating_point_3'...
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+export_ip_user_files -of_objects  [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3/floating_point_3.xci] -no_script -reset -force -quiet
+remove_files  /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3/floating_point_3.xci
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name floating_point_3
+set_property -dict [list \
+  CONFIG.A_Precision_Type {Half} \
+  CONFIG.C_A_Exponent_Width {5} \
+  CONFIG.C_A_Fraction_Width {11} \
+  CONFIG.C_Accum_Input_Msb {15} \
+  CONFIG.C_Accum_Lsb {-24} \
+  CONFIG.C_Accum_Msb {32} \
+  CONFIG.C_Latency {13} \
+  CONFIG.C_Mult_Usage {Full_Usage} \
+  CONFIG.C_Rate {1} \
+  CONFIG.C_Result_Exponent_Width {5} \
+  CONFIG.C_Result_Fraction_Width {11} \
+  CONFIG.Flow_Control {NonBlocking} \
+  CONFIG.Has_RESULT_TREADY {false} \
+  CONFIG.Operation_Type {Exponential} \
+  CONFIG.Result_Precision_Type {Half} \
+] [get_ips floating_point_3]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+generate_target {instantiation_template} [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3_1/floating_point_3.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'floating_point_3'...
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+generate_target all [get_files  /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3_1/floating_point_3.xci]
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'floating_point_3'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'floating_point_3'...
+INFO: [IP_Flow 19-1686] Generating 'C Simulation' target for IP 'floating_point_3'...
+INFO: [IP_Flow 19-1686] Generating 'Test Bench' target for IP 'floating_point_3'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'floating_point_3'...
+catch { config_ip_cache -export [get_ips -all floating_point_3] }
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_3
+export_ip_user_files -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3_1/floating_point_3.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3_1/floating_point_3.xci]
+launch_runs floating_point_3_synth_1 -jobs 79
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_3
+[Thu Sep 25 17:01:01 2025] Launched floating_point_3_synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/floating_point_3_synth_1/runme.log
+export_simulation -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_3_1/floating_point_3.xci] -directory /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.ip_user_files/sim_scripts -ip_user_files_dir /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.ip_user_files -ipstatic_source_dir /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/modelsim} {questa=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/questa} {xcelium=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/xcelium} {vcs=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/vcs} {riviera=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name floating_point_4
+set_property -dict [list \
+  CONFIG.A_Precision_Type {Half} \
+  CONFIG.C_A_Exponent_Width {5} \
+  CONFIG.C_A_Fraction_Width {11} \
+  CONFIG.C_Accum_Input_Msb {15} \
+  CONFIG.C_Accum_Lsb {-24} \
+  CONFIG.C_Accum_Msb {32} \
+  CONFIG.C_Latency {17} \
+  CONFIG.C_Mult_Usage {Medium_Usage} \
+  CONFIG.C_Rate {1} \
+  CONFIG.C_Result_Exponent_Width {5} \
+  CONFIG.C_Result_Fraction_Width {11} \
+  CONFIG.Flow_Control {NonBlocking} \
+  CONFIG.Has_RESULT_TREADY {false} \
+  CONFIG.Operation_Type {Logarithm} \
+  CONFIG.Result_Precision_Type {Half} \
+] [get_ips floating_point_4]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+generate_target {instantiation_template} [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_4/floating_point_4.xci]
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'floating_point_4'...
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+generate_target all [get_files  /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_4/floating_point_4.xci]
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'floating_point_4'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'floating_point_4'...
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+INFO: [IP_Flow 19-1686] Generating 'C Simulation' target for IP 'floating_point_4'...
+INFO: [IP_Flow 19-1686] Generating 'Test Bench' target for IP 'floating_point_4'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'floating_point_4'...
+catch { config_ip_cache -export [get_ips -all floating_point_4] }
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_4
+export_ip_user_files -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_4/floating_point_4.xci] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_4/floating_point_4.xci]
+launch_runs floating_point_4_synth_1 -jobs 79
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: floating_point_4
+[Thu Sep 25 17:01:41 2025] Launched floating_point_4_synth_1...
+Run output will be captured here: /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.runs/floating_point_4_synth_1/runme.log
+export_simulation -of_objects [get_files /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.srcs/sources_1/ip/floating_point_4/floating_point_4.xci] -directory /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.ip_user_files/sim_scripts -ip_user_files_dir /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.ip_user_files -ipstatic_source_dir /home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/modelsim} {questa=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/questa} {xcelium=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/xcelium} {vcs=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/vcs} {riviera=/home/intern-2501/Mamba_SSM_Block_ver7/Mamba_SSM_Block_ver7.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/pipe_bus_bram.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top_BR.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/ssm_top.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [/home/intern-2501/internship/Mamba/Mamba-2/mamba2-minimal/verilog/ver7_full_SSM/activation/Softplus.v:]
+report_ip_status -name ip_status 
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Sep 25 17:28:35 2025...
