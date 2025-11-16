@@ -1,12 +1,6 @@
 `timescale 1 ns / 1 ps
 
-// start_addr + len(바이트) 로 들어온 “큰 read 요청”을,
-// 4KB 경계 안 넘도록
-// 최대 256 beat(최대 256개의 데이터 전송) 을 넘지 않도록
-// 여러 개의 작은 burst(=trans_t: {addr, len})로 쪼개서 FIFO에 넣고,
-// AR 채널 / R 채널이 각각 그 FIFO를 읽어 쓰게 관리하는 모듈
-
-module mo_rd_fifo #(
+module mo_wr_fifo #(
     parameter int NUM_MO_BUF = 4,   // FIFO depth (number of outstanding transactions)
     parameter int ADDR_WIDTH = 64,  // 32 or 64
     parameter int DATA_WIDTH = 256,  // 256, 128, 64, ....
@@ -24,11 +18,13 @@ module mo_rd_fifo #(
     // FIFO (output) interface for split transactions:
     output logic          mo_fifo_full,
     output logic          mo_fifo_empty,
-    output trans_t        fifo_mo_ar,
-    output logic          fifo_mo_ar_valid,
-    input  logic          fifo_mo_ar_ready,
-    output trans_t        fifo_mo_r,
-    input  logic          fifo_mo_r_done
+    output trans_t        fifo_mo_aw,
+    output logic          fifo_mo_aw_valid,
+    input  logic          fifo_mo_aw_ready,
+    output trans_t        fifo_mo_w,
+    input  logic          fifo_mo_w_done,
+    output trans_t        fifo_mo_b,
+    input  logic          fifo_mo_b_done
 );
     localparam int MO_FIFO_SIZE = NUM_MO_BUF + 1;
     localparam DATA_SHIFT = $clog2(DATA_WIDTH / 8);
@@ -46,15 +42,17 @@ module mo_rd_fifo #(
 
     // Head/tail(b_ch_ptr) pointers and counter for circular FIFO.
     // head(push) tail(pop)
-    logic [$clog2(MO_FIFO_SIZE)-1:0] head, ar_ch_ptr, r_ch_ptr, next_head;
+    logic [$clog2(MO_FIFO_SIZE)-1:0]
+        head, aw_ch_ptr, w_ch_ptr, b_ch_ptr, next_head;
 
     assign next_head = (head + 1);
-    assign mo_fifo_full = (next_head == r_ch_ptr) || (next_head == r_ch_ptr + MO_FIFO_SIZE);  // fifo full
-    assign mo_fifo_empty = (head == r_ch_ptr);  // fifo empty
+    assign mo_fifo_full = (next_head == b_ch_ptr) || (next_head == b_ch_ptr + MO_FIFO_SIZE);  // fifo full
+    assign mo_fifo_empty = (head == b_ch_ptr);  // fifo empty
     assign start_ready = (state == IDLE) && (!mo_fifo_full);  // ready for new
-    assign fifo_mo_ar_valid = (ar_ch_ptr != head);  //wr_ptr not reached head
-    assign fifo_mo_ar = fifo_mem[ar_ch_ptr];
-    assign fifo_mo_r = fifo_mem[r_ch_ptr];
+    assign fifo_mo_aw_valid = (aw_ch_ptr != head);  //wr_ptr not reached head
+    assign fifo_mo_aw = fifo_mem[aw_ch_ptr];
+    assign fifo_mo_w = fifo_mem[w_ch_ptr];
+    assign fifo_mo_b = fifo_mem[b_ch_ptr];
 
     //-------------------------------------------------------------------------
     // State machine for splitting input transaction.
@@ -78,7 +76,7 @@ module mo_rd_fifo #(
     assign boundary_remaining = 4096 - offset;
     assign new_remaining = remaining - tx_size_bytes;
     assign tx_size_bytes_raw = (remaining < boundary_remaining) ? remaining: boundary_remaining;
-    assign tx_size_bytes = ((tx_size_bytes_raw >> DATA_SHIFT) < 256) ? tx_size_bytes_raw : (256 << DATA_SHIFT);
+    assign tx_size_bytes = ((tx_size_bytes_raw >> DATA_SHIFT) < axi_pkg::AXI_BURST_MAX) ? tx_size_bytes_raw : (axi_pkg::AXI_BURST_MAX << DATA_SHIFT);
     assign tx_len = tx_size_bytes >> DATA_SHIFT;
 
     // Main state machine and FIFO push/pop logic.
@@ -110,22 +108,27 @@ module mo_rd_fifo #(
             current_addr <= 0;
             remaining    <= 0;
             head         <= 0;
-            ar_ch_ptr    <= 0;
-            r_ch_ptr     <= 0;
+            aw_ch_ptr    <= 0;
+            w_ch_ptr     <= 0;
+            b_ch_ptr     <= 0;
             for (int mo_idx = 0; mo_idx < MO_FIFO_SIZE; mo_idx++) begin
-                fifo_mem[mo_idx] <= {'0, '0};
+                fifo_mem[mo_idx] <= '{0, 0};
             end
         end else begin
             //--------------------------------------------------------------------------
             // FIFO Pop Logic:
             // If the FIFO output is accepted (fifo_valid) while ready.
-            if (fifo_mo_ar_valid && fifo_mo_ar_ready) begin
-                ar_ch_ptr <= (ar_ch_ptr == MO_FIFO_SIZE - 1) ? 0 : ar_ch_ptr + 1;
+            if (fifo_mo_aw_valid && fifo_mo_aw_ready) begin
+                aw_ch_ptr <= (aw_ch_ptr == MO_FIFO_SIZE - 1) ? 0 : aw_ch_ptr + 1;
             end
             // pop the write ch mo
-            if (fifo_mo_r_done) begin
-                fifo_mem[r_ch_ptr] <= '{0, 0};
-                r_ch_ptr <= (r_ch_ptr == MO_FIFO_SIZE - 1) ? 0 : r_ch_ptr + 1;
+            if (fifo_mo_w_done) begin
+                fifo_mem[w_ch_ptr] <= '{0, 0};
+                w_ch_ptr <= (w_ch_ptr == MO_FIFO_SIZE - 1) ? 0 : w_ch_ptr + 1;
+            end
+            // pop the write ch mo
+            if (fifo_mo_b_done) begin
+                b_ch_ptr <= (b_ch_ptr == MO_FIFO_SIZE - 1) ? 0 : b_ch_ptr + 1;
             end
 
             //--------------------------------------------------------------------------

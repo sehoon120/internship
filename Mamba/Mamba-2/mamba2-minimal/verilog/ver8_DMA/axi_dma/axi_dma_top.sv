@@ -72,23 +72,36 @@ module axi_dma_top #(
         .init_write(init_write)
     );
 
-    axis_mm2s_receiver #(  // mm to 가속기 test
-        .DATA_WIDTH(DATA_WIDTH)
-    ) u_mm2s_receiver (
-        .clk(clk),
-        .rstn(rstn),
-        .start(start),
-        .__axis_mm2s(__axis_mm2s)
-    );
+    // axis_mm2s_receiver #(  // mm to 가속기 test
+    //     .DATA_WIDTH(DATA_WIDTH)
+    // ) u_mm2s_receiver (
+    //     .clk(clk),
+    //     .rstn(rstn),
+    //     .start(start),
+    //     .__axis_mm2s(__axis_mm2s)
+    // );
 
-    axis_s2mm_driver #(  // 가속기 to mm test
+    // axis_s2mm_driver #(  // 가속기 to mm test
+    //     .DATA_WIDTH(DATA_WIDTH)
+    // ) u_s2mm_driver (
+    //     .clk(clk),
+    //     .rstn(rstn),
+    //     .start(start),
+    //     .done_drive(done_drive),
+    //     .__axis_s2mm(__axis_s2mm)
+    // );
+
+    accel_axis_wrapper #(  //  가속기 + AXIS ↔ tile 래퍼
         .DATA_WIDTH(DATA_WIDTH)
-    ) u_s2mm_driver (
-        .clk(clk),
-        .rstn(rstn),
-        .start(start),
-        .done_drive(done_drive),
-        .__axis_s2mm(__axis_s2mm)
+    ) u_accel_wrap (
+        .clk  (clk),
+        .rstn (rstn),
+
+        // DMA -> 가속기 (MM2S)
+        .axis_in (__axis_mm2s),   // axis.slave
+
+        // 가속기 -> DMA (S2MM)
+        .axis_out(__axis_s2mm)    // axis.master
     );
 
     axi_dma #(  // DMA core
